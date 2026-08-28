@@ -3,7 +3,9 @@ set -euo pipefail
 
 mkdir -p data/raw/gpx data/raw/logs data/raw/import
 shopt -s nullglob
-for bundle in data/raw/import/*.zip; do
+
+bundles=(data/raw/import/*.zip data/raw/*.zip)
+for bundle in "${bundles[@]}"; do
   echo "Importing raw bundle: $bundle"
   tmp="$(mktemp -d)"
   unzip -q -o "$bundle" -d "$tmp"
