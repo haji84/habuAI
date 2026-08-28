@@ -1,0 +1,29 @@
+{
+  "status": "ok",
+  "rows": 26103,
+  "positives": 11,
+  "brier_train": 0.019974895640165646,
+  "features": [
+    "sin_hour",
+    "cos_hour",
+    "mean_speed_mps",
+    "elevation_m",
+    "rain_1h_mm",
+    "rain_3h_mm",
+    "rain_6h_mm",
+    "rain_12h_mm",
+    "rain_24h_mm",
+    "rain_48h_mm",
+    "temperature_c",
+    "humidity_pct",
+    "dew_point_c",
+    "hours_since_rain",
+    "curvature_deg",
+    "segment_prior_visits",
+    "bio_ネズミ_5m",
+    "bio_ネズミ_10m",
+    "bio_オットンガエル_10m",
+    "bio_カエル_10m",
+    "bio_ヤマシギ_10m"
+  ]
+}
