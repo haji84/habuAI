@@ -49,5 +49,29 @@ def apply_runtime_fixes(pipeline) -> None:
             raise ValueError("non-empty learning rows are missing required segment_id")
         return original_static(df, segs)
 
+    def join_weather(visits, weather):
+        if visits.empty or weather.empty:
+            return visits
+        v = visits.copy()
+        w = weather.copy()
+        # GPX timestamps arrive as a fixed +09:00 offset while Open-Meteo uses
+        # the named Asia/Tokyo zone. Pandas merge_asof requires identical tz dtypes.
+        # Normalize both through UTC, then return them to Asia/Tokyo so local-hour
+        # features remain correct.
+        v["entered_at"] = pd.to_datetime(v["entered_at"], utc=True).dt.tz_convert("Asia/Tokyo")
+        v["exited_at"] = pd.to_datetime(v["exited_at"], utc=True).dt.tz_convert("Asia/Tokyo")
+        w["timestamp"] = pd.to_datetime(w["timestamp"], utc=True).dt.tz_convert("Asia/Tokyo")
+        v = v.sort_values("entered_at")
+        w = w.sort_values("timestamp")
+        return pd.merge_asof(
+            v,
+            w,
+            left_on="entered_at",
+            right_on="timestamp",
+            direction="nearest",
+            tolerance=pd.Timedelta("40min"),
+        )
+
     pipeline._species_from_text = species_from_text
     pipeline.add_segment_static_features = add_segment_static_features
+    pipeline.join_weather = join_weather
