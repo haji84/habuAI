@@ -1,0 +1,26 @@
+[project]
+name = "habuai"
+version = "0.1.0"
+description = "Automated Habu GPX/OSM learning and prediction pipeline"
+requires-python = ">=3.12"
+dependencies = [
+  "pandas>=2.2",
+  "numpy>=2.0",
+  "geopandas>=1.0",
+  "shapely>=2.0",
+  "pyproj>=3.7",
+  "gpxpy>=1.6",
+  "requests>=2.32",
+  "scikit-learn>=1.5",
+  "joblib>=1.4",
+  "pyarrow>=17.0"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "ruff>=0.6"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
