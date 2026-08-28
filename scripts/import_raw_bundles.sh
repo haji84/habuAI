@@ -27,5 +27,13 @@ for bundle in "${bundles[@]}"; do
   rm -rf "$tmp"
 done
 
+# Holdout GPX is stored compressed to keep the repository small. It is expanded
+# only in the Actions workspace and therefore remains an unseen validation input
+# until the hardened pipeline explicitly scores the holdout period.
+if [[ -s data/raw/holdout_2026-08-28.gpx.xz ]]; then
+  echo 'Expanding 2026-08-28 holdout GPX...'
+  xz -dc data/raw/holdout_2026-08-28.gpx.xz > data/raw/gpx/2026-08-28.gpx
+fi
+
 printf 'GPX files: '; find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' | wc -l
 printf 'Log files: '; find data/raw/logs -maxdepth 1 -type f -name '*.txt' | wc -l
