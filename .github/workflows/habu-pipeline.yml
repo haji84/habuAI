@@ -29,7 +29,7 @@ jobs:
       - name: Install system GIS tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y osmium-tool gdal-bin
+          sudo apt-get install -y osmium-tool gdal-bin unzip
 
       - uses: actions/setup-python@v5
         with:
@@ -38,6 +38,23 @@ jobs:
 
       - name: Install Python dependencies
         run: pip install -e .
+
+      - name: Import zipped GPX/log bundles
+        run: bash scripts/import_raw_bundles.sh
+
+      - name: Validate raw inputs
+        run: |
+          GPX_COUNT=$(find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' | wc -l)
+          LOG_COUNT=$(find data/raw/logs -maxdepth 1 -type f -name '*.txt' | wc -l)
+          echo "GPX_COUNT=$GPX_COUNT LOG_COUNT=$LOG_COUNT"
+          if [ "$GPX_COUNT" -eq 0 ]; then
+            echo 'No GPX input found. Upload a zip bundle under data/raw/import/ or GPX files under data/raw/gpx/.'
+            exit 2
+          fi
+          if [ "$LOG_COUNT" -eq 0 ]; then
+            echo 'No field log found under data/raw/logs/.'
+            exit 2
+          fi
 
       - name: Cache Kyushu OSM PBF
         uses: actions/cache@v4
@@ -67,9 +84,11 @@ jobs:
           fi
 
       - name: Upload pipeline artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: habu-pipeline-output
+          if-no-files-found: warn
           path: |
             data/processed
             reports
