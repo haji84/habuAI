@@ -37,7 +37,7 @@ jobs:
           cache: pip
 
       - name: Install Python dependencies
-        run: pip install -e .
+        run: pip install -e '.[dev]'
 
       - name: Import zipped GPX/log bundles
         run: bash scripts/import_raw_bundles.sh
