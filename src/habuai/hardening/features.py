@@ -14,6 +14,7 @@ def add_outcomes_bio(visits,events,segs,cfg):
     excluded={"ハブ","ヒメハブ","アカマタ","ガラスヒバァ","ガラスヒヴァ","リュウキュウアオヘビ","ヒャン"}; bio=project_events(events[~events.species.isin(excluded)],segs.crs) if not events.empty else pd.DataFrame()
     windows=[int(v) for v in cfg.get("biological_windows_minutes",[5,10,15,30])]; distances=[float(v) for v in cfg.get("biological_distance_m",[50,100,250,500])]
     t=pd.to_datetime(x.entered_at,utc=True).astype("int64").to_numpy(); vx=x.segment_x_m.to_numpy(float); vy=x.segment_y_m.to_numpy(float)
+    feature_cols={}
     for sp in ["ネズミ","オットンガエル","カエル","ヤマシギ","クロウサギ"]:
         b=bio[bio.species==sp].copy() if not bio.empty else pd.DataFrame()
         if not b.empty:b["u"]=pd.to_datetime(b.timestamp,utc=True); b=b.sort_values("u"); bt=b.u.astype("int64").to_numpy(); bx=b.x_m.to_numpy(float); by=b.y_m.to_numpy(float); bc=pd.to_numeric(b.individual_count,errors="coerce").fillna(1).to_numpy(float)
@@ -28,13 +29,33 @@ def add_outcomes_bio(visits,events,segs,cfg):
                 for d in distances:
                     mm=dd<=d
                     if mm.any():cnt[d][i]=int(bc[lo:hi][mm].sum())
-            base=f"bio_{sp}_{mins}m"; x[base]=cnt[max(distances)]; x[f"{base}_nearest_m"]=nearest
-            for d in distances:x[f"{base}_{int(d)}m_count"]=cnt[d]
+            base=f"bio_{sp}_{mins}m"; feature_cols[base]=cnt[max(distances)]; feature_cols[f"{base}_nearest_m"]=nearest
+            for d in distances:feature_cols[f"{base}_{int(d)}m_count"]=cnt[d]
+    if feature_cols:
+        x=pd.concat([x,pd.DataFrame(feature_cols,index=x.index)],axis=1)
     return x
 
 def _nearest(points,target):
-    if target is None or target.empty:return np.full(len(points),np.nan)
-    j=gpd.sjoin_nearest(points[["geometry"]],target[["geometry"]].dropna(),how="left",distance_col="d"); return pd.to_numeric(j.d,errors="coerce").to_numpy(float)
+    """Return exactly one nearest distance per input point.
+
+    geopandas.sjoin_nearest can emit multiple rows for one source point when
+    several target geometries are tied at the same minimum distance.  Reduce
+    those ties back to the source index so callers always receive len(points)
+    values in the original order.
+    """
+    out=np.full(len(points),np.nan,dtype=float)
+    if target is None or target.empty:return out
+    target=target[["geometry"]].dropna().copy()
+    target=target[~target.geometry.is_empty]
+    if target.empty:return out
+    src=points[["geometry"]].copy().reset_index(drop=True)
+    src["_source_row"]=np.arange(len(src),dtype=int)
+    j=gpd.sjoin_nearest(src,target,how="left",distance_col="d")
+    d=pd.to_numeric(j["d"],errors="coerce")
+    reduced=pd.DataFrame({"_source_row":j["_source_row"].to_numpy(),"d":d.to_numpy()}).groupby("_source_row",sort=False)["d"].min()
+    idx=reduced.index.to_numpy(dtype=int)
+    out[idx]=reduced.to_numpy(dtype=float)
+    return out
 
 def add_static_context(data,segs,root):
     s=segs[["segment_id","highway","length_m","bearing_deg","curvature_deg","geometry"]].copy(); s["road_class_code"]=s.highway.astype("category").cat.codes.astype(float); p=gpd.GeoDataFrame(s[["segment_id"]].copy(),geometry=s.geometry.centroid,crs=segs.crs)
