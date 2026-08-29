@@ -1,25 +1,18 @@
 {
   "status": "ok",
-  "generated_at": "2026-08-29T17:07:24.692635+09:00",
+  "generated_at": "2026-08-30T07:38:21.432769+09:00",
   "gpx_sessions": 8,
   "gpx_points": 153397,
   "raw_event_rows": 892,
-  "deduplicated_event_rows": 895,
+  "deduplicated_event_rows": 892,
   "duplicates_removed": 0,
-  "baseline_main_capture_events": 40,
-  "baseline_main_individuals": 41,
+  "baseline_main_capture_events": 39,
+  "baseline_main_individuals": 40,
   "baseline_matched_capture_events": 38,
   "baseline_matched_individuals": 39,
-  "baseline_unmatched_capture_events": 2,
-  "baseline_unmatched_individuals": 2,
+  "baseline_unmatched_capture_events": 1,
+  "baseline_unmatched_individuals": 1,
   "unmatched": [
-    {
-      "timestamp": "2026-08-16 00:25:00+09:00",
-      "lat": 28.17024216566392,
-      "lon": 129.3029272593291,
-      "nearest_osm_distance_m": 317.12899398930176,
-      "reason": "nearest OSM highway exceeds match threshold"
-    },
     {
       "timestamp": "2026-08-16 00:25:00+09:00",
       "lat": 28.17024216566392,
