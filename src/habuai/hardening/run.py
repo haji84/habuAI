@@ -2,7 +2,7 @@ from __future__ import annotations
 import json
 import numpy as np
 import pandas as pd
-from .events import dedupe_events,join_weather,slope_features,species_from_text,strict_holdout_score
+from .events import collapse_nearest_event_matches,dedupe_events,join_weather,slope_features,species_from_text,strict_holdout_score
 from .features import add_outcomes_bio,add_static_context
 from .modeling import fit_model,score_holdout
 from .output import write_map,write_qa
@@ -11,7 +11,7 @@ def apply_hardening(pipeline):
     pipeline._species_from_text=species_from_text; original_parse=pipeline.parse_field_log
     def hardened_run(root):
         cfg=pipeline.load_config(root);paths=pipeline.Paths(root);pipeline.ensure_dirs(paths);segs=pipeline.build_10m_segments(root,cfg);points=pipeline.read_gpx_files(root);mp=pipeline.map_match_gpx(points,segs,cfg);visits=slope_features(pipeline.segment_visits(mp))
-        files=sorted((root/"data"/"raw"/"logs").glob("*.txt"));raw=pd.concat([original_parse(p) for p in files],ignore_index=True) if files else pd.DataFrame();events,removed=dedupe_events(raw);events=pipeline.match_events(events,segs) if not events.empty else events
+        files=sorted((root/"data"/"raw"/"logs").glob("*.txt"));raw=pd.concat([original_parse(p) for p in files],ignore_index=True) if files else pd.DataFrame();events,removed=dedupe_events(raw);events=collapse_nearest_event_matches(pipeline.match_events(events.reset_index(drop=True),segs)) if not events.empty else events
         if not events.empty:events["unmatched_reason"]=np.where(events.segment_id.isna(),"nearest OSM highway exceeds match threshold","")
         weather=pipeline.fetch_weather(root,events,visits,cfg);data=join_weather(visits,weather);data=add_outcomes_bio(data,events,segs,cfg);data=add_static_context(data,segs,root);data=pipeline.add_exposure_features(data)
         data.to_csv(paths.processed/"learning_10m_road.csv",index=False);data.to_parquet(paths.processed/"learning_10m_road.parquet",index=False);mp.to_csv(paths.processed/"gpx_points_matched.csv",index=False);visits.to_csv(paths.processed/"segment_visits.csv",index=False)
