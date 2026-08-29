@@ -27,12 +27,21 @@ for bundle in "${bundles[@]}"; do
   rm -rf "$tmp"
 done
 
-# Holdout GPX is stored compressed to keep the repository small. It is expanded
-# only in the Actions workspace and therefore remains an unseen validation input
-# until the hardened pipeline explicitly scores the holdout period.
+# The holdout archive is stored as base64 text of an xz-compressed GPX because
+# GitHub's UTF-8 contents API cannot write arbitrary binary bytes directly.
+# Decode to a temporary xz stream, validate it, then expand into the Actions
+# workspace. The source remains separate from the frozen baseline bundle.
 if [[ -s data/raw/holdout_2026-08-28.gpx.xz ]]; then
-  echo 'Expanding 2026-08-28 holdout GPX...'
-  xz -dc data/raw/holdout_2026-08-28.gpx.xz > data/raw/gpx/2026-08-28.gpx
+  echo 'Decoding and expanding 2026-08-28 holdout GPX...'
+  tmp_xz="$(mktemp --suffix=.gpx.xz)"
+  if head -c 6 data/raw/holdout_2026-08-28.gpx.xz | grep -q '^/Td6WF'; then
+    base64 -d data/raw/holdout_2026-08-28.gpx.xz > "$tmp_xz"
+  else
+    cp data/raw/holdout_2026-08-28.gpx.xz "$tmp_xz"
+  fi
+  xz -t "$tmp_xz"
+  xz -dc "$tmp_xz" > data/raw/gpx/2026-08-28.gpx
+  rm -f "$tmp_xz"
 fi
 
 printf 'GPX files: '; find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' | wc -l
