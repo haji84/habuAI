@@ -1,6 +1,6 @@
 import pandas as pd
 
-from habuai.hardening.events import dedupe_events, species_from_text, strict_holdout_score
+from habuai.hardening.events import collapse_nearest_event_matches, dedupe_events, species_from_text, strict_holdout_score
 
 
 def test_himehabu_not_contaminated_as_habu():
@@ -22,6 +22,21 @@ def test_dedupe_preserves_multi_individual_count():
     assert len(out) == 1
     assert removed == 1
     assert int(out.iloc[0].individual_count) == 2
+
+
+def test_nearest_join_tie_collapse_keeps_distinct_source_events():
+    joined = pd.DataFrame(
+        {
+            "event_signature": ["same", "same", "same"],
+            "segment_id": ["OSM_B", "OSM_A", "OSM_C"],
+            "event_match_distance_m": [12.0, 12.0, 8.0],
+        },
+        index=[0, 0, 1],
+    )
+    out = collapse_nearest_event_matches(joined)
+    assert len(out) == 2
+    assert out.event_signature.tolist() == ["same", "same"]
+    assert out.segment_id.tolist() == ["OSM_A", "OSM_C"]
 
 
 def test_strict_holdout_windows_do_not_move():
