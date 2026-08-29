@@ -1,6 +1,9 @@
+import geopandas as gpd
 import pandas as pd
+from shapely.geometry import LineString
 
 from habuai.hardening.events import collapse_nearest_event_matches, dedupe_events, species_from_text, strict_holdout_score
+from habuai.hardening.roads import recover_supplemental_roads
 
 
 def test_himehabu_not_contaminated_as_habu():
@@ -37,6 +40,20 @@ def test_nearest_join_tie_collapse_keeps_distinct_source_events():
     assert len(out) == 2
     assert out.event_signature.tolist() == ["same", "same"]
     assert out.segment_id.tolist() == ["OSM_A", "OSM_C"]
+
+
+def test_gpx_recovery_requires_event_corroboration():
+    base = pd.Timestamp("2026-08-16T00:20:00+09:00")
+    rows = []
+    for i in range(40):
+        rows.append({"session_file":"2026-08-15.gpx","seq":i,"timestamp":base+pd.Timedelta(seconds=i),"lat":28.1702,"lon":129.3000+i*0.00001,"segment_id":None})
+    points = pd.DataFrame(rows)
+    osm = gpd.GeoDataFrame({"segment_id":["OSM_X"],"geometry":[LineString([(129.29,28.16),(129.291,28.16)])]},crs="EPSG:4326").to_crs("EPSG:6669")
+    events = pd.DataFrame([{"timestamp":base+pd.Timedelta(seconds=20),"lat":28.1702,"lon":129.3002,"species":"ハブ","event_type":"捕獲","segment_id":None}])
+    recovered,audit = recover_supplemental_roads(points,points,events,osm,{"segment_length_m":10.0})
+    assert len(recovered) > 0
+    assert recovered.segment_id.str.startswith("GPXROAD_").all()
+    assert audit and audit[0]["corroborated_events"][0]["species"] == "ハブ"
 
 
 def test_strict_holdout_windows_do_not_move():
