@@ -18,6 +18,22 @@ def dedupe_events(df:pd.DataFrame)->tuple[pd.DataFrame,int]:
     x["event_signature"]=ts+"|"+x.species.astype("string")+"|"+x.event_type.astype("string")+"|"+lat+"|"+lon+"|"+x.raw_text.fillna("").astype("string")
     n=len(x); x=x.drop_duplicates("event_signature",keep="first").reset_index(drop=True); return x,n-len(x)
 
+def collapse_nearest_event_matches(matched:pd.DataFrame)->pd.DataFrame:
+    """Collapse only rows duplicated by a tied nearest-road join.
+
+    GeoPandas sjoin_nearest keeps the source index and may return more than
+    one row for one source event when several road geometries are tied at the
+    same minimum distance. Distinct source events are never deduplicated here.
+    """
+    if matched.empty:return matched
+    x=matched.copy(); x["_source_row"]=x.index.to_numpy()
+    if not x["_source_row"].duplicated().any():return x.drop(columns="_source_row").reset_index(drop=True)
+    x["_distance_sort"]=pd.to_numeric(x.get("event_match_distance_m"),errors="coerce").fillna(np.inf)
+    x["_segment_sort"]=x.get("segment_id",pd.Series(index=x.index,dtype="object")).fillna("").astype(str)
+    x=x.sort_values(["_source_row","_distance_sort","_segment_sort"],kind="stable")
+    x=x.drop_duplicates("_source_row",keep="first")
+    return x.drop(columns=["_source_row","_distance_sort","_segment_sort"]).reset_index(drop=True)
+
 def join_weather(visits,weather):
     if visits.empty or weather.empty:return visits
     v,w=visits.copy(),weather.copy()
