@@ -27,21 +27,65 @@ for bundle in "${bundles[@]}"; do
   rm -rf "$tmp"
 done
 
-# The holdout archive is stored as base64 text of an xz-compressed GPX because
-# GitHub's UTF-8 contents API cannot write arbitrary binary bytes directly.
-# Decode to a temporary xz stream, validate it, then expand into the Actions
-# workspace. The source remains separate from the frozen baseline bundle.
-if [[ -s data/raw/holdout_2026-08-28.gpx.xz ]]; then
-  echo 'Decoding and expanding 2026-08-28 holdout GPX...'
-  tmp_xz="$(mktemp --suffix=.gpx.xz)"
-  if head -c 6 data/raw/holdout_2026-08-28.gpx.xz | grep -q '^/Td6WF'; then
-    base64 -d data/raw/holdout_2026-08-28.gpx.xz > "$tmp_xz"
-  else
-    cp data/raw/holdout_2026-08-28.gpx.xz "$tmp_xz"
+# 2026-08-28 holdout GPX is a compact 5 m-resampled route stored as small,
+# individually auditable base64 chunks. The old monolithic compressed file is
+# intentionally ignored because it was truncated in an earlier upload.
+holdout_parts=(
+  data/raw/holdout_parts/part_00_v2.b64
+  data/raw/holdout_parts/part_01_v2.b64
+  data/raw/holdout_parts/part_02.b64
+  data/raw/holdout_parts/part_03.b64
+  data/raw/holdout_parts/part_04.b64
+  data/raw/holdout_parts/part_05.b64
+  data/raw/holdout_parts/part_06a.b64
+  data/raw/holdout_parts/part_06c00.b64
+  data/raw/holdout_parts/part_06c01.b64
+  data/raw/holdout_parts/part_06c02.b64
+  data/raw/holdout_parts/part_06c03.b64
+  data/raw/holdout_parts/part_06c04.b64
+  data/raw/holdout_parts/part_06c05.b64
+  data/raw/holdout_parts/part_06c06.b64
+  data/raw/holdout_parts/part_06c07.b64
+  data/raw/holdout_parts/part_06c08.b64
+)
+
+missing=0
+for part in "${holdout_parts[@]}"; do
+  if [[ ! -s "$part" ]]; then
+    echo "Missing holdout chunk: $part" >&2
+    missing=1
   fi
+done
+
+if [[ "$missing" -eq 0 ]]; then
+  echo 'Reassembling and validating 2026-08-28 holdout GPX...'
+  tmp_b64="$(mktemp)"
+  tmp_xz="$(mktemp --suffix=.gpx.xz)"
+  cat "${holdout_parts[@]}" > "$tmp_b64"
+
+  actual_chars="$(wc -c < "$tmp_b64" | tr -d ' ')"
+  expected_chars=68988
+  if [[ "$actual_chars" -ne "$expected_chars" ]]; then
+    echo "Holdout base64 length mismatch: expected=$expected_chars actual=$actual_chars" >&2
+    exit 3
+  fi
+
+  base64 -d "$tmp_b64" > "$tmp_xz"
   xz -t "$tmp_xz"
   xz -dc "$tmp_xz" > data/raw/gpx/2026-08-28.gpx
-  rm -f "$tmp_xz"
+
+  point_count="$(grep -o '<trkpt ' data/raw/gpx/2026-08-28.gpx | wc -l | tr -d ' ')"
+  expected_points=9358
+  if [[ "$point_count" -ne "$expected_points" ]]; then
+    echo "Holdout GPX point-count mismatch: expected=$expected_points actual=$point_count" >&2
+    exit 4
+  fi
+
+  echo "Holdout GPX validated: $point_count points"
+  rm -f "$tmp_b64" "$tmp_xz"
+else
+  echo 'Holdout chunks are incomplete; refusing to run with a partial validation route.' >&2
+  exit 3
 fi
 
 printf 'GPX files: '; find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' | wc -l
