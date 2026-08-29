@@ -1,0 +1,33 @@
+{
+  "status": "ok",
+  "forecast_frozen": true,
+  "night": "2026-08-28_to_2026-08-29",
+  "main_window": {
+    "start": "2026-08-29T00:20:00+09:00",
+    "end": "2026-08-29T01:20:00+09:00",
+    "actual_capture_events": 0,
+    "hit": false
+  },
+  "secondary_window": {
+    "start": "2026-08-29T01:35:00+09:00",
+    "end": "2026-08-29T02:35:00+09:00",
+    "actual_capture_events": 1,
+    "hit": true
+  },
+  "forecast_point": 3,
+  "forecast_range": [
+    2,
+    4
+  ],
+  "actual_capture_events": 4,
+  "actual_individuals": 4,
+  "range_hit": true,
+  "point_error": 1,
+  "event_times": [
+    "2026-08-28T22:06:00+09:00",
+    "2026-08-28T22:45:00+09:00",
+    "2026-08-29T01:22:00+09:00",
+    "2026-08-29T02:26:00+09:00"
+  ],
+  "note": "Strict windows frozen; 01:22 remains outside the main window."
+}

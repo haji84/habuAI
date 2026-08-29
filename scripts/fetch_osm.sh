@@ -19,4 +19,15 @@ osmium tags-filter data/osm/setouchi-all.pbf w/highway \
 osmium export data/osm/setouchi-roads.pbf \
   -f geojson -o data/osm/setouchi-roads.geojson --overwrite
 
-echo "OSM extract ready: data/osm/setouchi-roads.geojson"
+# Real environmental context for distance features. These are OSM vector features,
+# not placeholders: waterways, coastline, forest/wood, farmland and residential landuse.
+osmium tags-filter data/osm/setouchi-all.pbf \
+  w/waterway \
+  w/natural=coastline \
+  w/natural=wood \
+  w/landuse=forest,orchard,farmland,farmyard,meadow,residential \
+  -o data/osm/setouchi-context.pbf --overwrite
+osmium export data/osm/setouchi-context.pbf \
+  -f geojson -o data/osm/setouchi-context.geojson --overwrite
+
+echo "OSM extracts ready: data/osm/setouchi-roads.geojson + data/osm/setouchi-context.geojson"
