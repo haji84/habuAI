@@ -5,6 +5,7 @@ import pandas as pd
 
 from habuai.hardening.canonical import load_canonical_capture_master,load_canonical_habu_events,match_events_preserve_all
 from habuai.hardening.events import dedupe_events
+from habuai.hardening.features import build_capture_anchor_visits
 
 
 def test_canonical_capture_master_totals():
@@ -77,3 +78,38 @@ def test_match_preserves_missing_gps_and_named_source_index():
     assert len(out)==2
     assert out.loc[0,"segment_id"]=="OSM_test"
     assert pd.isna(out.loc[1,"segment_id"])
+
+
+def test_capture_anchor_created_when_same_road_has_no_nearby_visit():
+    t=pd.Timestamp("2026-08-20T22:00:00+09:00")
+    events=pd.DataFrame([{
+        "canonical_id":"c1","species":"ハブ","event_type":"捕獲","individual_count":1,
+        "lat":28.1,"lon":129.3,"timestamp":t,"segment_id":"OSM_A","event_match_distance_m":2.0,
+    }])
+    learning=pd.DataFrame([{"segment_id":"OSM_A","entered_at":t-pd.Timedelta(minutes=30)}])
+    anchors=build_capture_anchor_visits(events,learning)
+    assert len(anchors)==1
+    assert anchors.iloc[0].segment_id=="OSM_A"
+    assert anchors.iloc[0].learning_row_source=="capture_gps_anchor"
+    assert anchors.iloc[0].entered_at==t
+
+
+def test_capture_anchor_not_duplicated_when_visit_already_represents_capture():
+    t=pd.Timestamp("2026-08-20T22:00:00+09:00")
+    events=pd.DataFrame([{
+        "canonical_id":"c1","species":"ハブ","event_type":"捕獲","individual_count":1,
+        "lat":28.1,"lon":129.3,"timestamp":t,"segment_id":"OSM_A","event_match_distance_m":2.0,
+    }])
+    learning=pd.DataFrame([{"segment_id":"OSM_A","entered_at":t+pd.Timedelta(minutes=4)}])
+    anchors=build_capture_anchor_visits(events,learning)
+    assert anchors.empty
+
+
+def test_capture_anchor_never_created_without_gps_or_road_match():
+    t=pd.Timestamp("2026-08-20T22:00:00+09:00")
+    events=pd.DataFrame([
+        {"canonical_id":"a","species":"ハブ","event_type":"捕獲","individual_count":1,"lat":np.nan,"lon":np.nan,"timestamp":t,"segment_id":None},
+        {"canonical_id":"b","species":"ハブ","event_type":"捕獲","individual_count":1,"lat":28.1,"lon":129.3,"timestamp":t,"segment_id":None},
+    ])
+    anchors=build_capture_anchor_visits(events,pd.DataFrame())
+    assert anchors.empty
