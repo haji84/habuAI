@@ -5,9 +5,11 @@ on:
   push:
     paths:
       - 'data/raw/**'
+      - 'data/canonical/**'
       - 'config/**'
       - 'src/**'
       - 'scripts/**'
+      - 'tests/**'
       - '.github/workflows/habu-pipeline.yml'
   schedule:
     - cron: '20 18 * * *' # 03:20 JST
@@ -17,7 +19,7 @@ permissions:
 
 concurrency:
   group: habu-pipeline
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -46,15 +48,11 @@ jobs:
         run: |
           GPX_COUNT=$(find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' | wc -l)
           LOG_COUNT=$(find data/raw/logs -maxdepth 1 -type f -name '*.txt' | wc -l)
-          echo "GPX_COUNT=$GPX_COUNT LOG_COUNT=$LOG_COUNT"
-          if [ "$GPX_COUNT" -eq 0 ]; then
-            echo 'No GPX input found. Upload a zip bundle under data/raw/import/ or GPX files under data/raw/gpx/.'
-            exit 2
-          fi
-          if [ "$LOG_COUNT" -eq 0 ]; then
-            echo 'No field log found under data/raw/logs/.'
-            exit 2
-          fi
+          CANONICAL_COUNT=$(find data/canonical -maxdepth 1 -type f -name 'habu_capture_master_part_*.csv' | wc -l)
+          echo "GPX_COUNT=$GPX_COUNT LOG_COUNT=$LOG_COUNT CANONICAL_COUNT=$CANONICAL_COUNT"
+          test "$GPX_COUNT" -gt 0
+          test "$LOG_COUNT" -gt 0
+          test "$CANONICAL_COUNT" -gt 0
 
       - name: Cache Kyushu OSM PBF
         uses: actions/cache@v4
@@ -69,6 +67,18 @@ jobs:
 
       - name: Run full learning pipeline
         run: python scripts/run_pipeline.py
+
+      - name: Run historical spatial ablation
+        run: python scripts/run_spatial_ablation.py
+
+      - name: Run staged spatial and temporal model tournament
+        run: python scripts/run_model_tournament_staged.py
+
+      - name: Run point-conditioned time tournament
+        run: python scripts/run_point_time_tournament.py
+
+      - name: Run joint point-time backtest
+        run: python scripts/run_joint_point_time_backtest_v2.py
 
       - name: Run tests
         run: pytest -q

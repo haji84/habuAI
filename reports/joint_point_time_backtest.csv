@@ -1,0 +1,6 @@
+spatial_alpha,time_beta,nights_scored,eligible_gps_captures,exact_segment_plusminus1h_top30,hit_50m_plusminus1h_top30,hit_100m_plusminus1h_top30,hit_250m_plusminus1h_top30,hit_100m_plusminus1h_top10pct,rate_100m_plusminus1h_top30,rate_250m_plusminus1h_top30,rate_100m_plusminus1h_top10pct,selection_score
+1.0,2.0,7,20,1,1,2,4,8,0.1,0.2,0.4,0.8
+0.5,1.0,7,20,1,1,2,4,8,0.1,0.2,0.4,0.8
+1.0,1.0,7,20,1,1,2,4,7,0.1,0.2,0.35,0.75
+2.0,1.0,7,20,1,1,2,4,6,0.1,0.2,0.3,0.7
+1.0,0.5,7,20,1,1,2,4,6,0.1,0.2,0.3,0.7

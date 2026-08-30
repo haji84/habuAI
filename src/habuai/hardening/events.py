@@ -12,10 +12,24 @@ def species_from_text(text:str)->str:
     return "その他"
 
 def dedupe_events(df:pd.DataFrame)->tuple[pd.DataFrame,int]:
+    """Remove exact duplicate events without collapsing rows that contain missing values.
+
+    Pandas nullable string concatenation propagates NA.  The previous implementation
+    therefore assigned the same NA signature to every event with missing GPS and
+    silently collapsed distinct historical captures.  Every signature component is
+    now normalized to a concrete sentinel before concatenation.  raw_text/canonical_id
+    remains part of the signature, so distinct canonical events are preserved.
+    """
     if df.empty:return df.copy(),0
-    x=df.copy(); ts=pd.to_datetime(x.timestamp,errors="coerce",utc=True).astype("string")
-    lat=pd.to_numeric(x.lat,errors="coerce").round(7).astype("string"); lon=pd.to_numeric(x.lon,errors="coerce").round(7).astype("string")
-    x["event_signature"]=ts+"|"+x.species.astype("string")+"|"+x.event_type.astype("string")+"|"+lat+"|"+lon+"|"+x.raw_text.fillna("").astype("string")
+    x=df.copy()
+    ts=pd.to_datetime(x.get("timestamp"),errors="coerce",utc=True).astype("string").fillna("<missing_timestamp>")
+    species=x.get("species",pd.Series(index=x.index,dtype="object")).astype("string").fillna("<missing_species>")
+    event_type=x.get("event_type",pd.Series(index=x.index,dtype="object")).astype("string").fillna("<missing_event_type>")
+    lat=pd.to_numeric(x.get("lat"),errors="coerce").round(7).astype("string").fillna("<missing_lat>")
+    lon=pd.to_numeric(x.get("lon"),errors="coerce").round(7).astype("string").fillna("<missing_lon>")
+    raw=x.get("raw_text",pd.Series(index=x.index,dtype="object")).astype("string").fillna("")
+    canonical=x.get("canonical_id",pd.Series(index=x.index,dtype="object")).astype("string").fillna("")
+    x["event_signature"]=ts+"|"+species+"|"+event_type+"|"+lat+"|"+lon+"|"+canonical+"|"+raw
     n=len(x); x=x.drop_duplicates("event_signature",keep="first").reset_index(drop=True); return x,n-len(x)
 
 def collapse_nearest_event_matches(matched:pd.DataFrame)->pd.DataFrame:

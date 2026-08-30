@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "rows": 31726,
+  "nights": 33,
+  "positive_segment_rows": 93,
+  "negative_segment_rows": 31633,
+  "confidence_counts": {
+    "B-medium": 26290,
+    "B-high": 5436
+  },
+  "rescued_rows": 1667,
+  "rescued_nights": 2,
+  "usage": "spatial/location model only; excluded from temporal/weather/time-of-night model",
+  "remaining_c_low_excluded": 0
+}

@@ -1,117 +1,74 @@
-timestamp,session_start,event_type,species,individual_count,size,wetness,lat,lon,raw_text,night_date,event_signature,segment_id,event_match_distance_m,unmatched_reason
-2026-08-03 23:17:00+09:00,2026-08-02 00:27:00+09:00,目撃,カエル,1,,ソークド(水跳ね),28.16475033470805,129.3846062555978,"2026/08/03 23:17
-目撃
-
-1匹
-カエル
-ソークド(水跳ね)
-瀬戸内町節子
-28.16475033470805
-129.3846062555978
-",2026-08-02,"2026-08-03 14:17:00+00:00|カエル|目撃|28.1647503|129.3846063|2026/08/03 23:17
-目撃
-
-1匹
-カエル
-ソークド(水跳ね)
-瀬戸内町節子
-28.16475033470805
-129.3846062555978
-",,62.7462006507465,nearest OSM highway exceeds match threshold
-2026-08-16 00:25:00+09:00,2026-08-15 20:00:00+09:00,捕獲,ハブ,1,小,ウエット,28.17024216566392,129.3029272593291,"2026/08/16 0:25
-捕獲
-ハブ捕獲小
-移動中
-道路中央
-ウエット
-瀬戸内町久根津598
-28.17024216566392
-129.3029272593291
-",2026-08-15,"2026-08-15 15:25:00+00:00|ハブ|捕獲|28.1702422|129.3029273|2026/08/16 0:25
-捕獲
-ハブ捕獲小
-移動中
-道路中央
-ウエット
-瀬戸内町久根津598
-28.17024216566392
-129.3029272593291
-",,317.12899398930176,nearest OSM highway exceeds match threshold
-2026-08-16 00:30:00+09:00,2026-08-15 20:00:00+09:00,目撃,オットンガエル,1,,ウエット,28.17026359465878,129.3027774424985,"2026/08/16 0:30
-目撃
-
-1匹
-オットンガエル
-イシカワガエル
-ウエット
-
-28.17026359465878
-129.3027774424985
-",2026-08-15,"2026-08-15 15:30:00+00:00|オットンガエル|目撃|28.1702636|129.3027774|2026/08/16 0:30
-目撃
-
-1匹
-オットンガエル
-イシカワガエル
-ウエット
-
-28.17026359465878
-129.3027774424985
-",,302.1338332727569,nearest OSM highway exceeds match threshold
-2026-08-16 00:33:00+09:00,2026-08-15 20:00:00+09:00,目撃,カエル,3,,ソークド(水跳ね),28.17063926785185,129.3015737121189,"2026/08/16 0:33
-目撃
-
-3匹
-カエル
-ソークド(水跳ね)
-瀬戸内町久根津598-3
-28.17063926785185
-129.3015737121189
-",2026-08-15,"2026-08-15 15:33:00+00:00|カエル|目撃|28.1706393|129.3015737|2026/08/16 0:33
-目撃
-
-3匹
-カエル
-ソークド(水跳ね)
-瀬戸内町久根津598-3
-28.17063926785185
-129.3015737121189
-",,182.31975658975918,nearest OSM highway exceeds match threshold
-2026-08-20 02:08:00+09:00,2026-08-19 20:39:00+09:00,目撃,イシカワガエル,1,,ウエット,28.16983790749487,129.3037870220315,"2026/08/20 2:08
-目撃
-
-1匹
-イシカワガエル
-ウエット
-
-28.16983790749487
-129.3037870220315
-",2026-08-19,"2026-08-19 17:08:00+00:00|イシカワガエル|目撃|28.1698379|129.303787|2026/08/20 2:08
-目撃
-
-1匹
-イシカワガエル
-ウエット
-
-28.16983790749487
-129.3037870220315
-",,395.28129714236485,nearest OSM highway exceeds match threshold
-2026-08-20 02:09:00+09:00,2026-08-19 20:39:00+09:00,目撃,イシカワガエル,2,,ウエット,28.1695634651454,129.3044308818363,"2026/08/20 2:09
-目撃
-
-2匹
-イシカワガエル
-ウエット
-
-28.1695634651454
-129.3044308818363
-",2026-08-19,"2026-08-19 17:09:00+00:00|イシカワガエル|目撃|28.1695635|129.3044309|2026/08/20 2:09
-目撃
-
-2匹
-イシカワガエル
-ウエット
-
-28.1695634651454
-129.3044308818363
-",,440.36371804613566,nearest OSM highway exceeds match threshold
+canonical_id,canonical_source,event_type,individual_count,lat,lon,moon_age_observed,night_date,raw_text,session_start,size,species,temperature_observed_c,tide_direction_observed,tide_observed,timestamp,weather_observed,wetness,event_signature,segment_id,event_match_distance_m,unmatched_reason
+1,recovered,捕獲,1,,,24.5,2025-09-17,canonical:1 捕獲,,,ハブ,,,,2025-09-17 18:40:00+09:00,夕方通り雨,,2025-09-17 09:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|1|canonical:1 捕獲,,,missing GPS
+2,recovered,捕獲,1,,,25.5,2025-09-18,canonical:2 捕獲,,,ハブ,,,,2025-09-18 19:00:00+09:00,夕方通り雨,,2025-09-18 10:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|2|canonical:2 捕獲,,,missing GPS
+3,recovered,捕獲,1,,,27.5,2025-09-20,canonical:3 捕獲,,,ハブ,,,,2025-09-20 20:00:00+09:00,晴れ,,2025-09-20 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|3|canonical:3 捕獲,,,missing GPS
+4,recovered,捕獲,1,,,0.0,2025-09-22,canonical:4 捕獲,,,ハブ,,,,2025-09-22 20:00:00+09:00,夕方雨,,2025-09-22 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|4|canonical:4 捕獲,,,missing GPS
+5,recovered,捕獲,1,,,3.0,2025-09-25,canonical:5 捕獲,,,ハブ,,,,2025-09-25 20:00:00+09:00,夕方雨,,2025-09-25 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|5|canonical:5 捕獲,,,missing GPS
+6,recovered,捕獲,1,,,4.0,2025-09-26,canonical:6 捕獲,,,ハブ,,,,2025-09-26 22:00:00+09:00,晴れ,,2025-09-26 13:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|6|canonical:6 捕獲,,,missing GPS
+7,recovered,捕獲,1,,,6.0,2025-09-28,canonical:7 捕獲,,,ハブ,,,,2025-09-28 21:00:00+09:00,晴れ,,2025-09-28 12:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|7|canonical:7 捕獲,,,missing GPS
+10,recovered,捕獲,1,,,20.0,2025-10-12,canonical:10 捕獲,,,ハブ,,,,2025-10-12 20:00:00+09:00,晴れ,,2025-10-12 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|10|canonical:10 捕獲,,,missing GPS
+11,recovered,捕獲,1,,,21.0,2025-10-12,canonical:11 捕獲,,,ハブ,,,,2025-10-13 01:40:00+09:00,晴れ,,2025-10-12 16:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|11|canonical:11 捕獲,,,missing GPS
+12,recovered,捕獲,1,,,23.0,2025-10-15,canonical:12 捕獲,,,ハブ,,,,2025-10-15 21:00:00+09:00,,,2025-10-15 12:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|12|canonical:12 捕獲,,,missing GPS
+15,recovered,捕獲,1,,,25.0,2025-10-17,canonical:15 捕獲,,,ハブ,,,,2025-10-17 21:00:00+09:00,同一林道1個体目,,2025-10-17 12:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|15|canonical:15 捕獲,,,missing GPS
+16,recovered,捕獲,1,,,25.0,2025-10-17,canonical:16 捕獲,,,ハブ,,,,2025-10-17 22:00:00+09:00,同一林道2個体目,,2025-10-17 13:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|16|canonical:16 捕獲,,,missing GPS
+17,recovered,捕獲,1,,,26.0,2025-10-18,canonical:17 捕獲,,,ハブ,,,,2025-10-18 18:30:00+09:00,,,2025-10-18 09:30:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|17|canonical:17 捕獲,,,missing GPS
+20,recovered,捕獲,1,,,26.0,2025-10-18,canonical:20 捕獲,,,ハブ,,,,2025-10-18 23:00:00+09:00,,,2025-10-18 14:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|20|canonical:20 捕獲,,,missing GPS
+21,recovered,捕獲,1,,,27.0,2025-10-19,canonical:21 捕獲,,,ハブ,,,,2025-10-19 21:00:00+09:00,文脈推定,,2025-10-19 12:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|21|canonical:21 捕獲,,,missing GPS
+24,recovered,捕獲,1,,,29.0,2025-10-21,canonical:24 捕獲,,,ハブ,,,,2025-10-21 21:50:00+09:00,,,2025-10-21 12:50:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|24|canonical:24 捕獲,,,missing GPS
+25,recovered,捕獲,1,,,29.0,2025-10-21,canonical:25 捕獲,,,ハブ,,,,2025-10-21 22:10:00+09:00,,,2025-10-21 13:10:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|25|canonical:25 捕獲,,,missing GPS
+26,recovered,捕獲,1,,,29.0,2025-10-21,canonical:26 捕獲,,,ハブ,,,,2025-10-21 22:20:00+09:00,,,2025-10-21 13:20:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|26|canonical:26 捕獲,,,missing GPS
+28,recovered,捕獲,1,,,29.0,2025-10-21,canonical:28 捕獲,,,ハブ,,,,2025-10-22 00:10:00+09:00,,,2025-10-21 15:10:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|28|canonical:28 捕獲,,,missing GPS
+29,recovered,捕獲,1,,,4.5,2025-10-26,canonical:29 捕獲,,極小,ハブ,,,,2025-10-26 20:55:00+09:00,,,2025-10-26 11:55:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|29|canonical:29 捕獲,,,missing GPS
+30,recovered,捕獲,1,,,4.5,2025-10-26,canonical:30 捕獲,,大,ハブ,,,,2025-10-26 21:00:00+09:00,,,2025-10-26 12:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|30|canonical:30 捕獲,,,missing GPS
+31,recovered,捕獲,1,,,4.5,2025-10-26,canonical:31 捕獲,,小,ハブ,,,,2025-10-26 21:30:00+09:00,,,2025-10-26 12:30:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|31|canonical:31 捕獲,,,missing GPS
+32,recovered,捕獲,1,,,6.5,2025-10-28,canonical:32 捕獲,,大,ハブ,,,,2025-10-28 22:40:00+09:00,,,2025-10-28 13:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|32|canonical:32 捕獲,,,missing GPS
+33,recovered,捕獲,1,,,9.5,2025-10-31,canonical:33 捕獲,,極小,ハブ,,,,2025-10-31 21:40:00+09:00,,,2025-10-31 12:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|33|canonical:33 捕獲,,,missing GPS
+34,recovered,捕獲,1,,,13.5,2025-11-04,canonical:34 捕獲,,極小,ハブ,,,,2025-11-04 21:30:00+09:00,,,2025-11-04 12:30:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|34|canonical:34 捕獲,,,missing GPS
+35,recovered,捕獲,1,,,14.5,2025-11-05,canonical:35 捕獲,,極小,ハブ,,,,2025-11-05 22:40:00+09:00,雨,,2025-11-05 13:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|35|canonical:35 捕獲,,,missing GPS
+36,recovered,捕獲,1,,,15.5,2025-11-06,canonical:36 捕獲,,,ハブ,,,,2025-11-06 19:10:00+09:00,,,2025-11-06 10:10:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|36|canonical:36 捕獲,,,missing GPS
+37,recovered,捕獲,1,,,15.5,2025-11-06,canonical:37 捕獲,,大,ハブ,,,,2025-11-06 19:50:00+09:00,,,2025-11-06 10:50:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|37|canonical:37 捕獲,,,missing GPS
+38,recovered,捕獲,1,,,16.5,2025-11-07,canonical:38 捕獲,,,ハブ,,,,,満月期に近いが複数実績あり,,<missing_timestamp>|ハブ|捕獲|<missing_lat>|<missing_lon>|38|canonical:38 捕獲,,,missing GPS
+39,recovered,捕獲,1,,,17.5,2025-11-08,canonical:39 捕獲,,中,ハブ,,,,2025-11-08 20:00:00+09:00,,,2025-11-08 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|39|canonical:39 捕獲,,,missing GPS
+40,recovered,捕獲,1,,,18.5,2025-11-09,canonical:40 捕獲,,中,ハブ,,,,2025-11-09 20:00:00+09:00,,,2025-11-09 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|40|canonical:40 捕獲,,,missing GPS
+42,recovered,捕獲,1,,,27.5,2025-11-18,canonical:42 捕獲,,,ハブ,,,,2025-11-18 18:30:00+09:00,,,2025-11-18 09:30:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|42|canonical:42 捕獲,,,missing GPS
+44,recovered,捕獲,1,,,27.5,2025-11-18,canonical:44 捕獲,,,ハブ,,,,2025-11-18 23:00:00+09:00,,,2025-11-18 14:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|44|canonical:44 捕獲,,,missing GPS
+45,recovered,捕獲,1,,,1.0,2025-11-21,canonical:45 捕獲,,極小,ハブ,,,,2025-11-21 18:30:00+09:00,,,2025-11-21 09:30:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|45|canonical:45 捕獲,,,missing GPS
+46,recovered,捕獲,1,,,1.0,2025-11-21,canonical:46 捕獲,,極小,ハブ,,,,2025-11-21 20:00:00+09:00,,,2025-11-21 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|46|canonical:46 捕獲,,,missing GPS
+47,recovered,捕獲,2,,,4.0,2025-11-24,canonical:47 捕獲,,極小,ハブ,,,,,同夜3個体確認、草むら約1.2m目撃,,<missing_timestamp>|ハブ|捕獲|<missing_lat>|<missing_lon>|47|canonical:47 捕獲,,,missing GPS
+50,recovered,捕獲,1,,,25.8,2026-04-13,canonical:50 捕獲,,大,ハブ,,,,2026-04-13 21:35:00+09:00,,,2026-04-13 12:35:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|50|canonical:50 捕獲,,,missing GPS
+52,recovered,捕獲,1,,,27.8,2026-04-15,canonical:52 捕獲,,小,ハブ,,,,2026-04-15 20:40:00+09:00,,,2026-04-15 11:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|52|canonical:52 捕獲,,,missing GPS
+54,recovered,捕獲,1,,,0.3,2026-04-17,canonical:54 捕獲,,中,ハブ,,,,2026-04-17 21:40:00+09:00,,,2026-04-17 12:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|54|canonical:54 捕獲,,,missing GPS
+55,recovered,捕獲,1,,,0.3,2026-04-17,canonical:55 捕獲,,小,ハブ,,,,2026-04-17 22:20:00+09:00,,,2026-04-17 13:20:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|55|canonical:55 捕獲,,,missing GPS
+56,recovered,捕獲,1,,,2.3,2026-04-19,canonical:56 捕獲,,中,ハブ,,,,2026-04-19 21:40:00+09:00,,,2026-04-19 12:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|56|canonical:56 捕獲,,,missing GPS
+57,recovered,捕獲,1,,,2.3,2026-04-19,canonical:57 捕獲,,小,ハブ,,,,2026-04-19 22:20:00+09:00,,,2026-04-19 13:20:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|57|canonical:57 捕獲,,,missing GPS
+58,recovered,捕獲,1,,,3.3,2026-04-20,canonical:58 捕獲,,極小,ハブ,,,,2026-04-20 22:05:00+09:00,,,2026-04-20 13:05:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|58|canonical:58 捕獲,,,missing GPS
+59,recovered,捕獲,1,,,3.3,2026-04-20,canonical:59 捕獲,,中,ハブ,,,,2026-04-20 22:10:00+09:00,,,2026-04-20 13:10:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|59|canonical:59 捕獲,,,missing GPS
+60,May recovered,捕獲,1,,,14.3,2026-05-01,canonical:60 捕獲,,,ハブ,,,,2026-05-01 22:10:00+09:00,ファイル確認ログ,,2026-05-01 13:10:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|60|canonical:60 捕獲,,,missing GPS
+61,May recovered,捕獲,1,,,16.3,2026-05-03,canonical:61 捕獲,,中,ハブ,,,,2026-05-03 21:46:00+09:00,ファイル確認ログ,,2026-05-03 12:46:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|61|canonical:61 捕獲,,,missing GPS
+62,May recovered,捕獲,1,,,18.3,2026-05-05,canonical:62 捕獲,,,ハブ,,,,,記憶復旧,,<missing_timestamp>|ハブ|捕獲|<missing_lat>|<missing_lon>|62|canonical:62 捕獲,,,missing GPS
+63,May recovered,捕獲,1,,,20.3,2026-05-07,canonical:63 捕獲,,,ハブ,,,,,記憶復旧,,<missing_timestamp>|ハブ|捕獲|<missing_lat>|<missing_lon>|63|canonical:63 捕獲,,,missing GPS
+64,May recovered,捕獲,1,,,22.3,2026-05-09,canonical:64 捕獲,,,ハブ,,,,,5/9記録,,<missing_timestamp>|ハブ|捕獲|<missing_lat>|<missing_lon>|64|canonical:64 捕獲,,,missing GPS
+71,May recovered,捕獲,1,,,1.8,2026-05-18,canonical:71 捕獲,,大,ハブ,,,,2026-05-18 23:09:00+09:00,小雨後,,2026-05-18 14:09:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|71|canonical:71 捕獲,,,missing GPS
+79,handoff_yaml_2026-05-30,捕獲,1,,,,2026-05-27,canonical:79 捕獲,,小,ハブ,26.0,,,2026-05-27 23:06:00+09:00,霧雨/湿り,,2026-05-27 14:06:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|79|canonical:79 捕獲,,,missing GPS
+81,handoff_yaml_2026-05-30,捕獲,1,,,,2026-05-29,canonical:81 捕獲,,大,ハブ,,,,2026-05-29 23:49:00+09:00,昼間晴れ/夜ドライ,,2026-05-29 14:49:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|81|canonical:81 捕獲,,,missing GPS
+82,handoff_yaml_2026-05-30,捕獲,1,,,,2026-05-29,canonical:82 捕獲,,小,ハブ,,,,2026-05-30 00:17:00+09:00,昼間晴れ/夜ドライ,,2026-05-29 15:17:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|82|canonical:82 捕獲,,,missing GPS
+83,handoff_yaml_2026-05-30,捕獲,1,,,,2026-05-29,canonical:83 捕獲,,小,ハブ,,,,2026-05-30 00:55:00+09:00,昼間晴れ/夜ドライ,,2026-05-29 15:55:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|83|canonical:83 捕獲,,,missing GPS
+122,user_log_2026-06-22_added_2026-06-23,捕獲,1,28.14887845231345,129.3591007025003,,2026-06-22,canonical:122 捕獲,,小,ハブ,,,,2026-06-22 20:58:00+09:00,晴れ,,2026-06-22 11:58:00+00:00|ハブ|捕獲|28.1488785|129.3591007|122|canonical:122 捕獲,,190.79536683145417,nearest mapped road exceeds match threshold
+164,user_log_2026-07_full,捕獲,1,,,,2026-07-20,canonical:164 捕獲,,小,ハブ,,,,2026-07-20 22:25:00+09:00,,,2026-07-20 13:25:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|164|canonical:164 捕獲,,,missing GPS
+233,8:2~8:29ハブ.txt,捕獲,1,,,,2026-08-19,canonical:233 捕獲,,極小,ハブ,,,,2026-08-20 01:49:00+09:00,,,2026-08-19 16:49:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|233|canonical:233 捕獲,,,missing GPS
+8,recovered,roadkill_sighting,1,,,,2025-10-01,canonical:8 roadkill_sighting,,,ハブ,,,,2025-10-01 20:40:00+09:00,,,2025-10-01 11:40:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|8|canonical:8 roadkill_sighting,,,missing GPS
+9,recovered,sighting,1,,,,2025-10-03,canonical:9 sighting,,,ハブ,,,,2025-10-03 22:00:00+09:00,,,2025-10-03 13:00:00+00:00|ハブ|sighting|<missing_lat>|<missing_lon>|9|canonical:9 sighting,,,missing GPS
+13,recovered,roadkill_sighting,1,,,,2025-10-16,canonical:13 roadkill_sighting,,,ハブ,,,,2025-10-16 20:30:00+09:00,,,2025-10-16 11:30:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|13|canonical:13 roadkill_sighting,,,missing GPS
+14,recovered,roadkill_sighting,1,,,,2025-10-16,canonical:14 roadkill_sighting,,,ハブ,,,,2025-10-16 21:00:00+09:00,,,2025-10-16 12:00:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|14|canonical:14 roadkill_sighting,,,missing GPS
+18,recovered,roadkill_sighting,1,,,,2025-10-18,canonical:18 roadkill_sighting,,,ハブ,,,,2025-10-18 18:30:00+09:00,,,2025-10-18 09:30:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|18|canonical:18 roadkill_sighting,,,missing GPS
+19,recovered,roadkill_sighting,1,,,,2025-10-18,canonical:19 roadkill_sighting,,,ハブ,,,,2025-10-18 22:40:00+09:00,,,2025-10-18 13:40:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|19|canonical:19 roadkill_sighting,,,missing GPS
+22,recovered,roadkill_sighting,1,,,,2025-10-21,canonical:22 roadkill_sighting,,,ハブ,,,,2025-10-21 18:45:00+09:00,,,2025-10-21 09:45:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|22|canonical:22 roadkill_sighting,,,missing GPS
+23,recovered,roadkill_sighting,1,,,,2025-10-21,canonical:23 roadkill_sighting,,,ハブ,,,,2025-10-21 21:10:00+09:00,,,2025-10-21 12:10:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|23|canonical:23 roadkill_sighting,,,missing GPS
+27,recovered,roadkill_sighting,1,,,,2025-10-21,canonical:27 roadkill_sighting,,,ハブ,,,,2025-10-21 23:00:00+09:00,,,2025-10-21 14:00:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|27|canonical:27 roadkill_sighting,,,missing GPS
+41,recovered,no_capture,0,,,,2025-11-11,canonical:41 no_capture,,,ハブ,,,,,,,<missing_timestamp>|ハブ|no_capture|<missing_lat>|<missing_lon>|41|canonical:41 no_capture,,,missing GPS
+43,recovered,roadkill_sighting,1,,,,2025-11-18,canonical:43 roadkill_sighting,,,ハブ,,,,,,,<missing_timestamp>|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|43|canonical:43 roadkill_sighting,,,missing GPS
+48,recovered,sighting,1,,,,2025-11-24,canonical:48 sighting,,,ハブ,,,,,,,<missing_timestamp>|ハブ|sighting|<missing_lat>|<missing_lon>|48|canonical:48 sighting,,,missing GPS
+49,recovered,no_capture,0,,,,2026-04-12,canonical:49 no_capture,,,ハブ,,,,2026-04-12 19:30:00+09:00,,,2026-04-12 10:30:00+00:00|ハブ|no_capture|<missing_lat>|<missing_lon>|49|canonical:49 no_capture,,,missing GPS
+51,recovered,roadkill_sighting,1,,,,2026-04-13,canonical:51 roadkill_sighting,,,ハブ,,,,,,,<missing_timestamp>|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|51|canonical:51 roadkill_sighting,,,missing GPS
+53,recovered,roadkill_sighting,1,,,,2026-04-15,canonical:53 roadkill_sighting,,,ハブ,,,,2026-04-15 21:55:00+09:00,,,2026-04-15 12:55:00+00:00|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|53|canonical:53 roadkill_sighting,,,missing GPS
+80,handoff_yaml_2026-05-30,roadkill_sighting,1,,,,2026-05-27,canonical:80 roadkill_sighting,,,ハブ,,,,,,,<missing_timestamp>|ハブ|roadkill_sighting|<missing_lat>|<missing_lon>|80|canonical:80 roadkill_sighting,,,missing GPS

@@ -1,0 +1,91 @@
+{
+  "recovered_segment_count": 69,
+  "recovered_roads": [
+    {
+      "road_id": "GPXROAD_90b0ecfe5fbc",
+      "session_file": "2026-08-15.gpx",
+      "support_sessions": [
+        "2026-08-15.gpx",
+        "2026-08-19.gpx"
+      ],
+      "source_seq_start": 15350,
+      "source_seq_end": 15860,
+      "source_time_start": "2026-08-16 00:19:13.999000+09:00",
+      "source_time_end": "2026-08-16 00:27:43.999000+09:00",
+      "length_m": 492.0730376279191,
+      "max_point_gap_m": 3.303409857825659,
+      "connected_to_osm": true,
+      "temporally_corroborated_event": true,
+      "accepted": true,
+      "corroborated_events": [
+        {
+          "event_index": 359,
+          "timestamp": "2026-08-16 00:30:00+09:00",
+          "species": "オットンガエル",
+          "event_type": "目撃",
+          "distance_to_recovered_road_m": 0.8256097618883339
+        },
+        {
+          "event_index": 360,
+          "timestamp": "2026-08-16 00:33:00+09:00",
+          "species": "カエル",
+          "event_type": "目撃",
+          "distance_to_recovered_road_m": 0.5680496570770915
+        },
+        {
+          "event_index": 448,
+          "timestamp": "2026-08-20 02:08:00+09:00",
+          "species": "イシカワガエル",
+          "event_type": "目撃",
+          "distance_to_recovered_road_m": 4.090132557070338
+        },
+        {
+          "event_index": 449,
+          "timestamp": "2026-08-20 02:09:00+09:00",
+          "species": "イシカワガエル",
+          "event_type": "目撃",
+          "distance_to_recovered_road_m": 0.39444998237528883
+        },
+        {
+          "event_index": 966,
+          "timestamp": "2026-07-02 01:27:00+09:00",
+          "species": "ハブ",
+          "event_type": "捕獲",
+          "distance_to_recovered_road_m": 1.1383743008546716
+        },
+        {
+          "event_index": 1026,
+          "timestamp": "2026-08-16 00:25:00+09:00",
+          "species": "ハブ",
+          "event_type": "捕獲",
+          "distance_to_recovered_road_m": 0.3073955487720723
+        }
+      ]
+    },
+    {
+      "road_id": "GPXROAD_fc34565d5965",
+      "session_file": "2026-08-24.gpx",
+      "support_sessions": [
+        "2026-08-24.gpx"
+      ],
+      "source_seq_start": 13878,
+      "source_seq_end": 13983,
+      "source_time_start": "2026-08-25 00:19:30.999000+09:00",
+      "source_time_end": "2026-08-25 00:21:15.999000+09:00",
+      "length_m": 182.72626352832987,
+      "max_point_gap_m": 2.9602159728899915,
+      "connected_to_osm": true,
+      "temporally_corroborated_event": false,
+      "accepted": true,
+      "corroborated_events": [
+        {
+          "event_index": 75,
+          "timestamp": "2026-08-03 23:17:00+09:00",
+          "species": "カエル",
+          "event_type": "目撃",
+          "distance_to_recovered_road_m": 2.637093133788939
+        }
+      ]
+    }
+  ]
+}
