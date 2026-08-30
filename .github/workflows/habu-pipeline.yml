@@ -19,7 +19,7 @@ permissions:
 
 concurrency:
   group: habu-pipeline
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
