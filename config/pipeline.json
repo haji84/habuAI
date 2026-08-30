@@ -25,7 +25,9 @@
     "candidate_coverage_delta": 0.15,
     "min_candidate_coverage": 0.30,
     "high_confidence_coverage": 1.0,
-    "high_confidence_min_support_sessions": 2
+    "high_confidence_min_support_sessions": 2,
+    "rescue_min_anchor_coverage": 1.0,
+    "rescue_high_median_edge_support": 2.0
   },
   "walk_forward_backtest": {
     "enabled": true,
