@@ -71,8 +71,8 @@ jobs:
       - name: Run historical spatial ablation
         run: python scripts/run_spatial_ablation.py
 
-      - name: Run spatial and temporal model tournament
-        run: python scripts/run_model_tournament.py
+      - name: Run staged spatial and temporal model tournament
+        run: python scripts/run_model_tournament_staged.py
 
       - name: Run tests
         run: pytest -q
