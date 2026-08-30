@@ -74,6 +74,9 @@ jobs:
       - name: Run staged spatial and temporal model tournament
         run: python scripts/run_model_tournament_staged.py
 
+      - name: Run point-conditioned time tournament
+        run: python scripts/run_point_time_tournament.py
+
       - name: Run tests
         run: pytest -q
 
