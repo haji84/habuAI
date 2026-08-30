@@ -5,9 +5,11 @@ on:
   push:
     paths:
       - 'data/raw/**'
+      - 'data/canonical/**'
       - 'config/**'
       - 'src/**'
       - 'scripts/**'
+      - 'tests/**'
       - '.github/workflows/habu-pipeline.yml'
   schedule:
     - cron: '20 18 * * *' # 03:20 JST
@@ -46,15 +48,11 @@ jobs:
         run: |
           GPX_COUNT=$(find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' | wc -l)
           LOG_COUNT=$(find data/raw/logs -maxdepth 1 -type f -name '*.txt' | wc -l)
-          echo "GPX_COUNT=$GPX_COUNT LOG_COUNT=$LOG_COUNT"
-          if [ "$GPX_COUNT" -eq 0 ]; then
-            echo 'No GPX input found. Upload a zip bundle under data/raw/import/ or GPX files under data/raw/gpx/.'
-            exit 2
-          fi
-          if [ "$LOG_COUNT" -eq 0 ]; then
-            echo 'No field log found under data/raw/logs/.'
-            exit 2
-          fi
+          CANONICAL_COUNT=$(find data/canonical -maxdepth 1 -type f -name 'habu_capture_master_part_*.csv' | wc -l)
+          echo "GPX_COUNT=$GPX_COUNT LOG_COUNT=$LOG_COUNT CANONICAL_COUNT=$CANONICAL_COUNT"
+          test "$GPX_COUNT" -gt 0
+          test "$LOG_COUNT" -gt 0
+          test "$CANONICAL_COUNT" -gt 0
 
       - name: Cache Kyushu OSM PBF
         uses: actions/cache@v4
