@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 from habuai.hardening.canonical import load_canonical_capture_master,load_canonical_habu_events,match_events_preserve_all
+from habuai.hardening.events import dedupe_events
 
 
 def test_canonical_capture_master_totals():
@@ -33,6 +34,31 @@ def test_night_rollover_is_0700():
     df=load_canonical_capture_master(root)
     r=df[df.canonical_id=="11"].iloc[0]
     assert str(r.night_date)=="2025-10-12"
+
+
+def test_missing_gps_canonical_events_survive_dedupe():
+    root=Path(__file__).resolve().parents[1]
+    df=load_canonical_capture_master(root)
+    before=df[df.lat.isna()|df.lon.isna()].copy()
+    assert len(before)==56
+    out,removed=dedupe_events(df)
+    after=out[out.lat.isna()|out.lon.isna()]
+    assert len(out)==206
+    assert len(after)==56
+    assert removed==0
+    assert after.canonical_id.nunique()==56
+
+
+def test_dedupe_removes_true_duplicate_but_not_distinct_missing_values():
+    rows=pd.DataFrame([
+        {"canonical_id":"a","timestamp":pd.NaT,"species":"ハブ","event_type":"捕獲","lat":np.nan,"lon":np.nan,"raw_text":"canonical:a 捕獲"},
+        {"canonical_id":"b","timestamp":pd.NaT,"species":"ハブ","event_type":"捕獲","lat":np.nan,"lon":np.nan,"raw_text":"canonical:b 捕獲"},
+        {"canonical_id":"a","timestamp":pd.NaT,"species":"ハブ","event_type":"捕獲","lat":np.nan,"lon":np.nan,"raw_text":"canonical:a 捕獲"},
+    ])
+    out,removed=dedupe_events(rows)
+    assert len(out)==2
+    assert removed==1
+    assert set(out.canonical_id)=={"a","b"}
 
 
 def test_match_preserves_missing_gps_and_named_source_index():
