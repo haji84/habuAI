@@ -10,16 +10,44 @@ from .modeling import fit_model,score_holdout
 from .output import write_map,write_qa
 from .roads import combine_roads,recover_supplemental_roads
 
+EXPECTED_CANONICAL={
+    "capture_events":206,
+    "capture_individuals":208,
+    "gps_capture_events":150,
+    "gps_capture_individuals":151,
+    "gps_missing_capture_events":56,
+    "canonical_habu_events_total":247,
+    "no_capture_events":2,
+    "roadkill_events":33,
+    "sighting_events":6,
+}
+
+def _full_canonical_audit(events):
+    audit=add_canonical_audit(events)
+    audit["canonical_habu_events_total"]=int((events.species=="ハブ").sum())
+    audit["no_capture_events"]=int(((events.species=="ハブ")&(events.event_type=="no_capture")).sum())
+    audit["roadkill_events"]=int(((events.species=="ハブ")&events.event_type.isin(["轢死","roadkill_sighting"])).sum())
+    audit["sighting_events"]=int(((events.species=="ハブ")&events.event_type.isin(["目撃","sighting"])).sum())
+    return audit
+
+def _require_expected_canonical(audit,stage):
+    bad={k:{"expected":v,"actual":audit.get(k)} for k,v in EXPECTED_CANONICAL.items() if audit.get(k)!=v}
+    if bad:
+        raise RuntimeError(f"canonical master gate failed at {stage}: {json.dumps(bad,ensure_ascii=False)}")
+
 def apply_hardening(pipeline):
     pipeline._species_from_text=species_from_text; original_parse=pipeline.parse_field_log
     def hardened_run(root):
         cfg=pipeline.load_config(root);paths=pipeline.Paths(root);pipeline.ensure_dirs(paths);osm_segs=pipeline.build_10m_segments(root,cfg);points=pipeline.read_gpx_files(root);osm_mp=pipeline.map_match_gpx(points,osm_segs,cfg)
         files=sorted((root/"data"/"raw"/"logs").glob("*.txt"));raw_logs=pd.concat([original_parse(p) for p in files],ignore_index=True) if files else pd.DataFrame()
         canonical=load_canonical_habu_events(root)
+        _require_expected_canonical(_full_canonical_audit(canonical),"canonical-load")
         # The integrated workbook is authoritative for every Habu outcome. Keep raw logs
         # only for non-Habu biological reactions to avoid duplicate Habu events.
         if not raw_logs.empty:raw_logs=raw_logs[raw_logs.species!="ハブ"].copy()
         raw=merge_canonical_capture_master(raw_logs,canonical);events,removed=dedupe_events(raw);pre_match_rows=len(events)
+        canonical_after_dedupe=events[events.species=="ハブ"].copy()
+        _require_expected_canonical(_full_canonical_audit(canonical_after_dedupe),"post-dedupe")
         events_osm=match_events_preserve_all(pipeline,events,osm_segs) if not events.empty else events
         if len(events_osm)>pre_match_rows:raise RuntimeError(f"event road matching expanded rows: {pre_match_rows} -> {len(events_osm)}")
         gps_events_osm=events_osm[events_osm.lat.notna()&events_osm.lon.notna()] if not events_osm.empty else events_osm
@@ -29,11 +57,8 @@ def apply_hardening(pipeline):
         if len(events)>pre_match_rows:raise RuntimeError(f"event road matching expanded rows after supplemental recovery: {pre_match_rows} -> {len(events)}")
         if not events.empty:
             missing_gps=events.lat.isna()|events.lon.isna();events["unmatched_reason"]=np.where(missing_gps,"missing GPS",np.where(events.segment_id.isna(),"nearest mapped road exceeds match threshold",""))
-        canonical_audit=add_canonical_audit(events)
-        canonical_audit["canonical_habu_events_total"]=int((events.species=="ハブ").sum())
-        canonical_audit["no_capture_events"]=int(((events.species=="ハブ")&(events.event_type=="no_capture")).sum())
-        canonical_audit["roadkill_events"]=int(((events.species=="ハブ")&events.event_type.isin(["轢死","roadkill_sighting"])).sum())
-        canonical_audit["sighting_events"]=int(((events.species=="ハブ")&events.event_type.isin(["目撃","sighting"])).sum())
+        canonical_audit=_full_canonical_audit(events[events.species=="ハブ"].copy())
+        _require_expected_canonical(canonical_audit,"post-road-match")
         (paths.reports/"canonical_master_audit.json").write_text(json.dumps(canonical_audit,ensure_ascii=False,indent=2),encoding="utf-8")
         (paths.reports/"gpx_road_recovery.json").write_text(json.dumps({"recovered_segment_count":int(len(supplemental)),"recovered_roads":recovery_audit},ensure_ascii=False,indent=2),encoding="utf-8")
         weather_events=events.dropna(subset=["timestamp"]) if not events.empty else events
@@ -44,7 +69,9 @@ def apply_hardening(pipeline):
         metrics=fit_model(root,data,cfg);hold=score_holdout(root,data,cfg);strict=strict_holdout_score(events);(paths.reports/"strict_holdout_2026-08-28.json").write_text(json.dumps(strict,ensure_ascii=False,indent=2),encoding="utf-8");cut=pd.Timestamp(cfg["baseline_cutoff"]);forecast=pipeline.make_forecast(root,data[data.entered_at<cut].copy(),cfg);(paths.reports/"model_metrics.json").write_text(json.dumps(metrics,ensure_ascii=False,indent=2),encoding="utf-8");(paths.reports/"latest_score.json").write_text(json.dumps(hold,ensure_ascii=False,indent=2),encoding="utf-8");write_map(root,segs,data,events,points,cfg);qa=write_qa(root,pipeline,cfg,points,raw,events,data,removed,strict)
         label_ok=int((label_audit.audit_status=="ok").sum()) if not label_audit.empty else 0
         qa["canonical_master"]=canonical_audit;qa["positive_label_audit"]={"capture_events":int(len(label_audit)),"labeled_ok":label_ok,"not_labeled":int(len(label_audit)-label_ok),"status_counts":label_audit.audit_status.value_counts(dropna=False).to_dict() if not label_audit.empty else {}}
-        qa.setdefault("foundation_steps",{}).pop("2_40_habu_same_osm_10m",None);qa["foundation_steps"]["2_full_capture_master_road_match_and_label_audit"]="complete" if canonical_audit.get("capture_events")==206 and canonical_audit.get("capture_individuals")==208 and label_ok>0 else "partial"
+        qa["foundation_steps"]["2_full_capture_master_road_match_and_label_audit"]="complete" if canonical_audit==EXPECTED_CANONICAL and label_ok>0 else "partial"
+        env_cols=["moon_age_days","moon_illumination","moon_phase_sin","moon_phase_cos","fog_flag","fog_proxy","temperature_change_3h_c","cloud_cover_pct","surface_pressure_hpa","tide_cm","tide_rising","minutes_to_tide_turn"]
+        qa["environmental_feature_missing_rate"]={c:(None if c not in data else float(data[c].isna().mean())) for c in env_cols}
         qa["feature_sources"]={"lunar":"deterministic synodic calculation","fog":"Open-Meteo WMO code 45/48 plus temperature-dewpoint proxy","temperature":"Open-Meteo hourly","tide":"JMA Amami O9 hourly predicted tide table; local authoritative tide_hourly.csv overrides when supplied"}
         (paths.reports/"qa_summary.json").write_text(json.dumps(qa,ensure_ascii=False,indent=2),encoding="utf-8")
         return {"segments":len(segs),"supplemental_segments":len(supplemental),"gpx_points":len(points),"visits":len(visits),"events":len(events),"duplicates_removed":removed,"canonical_master":canonical_audit,"positive_label_audit":qa["positive_label_audit"],"metrics":metrics,"holdout":hold,"strict_holdout":strict,"qa":qa,"forecast":forecast}
