@@ -45,7 +45,7 @@ def apply_hardening(pipeline):
         label_ok=int((label_audit.audit_status=="ok").sum()) if not label_audit.empty else 0
         qa["canonical_master"]=canonical_audit;qa["positive_label_audit"]={"capture_events":int(len(label_audit)),"labeled_ok":label_ok,"not_labeled":int(len(label_audit)-label_ok),"status_counts":label_audit.audit_status.value_counts(dropna=False).to_dict() if not label_audit.empty else {}}
         qa.setdefault("foundation_steps",{}).pop("2_40_habu_same_osm_10m",None);qa["foundation_steps"]["2_full_capture_master_road_match_and_label_audit"]="complete" if canonical_audit.get("capture_events")==206 and canonical_audit.get("capture_individuals")==208 and label_ok>0 else "partial"
-        qa["feature_sources"]={"lunar":"deterministic synodic calculation","fog":"Open-Meteo WMO code 45/48 plus temperature-dewpoint proxy","temperature":"Open-Meteo hourly","tide":"data/canonical/tide_hourly.csv when authoritative data is supplied"}
+        qa["feature_sources"]={"lunar":"deterministic synodic calculation","fog":"Open-Meteo WMO code 45/48 plus temperature-dewpoint proxy","temperature":"Open-Meteo hourly","tide":"JMA Amami O9 hourly predicted tide table; local authoritative tide_hourly.csv overrides when supplied"}
         (paths.reports/"qa_summary.json").write_text(json.dumps(qa,ensure_ascii=False,indent=2),encoding="utf-8")
         return {"segments":len(segs),"supplemental_segments":len(supplemental),"gpx_points":len(points),"visits":len(visits),"events":len(events),"duplicates_removed":removed,"canonical_master":canonical_audit,"positive_label_audit":qa["positive_label_audit"],"metrics":metrics,"holdout":hold,"strict_holdout":strict,"qa":qa,"forecast":forecast}
     pipeline.run=hardened_run
