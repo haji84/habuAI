@@ -1,0 +1,151 @@
+{
+  "status": "ok",
+  "method": "full-history point-conditioned capture-time validation. For each operational night, all same-night captures are hidden at the 07:00 cutoff and only earlier captures are visible. Hyperparameters are selected on the earlier 70% of GPS+timestamp capture nights and frozen for the later 30% chronological confirmation period. 30-minute slots are scored with circular time error.",
+  "inventory": {
+    "capture_events": 206,
+    "capture_individuals": 208,
+    "capture_nights": 82,
+    "gps_timestamp_capture_events": 150,
+    "gps_timestamp_capture_nights": 50,
+    "actual_gpx_nights": 8,
+    "explicit_no_capture_event_nights": 1,
+    "monthly_capture_inventory": [
+      {
+        "month": "2025-09",
+        "capture_events": 7,
+        "capture_nights": 7,
+        "gps_capture_events": 0
+      },
+      {
+        "month": "2025-10",
+        "capture_events": 17,
+        "capture_nights": 9,
+        "gps_capture_events": 0
+      },
+      {
+        "month": "2025-11",
+        "capture_events": 10,
+        "capture_nights": 7,
+        "gps_capture_events": 0
+      },
+      {
+        "month": "2026-04",
+        "capture_events": 8,
+        "capture_nights": 5,
+        "gps_capture_events": 0
+      },
+      {
+        "month": "2026-05",
+        "capture_events": 20,
+        "capture_nights": 11,
+        "gps_capture_events": 13
+      },
+      {
+        "month": "2026-06",
+        "capture_events": 56,
+        "capture_nights": 13,
+        "gps_capture_events": 56
+      },
+      {
+        "month": "2026-07",
+        "capture_events": 38,
+        "capture_nights": 13,
+        "gps_capture_events": 37
+      },
+      {
+        "month": "2026-08",
+        "capture_events": 45,
+        "capture_nights": 17,
+        "gps_capture_events": 44
+      }
+    ],
+    "note": "capture_nights are nights with a recorded Habu capture, not total operating nights. Total operating nights require explicit GPX/session/no-capture evidence.",
+    "may_july_capture_nights_considered_for_reconstruction": 37,
+    "may_july_reconstructed_nights": 33,
+    "may_july_reconstructed_capture_events": 114,
+    "may_july_road_matched_capture_events": 105
+  },
+  "gps_timestamp_capture_nights_total": 50,
+  "selection_nights": 35,
+  "confirmation_nights": 15,
+  "best_parameters_selected_on_early_period": {
+    "radius_m": 3000,
+    "bandwidth_h": 2.0,
+    "local_weight": 0.99,
+    "min_local": 1,
+    "tau_days": 90.0
+  },
+  "selection_metrics": {
+    "eligible": 98,
+    "nights_scored": 29,
+    "median_absolute_error_minutes": 70.5,
+    "mean_absolute_error_minutes": 104.55102040816327,
+    "within_30m_hits": 18,
+    "within_30m_rate": 0.1836734693877551,
+    "within_30m_wilson95": [
+      0.11945967624196774,
+      0.2717517736959752
+    ],
+    "within_60m_hits": 42,
+    "within_60m_rate": 0.42857142857142855,
+    "within_60m_wilson95": [
+      0.3351141839487037,
+      0.5274174337792189
+    ],
+    "within_90m_hits": 59,
+    "within_90m_rate": 0.6020408163265306,
+    "within_90m_wilson95": [
+      0.50304770600903,
+      0.6933356972367949
+    ]
+  },
+  "confirmation_metrics_frozen": {
+    "eligible": 40,
+    "nights_scored": 15,
+    "median_absolute_error_minutes": 58.0,
+    "mean_absolute_error_minutes": 70.125,
+    "within_30m_hits": 11,
+    "within_30m_rate": 0.275,
+    "within_30m_wilson95": [
+      0.1610785343314309,
+      0.4283525083312457
+    ],
+    "within_60m_hits": 22,
+    "within_60m_rate": 0.55,
+    "within_60m_wilson95": [
+      0.39828829888440775,
+      0.6929492471905531
+    ],
+    "within_90m_hits": 30,
+    "within_90m_rate": 0.75,
+    "within_90m_wilson95": [
+      0.598057409330299,
+      0.8581303210445048
+    ]
+  },
+  "all_walkforward_metrics_descriptive": {
+    "eligible": 138,
+    "nights_scored": 44,
+    "median_absolute_error_minutes": 66.0,
+    "mean_absolute_error_minutes": 94.57246376811594,
+    "within_30m_hits": 29,
+    "within_30m_rate": 0.21014492753623187,
+    "within_30m_wilson95": [
+      0.15048902277634182,
+      0.2855015469859846
+    ],
+    "within_60m_hits": 64,
+    "within_60m_rate": 0.463768115942029,
+    "within_60m_wilson95": [
+      0.382674189047319,
+      0.5468246321729718
+    ],
+    "within_90m_hits": 89,
+    "within_90m_rate": 0.644927536231884,
+    "within_90m_wilson95": [
+      0.562151398381082,
+      0.7198533167377548
+    ]
+  },
+  "interpretation_guardrail": "The confirmation period is the primary reliability estimate for capture-time prediction. GPX-only 20-event testing remains as a separate stricter survey-night check. Reconstructed routes add spatial zero/exposure evidence but do not invent historical pass-through times."
+}
