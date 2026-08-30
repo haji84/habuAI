@@ -7,16 +7,17 @@ from habuai.hardening.spatial_backtest import run_reconstructed_spatial_backtest
 def test_trusted_reconstruction_becomes_spatial_labels(tmp_path:Path):
     (tmp_path/"data"/"processed").mkdir(parents=True);(tmp_path/"reports").mkdir()
     r=pd.DataFrame([
-        {"night":"2026-05-01","segment_id":"A","capture_anchor_segment":True,"reconstruction_confidence":"B-high","segment_support_fraction":1.0,"support_sessions":3,"template_session_file":"x"},
-        {"night":"2026-05-01","segment_id":"B","capture_anchor_segment":False,"reconstruction_confidence":"B-high","segment_support_fraction":1.0,"support_sessions":3,"template_session_file":"x"},
-        {"night":"2026-05-02","segment_id":"C","capture_anchor_segment":False,"reconstruction_confidence":"C-low","segment_support_fraction":0.2,"support_sessions":1,"template_session_file":"y"},
+        {"night":"2026-05-01","segment_id":"A","capture_anchor_segment":True,"reconstruction_confidence":"B-high","segment_support_fraction":1.0,"support_sessions":3,"template_session_file":"x","reconstruction_source":"later_gpx_template"},
+        {"night":"2026-05-01","segment_id":"B","capture_anchor_segment":False,"reconstruction_confidence":"B-high","segment_support_fraction":1.0,"support_sessions":3,"template_session_file":"x","reconstruction_source":"later_gpx_template"},
+        {"night":"2026-05-02","segment_id":"C","capture_anchor_segment":False,"reconstruction_confidence":"C-low","segment_support_fraction":0.2,"support_sessions":1,"template_session_file":"y","reconstruction_source":"later_gpx_template"},
     ])
     out,audit=build_reconstructed_spatial_learning(tmp_path,r)
     assert len(out)==2
     assert int(out.spatial_label.sum())==1
     assert int((out.spatial_label==0).sum())==1
     assert set(out.reconstruction_confidence)=={"B-high"}
-    assert audit["c_low_excluded"]==1
+    assert audit["remaining_c_low_excluded"]==1
+    assert audit["rescued_rows"]==0
 
 
 def test_spatial_backtest_walks_forward(tmp_path:Path):
