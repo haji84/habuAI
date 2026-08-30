@@ -80,6 +80,9 @@ jobs:
       - name: Run full-history capture-time validation
         run: python scripts/run_full_capture_time_backtest.py
 
+      - name: Re-evaluate original 40 time models on full history
+        run: python scripts/run_original40_full_history.py
+
       - name: Run joint point-time backtest
         run: python scripts/run_joint_point_time_backtest_v2.py
 
