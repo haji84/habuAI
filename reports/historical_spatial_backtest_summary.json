@@ -1,6 +1,7 @@
 {
   "status": "ok",
   "feature_mode": "static",
+  "output_tag": null,
   "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time",
   "nights_total": 33,
   "nights_scored": 31,

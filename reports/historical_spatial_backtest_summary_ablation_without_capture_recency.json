@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "feature_mode": "enhanced",
-  "output_tag": null,
+  "output_tag": "ablation_without_capture_recency",
   "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time",
   "nights_total": 33,
   "nights_scored": 31,
@@ -18,10 +18,6 @@
     "forest_distance_m",
     "farmland_distance_m",
     "residential_distance_m",
-    "days_since_capture_100m",
-    "days_since_capture_250m",
-    "days_since_capture_500m",
-    "days_since_capture_50m",
     "hist_bio_30d_count_100m",
     "hist_bio_30d_count_250m",
     "hist_bio_30d_count_500m",
@@ -67,15 +63,15 @@
     "hist_large_capture_count_500m",
     "hist_large_capture_count_50m"
   ],
-  "feature_count": 58,
+  "feature_count": 54,
   "location_eligible_positive_segments": 90,
-  "location_hits_top_k": 10,
-  "location_hit_rate_top_k": 0.1111111111111111,
+  "location_hits_top_k": 14,
+  "location_hit_rate_top_k": 0.15555555555555556,
   "location_hits_top_1pct": 2,
   "location_hit_rate_top_1pct": 0.022222222222222223,
-  "location_hits_top_5pct": 8,
-  "location_hit_rate_top_5pct": 0.08888888888888889,
-  "location_hits_top_10pct": 15,
-  "location_hit_rate_top_10pct": 0.16666666666666666,
-  "median_actual_rank_percentile": 0.4844290657439446
+  "location_hits_top_5pct": 10,
+  "location_hit_rate_top_5pct": 0.1111111111111111,
+  "location_hits_top_10pct": 18,
+  "location_hit_rate_top_10pct": 0.2,
+  "median_actual_rank_percentile": 0.47940865892291445
 }

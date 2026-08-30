@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-08-30T23:45:36.959613+09:00",
+  "generated_at": "2026-08-31T00:15:26.106567+09:00",
   "gpx_sessions": 8,
   "gpx_points": 153397,
   "raw_event_rows": 1089,
@@ -1404,6 +1404,7 @@
   "historical_spatial_backtest_static": {
     "status": "ok",
     "feature_mode": "static",
+    "output_tag": null,
     "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time",
     "nights_total": 33,
     "nights_scored": 31,
@@ -1436,6 +1437,7 @@
   "historical_spatial_backtest_enhanced": {
     "status": "ok",
     "feature_mode": "enhanced",
+    "output_tag": null,
     "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time",
     "nights_total": 33,
     "nights_scored": 31,

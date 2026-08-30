@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "feature_mode": "enhanced",
-  "output_tag": null,
+  "output_tag": "ablation_without_large_capture_history",
   "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time",
   "nights_total": 33,
   "nights_scored": 31,
@@ -61,21 +61,17 @@
     "hist_capture_count_100m",
     "hist_capture_count_250m",
     "hist_capture_count_500m",
-    "hist_capture_count_50m",
-    "hist_large_capture_count_100m",
-    "hist_large_capture_count_250m",
-    "hist_large_capture_count_500m",
-    "hist_large_capture_count_50m"
+    "hist_capture_count_50m"
   ],
-  "feature_count": 58,
+  "feature_count": 54,
   "location_eligible_positive_segments": 90,
-  "location_hits_top_k": 10,
-  "location_hit_rate_top_k": 0.1111111111111111,
-  "location_hits_top_1pct": 2,
-  "location_hit_rate_top_1pct": 0.022222222222222223,
+  "location_hits_top_k": 9,
+  "location_hit_rate_top_k": 0.1,
+  "location_hits_top_1pct": 3,
+  "location_hit_rate_top_1pct": 0.03333333333333333,
   "location_hits_top_5pct": 8,
   "location_hit_rate_top_5pct": 0.08888888888888889,
-  "location_hits_top_10pct": 15,
-  "location_hit_rate_top_10pct": 0.16666666666666666,
-  "median_actual_rank_percentile": 0.4844290657439446
+  "location_hits_top_10pct": 13,
+  "location_hit_rate_top_10pct": 0.14444444444444443,
+  "median_actual_rank_percentile": 0.49019607843137253
 }

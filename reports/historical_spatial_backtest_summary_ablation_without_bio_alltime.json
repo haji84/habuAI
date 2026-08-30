@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "feature_mode": "enhanced",
-  "output_tag": null,
+  "output_tag": "ablation_without_bio_alltime",
   "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time",
   "nights_total": 33,
   "nights_scored": 31,
@@ -26,10 +26,6 @@
     "hist_bio_30d_count_250m",
     "hist_bio_30d_count_500m",
     "hist_bio_30d_count_50m",
-    "hist_bio_count_100m",
-    "hist_bio_count_250m",
-    "hist_bio_count_500m",
-    "hist_bio_count_50m",
     "hist_bio_オットンガエル_30d_count_100m",
     "hist_bio_オットンガエル_30d_count_250m",
     "hist_bio_オットンガエル_30d_count_500m",
@@ -67,7 +63,7 @@
     "hist_large_capture_count_500m",
     "hist_large_capture_count_50m"
   ],
-  "feature_count": 58,
+  "feature_count": 54,
   "location_eligible_positive_segments": 90,
   "location_hits_top_k": 10,
   "location_hit_rate_top_k": 0.1111111111111111,
