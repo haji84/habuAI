@@ -13,19 +13,34 @@ def _later_support(sessions:dict[str,list[str]])->Counter:
 
 
 def _segment_graph(segs,snap_m:float):
-    endpoint_map=defaultdict(list);lengths={};geoms={}
+    """Build segment adjacency from endpoint proximity using an exact metric-distance gate.
+
+    OSM ways that meet at the same physical junction are not always emitted with numerically
+    identical endpoints after 10 m segmentation. The former rounded-bin implementation at 0.5 m
+    fragmented real roads. We bucket endpoints only for candidate lookup, then require true
+    Euclidean endpoint distance <= snap_m before connecting segments.
+    """
+    cell=max(float(snap_m),0.01);endpoint_cells=defaultdict(list);lengths={}
     for r in segs[["segment_id","geometry"]].dropna(subset=["segment_id","geometry"]).itertuples():
         sid=str(r.segment_id);g=r.geometry
         if g is None or g.is_empty:continue
         coords=list(g.coords)
         if len(coords)<2:continue
-        lengths[sid]=float(g.length);geoms[sid]=g
-        for x,y in (coords[0],coords[-1]):endpoint_map[(round(float(x)/snap_m),round(float(y)/snap_m))].append(sid)
-    adj=defaultdict(set)
-    for members in endpoint_map.values():
-        u=list(dict.fromkeys(members))
-        for i,a in enumerate(u):
-            for b in u[i+1:]:adj[a].add(b);adj[b].add(a)
+        lengths[sid]=float(g.length)
+        for x,y in (coords[0],coords[-1]):
+            x=float(x);y=float(y);endpoint_cells[(int(np.floor(x/cell)),int(np.floor(y/cell)))].append((sid,x,y))
+    adj=defaultdict(set);seen_pairs=set()
+    for (cx,cy),members in endpoint_cells.items():
+        nearby=[]
+        for dx in (-1,0,1):
+            for dy in (-1,0,1):nearby.extend(endpoint_cells.get((cx+dx,cy+dy),()))
+        for a,x1,y1 in members:
+            for b,x2,y2 in nearby:
+                if a==b:continue
+                pair=tuple(sorted((a,b)))
+                if pair in seen_pairs:continue
+                if float(np.hypot(x1-x2,y1-y2))<=cell:
+                    adj[a].add(b);adj[b].add(a);seen_pairs.add(pair)
     return adj,lengths
 
 
@@ -59,7 +74,7 @@ def rescue_with_road_network(capture_segments_ordered:list[str],sessions:dict[st
     is accepted only when it stays reasonably close to the pure shortest road-network path.
     """
     rcfg=cfg.get("historical_route_reconstruction",{})
-    snap=float(rcfg.get("road_rescue_endpoint_snap_m",0.5));unseen=float(rcfg.get("road_rescue_unseen_penalty",2.5));bonus=float(rcfg.get("road_rescue_support_bonus",0.35));max_detour=float(rcfg.get("road_rescue_max_detour_ratio",1.6));max_gap=float(rcfg.get("road_rescue_max_gap_path_m",8000.0));high_support_fraction=float(rcfg.get("road_rescue_high_support_fraction",0.75));high_detour=float(rcfg.get("road_rescue_high_max_detour_ratio",1.25))
+    snap=float(rcfg.get("road_rescue_endpoint_snap_m",5.0));unseen=float(rcfg.get("road_rescue_unseen_penalty",2.5));bonus=float(rcfg.get("road_rescue_support_bonus",0.35));max_detour=float(rcfg.get("road_rescue_max_detour_ratio",1.6));max_gap=float(rcfg.get("road_rescue_max_gap_path_m",8000.0));high_support_fraction=float(rcfg.get("road_rescue_high_support_fraction",0.75));high_detour=float(rcfg.get("road_rescue_high_max_detour_ratio",1.25));min_supported=float(rcfg.get("road_rescue_min_supported_fraction",0.65))
     anchors=list(dict.fromkeys(str(s) for s in capture_segments_ordered if s and str(s)!="nan"))
     if not anchors or segs is None or len(anchors)<2:return None
     adj,lengths=_segment_graph(segs,snap);support=_later_support(sessions);combined=[];weighted_len=0.0;baseline_len=0.0
@@ -72,5 +87,6 @@ def rescue_with_road_network(capture_segments_ordered:list[str],sessions:dict[st
     detour=weighted_len/max(baseline_len,1.0)
     if detour>max_detour:return None
     support_vals=[support.get(s,0) for s in combined];supported_fraction=float(np.mean([v>0 for v in support_vals])) if support_vals else 0.0;median_support=float(np.median(support_vals)) if support_vals else 0.0
+    if supported_fraction<min_supported:return None
     confidence="B-high" if supported_fraction>=high_support_fraction and detour<=high_detour and median_support>=1.0 else "B-medium"
     return {"piece":combined,"coverage":1.0,"support":support,"support_sessions":max(support_vals) if support_vals else 0,"confidence":confidence,"detour_ratio":detour,"supported_fraction":supported_fraction,"median_support":median_support,"weighted_path_m":weighted_len,"baseline_shortest_path_m":baseline_len}
