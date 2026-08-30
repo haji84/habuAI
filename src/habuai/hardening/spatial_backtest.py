@@ -24,7 +24,7 @@ def _model():
 def _features(data:pd.DataFrame,feature_mode:str)->list[str]:
     static=[c for c in STATIC_SPATIAL_FEATURES if c in data.columns]
     if feature_mode=="static":return static
-    hist=[c for c in data.columns if c.startswith("hist_")]
+    hist=[c for c in data.columns if c.startswith("hist_") or c.startswith("days_since_capture_")]
     # Availability is an audit flag, not a biological signal.
     return static+sorted(hist)
 
