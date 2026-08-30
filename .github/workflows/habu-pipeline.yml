@@ -78,7 +78,7 @@ jobs:
         run: python scripts/run_point_time_tournament.py
 
       - name: Run joint point-time backtest
-        run: python scripts/run_joint_point_time_backtest.py
+        run: python scripts/run_joint_point_time_backtest_v2.py
 
       - name: Run tests
         run: pytest -q
