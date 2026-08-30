@@ -16,6 +16,12 @@
     "duplicate_hausdorff_m": 20.0,
     "event_corroboration_m": 25.0
   },
+  "walk_forward_backtest": {
+    "enabled": true,
+    "top_k_segments": 30,
+    "min_train_positives": 5,
+    "min_train_negatives": 20
+  },
   "baseline_cutoff": "2026-08-28T07:00:00+09:00",
   "holdout_start": "2026-08-28T07:00:00+09:00",
   "weather": {
