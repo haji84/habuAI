@@ -1,8 +1,8 @@
 {
   "status": "ok",
   "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives and static road/terrain features only; no fabricated historical clock time",
-  "nights_total": 31,
-  "nights_scored": 29,
+  "nights_total": 33,
+  "nights_scored": 31,
   "nights_skipped": 2,
   "top_k_segments": 30,
   "features": [
@@ -17,10 +17,10 @@
     "farmland_distance_m",
     "residential_distance_m"
   ],
-  "location_eligible_positive_segments": 84,
-  "location_hits_top_k": 1,
-  "location_hit_rate_top_k": 0.011904761904761904,
-  "location_hits_top_10pct": 10,
-  "location_hit_rate_top_10pct": 0.11904761904761904,
-  "median_actual_rank_percentile": 0.42748091603053434
+  "location_eligible_positive_segments": 90,
+  "location_hits_top_k": 2,
+  "location_hit_rate_top_k": 0.022222222222222223,
+  "location_hits_top_10pct": 8,
+  "location_hit_rate_top_10pct": 0.08888888888888889,
+  "median_actual_rank_percentile": 0.42375
 }
