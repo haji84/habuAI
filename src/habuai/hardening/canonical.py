@@ -117,7 +117,8 @@ def match_events_preserve_all(pipeline, events, segs):
     without_gps = x[~has_gps].copy()
     if not with_gps.empty:
         matched = pipeline.match_events(with_gps.set_index("_source_row"), segs)
-        matched["_source_row"] = matched.index
+        matched["_source_row"] = matched.index.to_numpy()
+        matched = matched.reset_index(drop=True)
         matched["_distance_sort"] = pd.to_numeric(matched.get("event_match_distance_m"), errors="coerce").fillna(np.inf)
         matched = matched.sort_values(["_source_row", "_distance_sort"], kind="stable").drop_duplicates("_source_row", keep="first").drop(columns="_distance_sort")
     else:
