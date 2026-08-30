@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-08-30T07:38:21.432769+09:00",
+  "generated_at": "2026-08-31T06:16:39.791712+09:00",
   "gpx_sessions": 8,
   "gpx_points": 153397,
   "raw_event_rows": 892,
@@ -8,23 +8,15 @@
   "duplicates_removed": 0,
   "baseline_main_capture_events": 39,
   "baseline_main_individuals": 40,
-  "baseline_matched_capture_events": 38,
-  "baseline_matched_individuals": 39,
-  "baseline_unmatched_capture_events": 1,
-  "baseline_unmatched_individuals": 1,
-  "unmatched": [
-    {
-      "timestamp": "2026-08-16 00:25:00+09:00",
-      "lat": 28.17024216566392,
-      "lon": 129.3029272593291,
-      "nearest_osm_distance_m": 317.12899398930176,
-      "reason": "nearest OSM highway exceeds match threshold"
-    }
-  ],
-  "learning_rows_baseline": 26103,
-  "positive_rows_baseline": 11,
-  "zero_rows_baseline": 26092,
-  "unique_visited_segments_baseline": 8000,
+  "baseline_matched_capture_events": 39,
+  "baseline_matched_individuals": 40,
+  "baseline_unmatched_capture_events": 0,
+  "baseline_unmatched_individuals": 0,
+  "unmatched": [],
+  "learning_rows_baseline": 26135,
+  "positive_rows_baseline": 14,
+  "zero_rows_baseline": 26121,
+  "unique_visited_segments_baseline": 7916,
   "feature_completeness": {
     "time": {
       "present": [
@@ -291,9 +283,9 @@
       "missing": [],
       "missing_rate": {
         "elevation_m": 0.0,
-        "slope_observed_deg": 0.00030647818258437725,
+        "slope_observed_deg": 0.0003061029271092405,
         "local_relief_proxy_m": 0.0,
-        "curvature_deg": 0.0,
+        "curvature_deg": 0.005586378419743639,
         "junction_distance_m": 0.0,
         "stream_distance_m": 0.0,
         "coast_distance_m": 0.0,
@@ -305,7 +297,7 @@
   },
   "foundation_steps": {
     "1_zero_data": "complete",
-    "2_40_habu_same_osm_10m": "partial",
+    "2_40_habu_same_osm_10m": "complete",
     "3_exposure_corrected_time": "complete",
     "4_weather_join": "complete",
     "5_bio_time_and_distance": "complete",
