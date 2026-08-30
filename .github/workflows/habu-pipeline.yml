@@ -68,6 +68,9 @@ jobs:
       - name: Run full learning pipeline
         run: python scripts/run_pipeline.py
 
+      - name: Run historical spatial ablation
+        run: python scripts/run_spatial_ablation.py
+
       - name: Run tests
         run: pytest -q
 
