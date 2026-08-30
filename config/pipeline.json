@@ -13,7 +13,7 @@
     "provider": "open-meteo",
     "reference_lat": 28.1456,
     "reference_lon": 129.3200,
-    "hourly": ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "precipitation"]
+    "hourly": ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "precipitation", "weather_code", "surface_pressure", "cloud_cover"]
   },
   "biological_windows_minutes": [5, 10, 15, 30],
   "biological_distance_m": [50, 100, 250, 500],
