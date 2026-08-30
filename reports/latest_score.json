@@ -1,7 +1,8 @@
 {
   "status": "ok",
+  "model_role": "evaluation",
   "rows": 5,
   "positive_rows": 5,
-  "mean_pred_prob": 0.9999996609280715,
+  "mean_pred_prob": 0.9999996609280822,
   "max_pred_prob": 0.9999999998874483
 }
