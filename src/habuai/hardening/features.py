@@ -35,6 +35,60 @@ def add_outcomes_bio(visits,events,segs,cfg):
         x=pd.concat([x,pd.DataFrame(feature_cols,index=x.index)],axis=1)
     return x
 
+def build_capture_anchor_visits(events,learning):
+    """Create positive learning anchors for road-matched GPS captures not represented by a nearby GPX visit.
+
+    These rows are evidence of occurrence at the capture timestamp and segment, but they are
+    not exploration visits.  They are marked separately so exposure denominators can continue
+    to use GPX visits only.
+    """
+    if events.empty:
+        return pd.DataFrame()
+    h=events[(events.species=="ハブ")&(events.event_type=="捕獲")].copy()
+    h=h[h.segment_id.notna() & h.lat.notna() & h.lon.notna() & h.timestamp.notna()].copy()
+    if h.empty:
+        return pd.DataFrame()
+    rows=[]
+    for r in h.itertuples():
+        represented=False
+        if not learning.empty:
+            cand=learning[learning.segment_id==r.segment_id]
+            if not cand.empty:
+                delta=(pd.to_datetime(cand.entered_at)-pd.Timestamp(r.timestamp)).dt.total_seconds().abs()
+                represented=bool((delta<=600).any())
+        if represented:
+            continue
+        rows.append({
+            "session_file":f"capture_anchor:{getattr(r,'canonical_id',None)}",
+            "visit_index":-1,
+            "segment_id":r.segment_id,
+            "entered_at":r.timestamp,
+            "exited_at":r.timestamp,
+            "point_count":0,
+            "mean_speed_mps":np.nan,
+            "mean_match_distance_m":getattr(r,"event_match_distance_m",np.nan),
+            "elevation_m":np.nan,
+            "duration_s":0.0,
+            "learning_row_source":"capture_gps_anchor",
+            "anchor_canonical_id":getattr(r,"canonical_id",None),
+            "anchor_individual_count":int(getattr(r,"individual_count",1) or 1),
+        })
+    return pd.DataFrame(rows)
+
+def apply_anchor_prior_visits(anchors,gpx_learning):
+    if anchors.empty:
+        return anchors
+    x=anchors.copy()
+    if gpx_learning.empty:
+        x["segment_prior_visits"]=0
+        return x
+    times=pd.to_datetime(gpx_learning.entered_at)
+    vals=[]
+    for r in x.itertuples():
+        vals.append(int(((gpx_learning.segment_id==r.segment_id)&(times<pd.Timestamp(r.entered_at))).sum()))
+    x["segment_prior_visits"]=vals
+    return x
+
 def _nearest(points,target):
     """Return exactly one nearest distance per input point.
 
