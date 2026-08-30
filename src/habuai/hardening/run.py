@@ -38,7 +38,7 @@ def apply_hardening(pipeline):
         if not events.empty:
             missing_gps=events.lat.isna()|events.lon.isna();events["unmatched_reason"]=np.where(missing_gps,"missing GPS",np.where(events.segment_id.isna(),"nearest mapped road exceeds match threshold",""))
         canonical_audit=_full_canonical_audit(events[events.species=="ハブ"].copy());_require_expected_canonical(canonical_audit,"post-road-match");(paths.reports/"canonical_master_audit.json").write_text(json.dumps(canonical_audit,ensure_ascii=False,indent=2),encoding="utf-8");(paths.reports/"gpx_road_recovery.json").write_text(json.dumps({"recovered_segment_count":int(len(supplemental)),"recovered_roads":recovery_audit},ensure_ascii=False,indent=2),encoding="utf-8")
-        reconstructed_routes,reconstruction=reconstruct_historical_routes(root,events,visits,cfg)
+        reconstructed_routes,reconstruction=reconstruct_historical_routes(root,events,visits,cfg,segs=segs)
         reconstructed_spatial,spatial_learning_audit=build_reconstructed_spatial_learning(root,reconstructed_routes)
         if not reconstructed_spatial.empty:
             reconstructed_spatial=add_static_context(reconstructed_spatial,segs,root);reconstructed_spatial.to_csv(paths.processed/"reconstructed_spatial_learning_2026-05_07.csv",index=False);historical_spatial_backtest=run_reconstructed_spatial_backtest(root,reconstructed_spatial,cfg)
