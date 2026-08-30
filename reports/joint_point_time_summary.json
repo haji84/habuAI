@@ -1,0 +1,48 @@
+{
+  "status": "ok",
+  "spatial_winner": {
+    "feature_set": "no_recency_road_capture30",
+    "estimator": "logistic_c1",
+    "feature_count": 45,
+    "nights_scored": 31,
+    "eligible": 90,
+    "top30_hits": 12,
+    "top30_rate": 0.13333333333333333,
+    "top1_hits": 3,
+    "top1_rate": 0.03333333333333333,
+    "top5_hits": 14,
+    "top5_rate": 0.15555555555555556,
+    "top10_hits": 25,
+    "top10_rate": 0.2777777777777778,
+    "median_rank_pct": 0.29467477015254295,
+    "selection_score": 1.0971070593681729
+  },
+  "point_time_winner": {
+    "radius_m": 1000.0,
+    "bandwidth_h": 0.75,
+    "recency_tau_days": NaN,
+    "nights_scored": 7.0,
+    "eligible_gps_captures": 20.0,
+    "exact_hour_hits": 10.0,
+    "exact_hour_rate": 0.5,
+    "within_1h_hits": 16.0,
+    "within_1h_rate": 0.8,
+    "selection_score": 1.8
+  },
+  "best_joint": {
+    "spatial_alpha": 1.0,
+    "time_beta": 2.0,
+    "nights_scored": 7.0,
+    "eligible_gps_captures": 20.0,
+    "exact_segment_plusminus1h_top30": 1.0,
+    "hit_50m_plusminus1h_top30": 1.0,
+    "hit_100m_plusminus1h_top30": 2.0,
+    "hit_250m_plusminus1h_top30": 4.0,
+    "hit_100m_plusminus1h_top10pct": 8.0,
+    "rate_100m_plusminus1h_top30": 0.1,
+    "rate_250m_plusminus1h_top30": 0.2,
+    "rate_100m_plusminus1h_top10pct": 0.4,
+    "selection_score": 0.8
+  },
+  "method": "leakage-safe August actual-GPX route replay; spatial model updates only from prior nights; each candidate road gets a 24h location-conditioned capture-time curve; joint hits reported at 50/100/250m and ±1h"
+}

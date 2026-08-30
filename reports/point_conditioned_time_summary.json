@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "method": "for each candidate point, use only prior capture times; captures within radius receive full weight and global captures a 5% background weight; evaluated only on actual GPX survey nights",
+  "best": {
+    "radius_m": 1000.0,
+    "bandwidth_h": 0.75,
+    "recency_tau_days": NaN,
+    "nights_scored": 7.0,
+    "eligible_gps_captures": 20.0,
+    "exact_hour_hits": 10.0,
+    "exact_hour_rate": 0.5,
+    "within_1h_hits": 16.0,
+    "within_1h_rate": 0.8,
+    "selection_score": 1.8
+  },
+  "candidates": 40,
+  "operational_use": "assign a separate peak hour/window to each spatial candidate point, then combine point score and time score"
+}

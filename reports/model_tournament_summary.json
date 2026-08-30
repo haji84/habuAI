@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "method": "two-stage leakage-safe tournament: feature-set screen with logistic C=.2, then estimator tournament on top 3 sets",
+  "spatial": {
+    "feature_sets_screened": 8,
+    "finalists": [
+      "no_recency_road_capture30",
+      "no_recency_road",
+      "terrain_large_capture"
+    ],
+    "best": {
+      "feature_set": "no_recency_road_capture30",
+      "estimator": "logistic_c1",
+      "feature_count": 45,
+      "nights_scored": 31,
+      "eligible": 90,
+      "top30_hits": 12,
+      "top30_rate": 0.13333333333333333,
+      "top1_hits": 3,
+      "top1_rate": 0.03333333333333333,
+      "top5_hits": 14,
+      "top5_rate": 0.15555555555555556,
+      "top10_hits": 25,
+      "top10_rate": 0.2777777777777778,
+      "median_rank_pct": 0.29467477015254295,
+      "selection_score": 1.0971070593681729
+    }
+  },
+  "temporal": {
+    "feature_sets_screened": 6,
+    "finalists": [
+      "clock",
+      "clock_env",
+      "clock_env_spatial"
+    ],
+    "best": {
+      "feature_set": "capture_clock_prior",
+      "estimator": "cyclic_kde_bw1.0",
+      "feature_count": 1,
+      "nights_scored": 7,
+      "eligible": 21,
+      "peak_hour_hits": 6,
+      "peak_hour_rate": 0.2857142857142857,
+      "within_1h_hits": 13,
+      "within_1h_rate": 0.6190476190476191,
+      "selection_score": 1.1904761904761905
+    },
+    "note": "time scoring uses actual GPX survey nights only; May-Jul reconstructed routes never become time negatives"
+  }
+}
