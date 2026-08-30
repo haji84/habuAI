@@ -34,9 +34,8 @@ def _minimal_span(route:list[str],capture_segments:set[str],padding:int)->tuple[
 def reconstruct_historical_routes(root:Path,events:pd.DataFrame,visits:pd.DataFrame,cfg:dict)->tuple[pd.DataFrame,dict]:
     """Reconstruct 2026-05..07 exploration roads from later GPX route geometry.
 
-    The reconstruction uses historical capture GPS road matches as anchors and only later GPX
-    road sequences as route templates. It never pretends the later GPX timestamps are historical.
-    Output rows therefore contain route order and provenance, but no fabricated entered_at time.
+    Historical capture GPS road matches are anchors. Later GPX road sequences are templates only.
+    Later timestamps are never copied into May-July.
     """
     rcfg=cfg.get("historical_route_reconstruction",{})
     if not rcfg.get("enabled",True) or events.empty or visits.empty:
@@ -63,7 +62,6 @@ def reconstruct_historical_routes(root:Path,events:pd.DataFrame,visits:pd.DataFr
             a,b=span;piece=route[a:b+1];spans.append((session,cov,hit,piece,a,b));support.update(set(piece))
         if not spans:
             audit.append({"night":night,"capture_events":total_caps,"matched_capture_events":matched_caps,"status":"no-contiguous-span","best_coverage":best_cov});continue
-        # Prefer a high-coverage template whose contiguous span is most corroborated by other GPX sessions.
         def quality(item):
             session,cov,hit,piece,a,b=item;common=np.mean([support[s]/len(spans) for s in set(piece)]) if piece else 0.0;return (cov,common,hit,-len(piece))
         primary=max(spans,key=quality);session,cov,hit,piece,a,b=primary
@@ -76,3 +74,28 @@ def reconstruct_historical_routes(root:Path,events:pd.DataFrame,visits:pd.DataFr
     p=root/"data"/"processed";r=root/"reports";p.mkdir(parents=True,exist_ok=True);r.mkdir(parents=True,exist_ok=True)
     out.to_csv(p/"reconstructed_routes_2026-05_07.csv",index=False);(r/"historical_route_reconstruction.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     return out,report
+
+
+def build_reconstructed_spatial_learning(root:Path,reconstructed:pd.DataFrame)->tuple[pd.DataFrame,dict]:
+    """Turn trusted B-high/B-medium route reconstructions into spatial exposure labels.
+
+    Each night/segment is one row. Capture-anchor segments are positives; all other reconstructed
+    route segments are explicit spatial negatives. C-low is audit-only and excluded from learning.
+    No historical clock time is invented.
+    """
+    out_path=root/"data"/"processed"/"reconstructed_spatial_learning_2026-05_07.csv"
+    report_path=root/"reports"/"reconstructed_spatial_learning.json"
+    if reconstructed.empty:
+        out=pd.DataFrame();report={"status":"empty","rows":0};out.to_csv(out_path,index=False);report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8");return out,report
+    trusted=reconstructed[reconstructed.reconstruction_confidence.isin(["B-high","B-medium"])].copy()
+    if trusted.empty:
+        out=pd.DataFrame();report={"status":"no-trusted-routes","rows":0};out.to_csv(out_path,index=False);report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8");return out,report
+    trusted["spatial_label"]=trusted.capture_anchor_segment.astype(bool).astype(int)
+    trusted["sample_weight"]=np.where(trusted.reconstruction_confidence.eq("B-high"),1.0,0.65)
+    agg=trusted.groupby(["night","segment_id"],as_index=False).agg(spatial_label=("spatial_label","max"),reconstruction_confidence=("reconstruction_confidence",lambda s:"B-high" if (s=="B-high").any() else "B-medium"),sample_weight=("sample_weight","max"),segment_support_fraction=("segment_support_fraction","max"),support_sessions=("support_sessions","max"),template_session_file=("template_session_file","first"))
+    agg["learning_row_source"]="historical_reconstructed_spatial_exposure"
+    agg["historical_time_reconstructed"]=False
+    agg.to_csv(out_path,index=False)
+    report={"status":"ok","rows":int(len(agg)),"nights":int(agg.night.nunique()),"positive_segment_rows":int(agg.spatial_label.sum()),"negative_segment_rows":int((agg.spatial_label==0).sum()),"confidence_counts":agg.reconstruction_confidence.value_counts().to_dict(),"usage":"spatial/location model only; excluded from temporal/weather/time-of-night model","c_low_excluded":int((reconstructed.reconstruction_confidence=="C-low").sum())}
+    report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+    return agg,report
