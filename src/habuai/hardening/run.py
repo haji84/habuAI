@@ -16,8 +16,9 @@ def apply_hardening(pipeline):
         cfg=pipeline.load_config(root);paths=pipeline.Paths(root);pipeline.ensure_dirs(paths);osm_segs=pipeline.build_10m_segments(root,cfg);points=pipeline.read_gpx_files(root);osm_mp=pipeline.map_match_gpx(points,osm_segs,cfg)
         files=sorted((root/"data"/"raw"/"logs").glob("*.txt"));raw_logs=pd.concat([original_parse(p) for p in files],ignore_index=True) if files else pd.DataFrame()
         canonical=load_canonical_capture_master(root)
-        # The integrated master is authoritative for Habu outcomes; keep raw logs for non-Habu biological reactions.
-        if not raw_logs.empty:raw_logs=raw_logs[raw_logs.species!="ハブ"].copy()
+        # Canonical data is authoritative only for Habu captures. Keep Habu no-capture,
+        # sighting and roadkill events from raw logs so negative/auxiliary evidence survives.
+        if not raw_logs.empty:raw_logs=raw_logs[~((raw_logs.species=="ハブ")&(raw_logs.event_type=="捕獲"))].copy()
         raw=merge_canonical_capture_master(raw_logs,canonical);events,removed=dedupe_events(raw);pre_match_rows=len(events)
         events_osm=match_events_preserve_all(pipeline,events,osm_segs) if not events.empty else events
         if len(events_osm)>pre_match_rows:raise RuntimeError(f"event road matching expanded rows: {pre_match_rows} -> {len(events_osm)}")
