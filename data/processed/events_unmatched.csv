@@ -1,23 +1,4 @@
 canonical_id,canonical_source,event_type,individual_count,lat,lon,moon_age_observed,night_date,raw_text,session_start,size,species,temperature_observed_c,tide_direction_observed,tide_observed,timestamp,weather_observed,wetness,event_signature,segment_id,event_match_distance_m,unmatched_reason
-,,目撃,1,28.16475033470805,129.3846062555978,,2026-08-02,"2026/08/03 23:17
-目撃
-
-1匹
-カエル
-ソークド(水跳ね)
-瀬戸内町節子
-28.16475033470805
-129.3846062555978
-",2026-08-02 00:27:00+09:00,,カエル,,,,2026-08-03 23:17:00+09:00,,ソークド(水跳ね),"2026-08-03 14:17:00+00:00|カエル|目撃|28.1647503|129.3846063||2026/08/03 23:17
-目撃
-
-1匹
-カエル
-ソークド(水跳ね)
-瀬戸内町節子
-28.16475033470805
-129.3846062555978
-",,62.12811199161507,nearest mapped road exceeds match threshold
 1,recovered,捕獲,1,,,24.5,2025-09-17,canonical:1 捕獲,,,ハブ,,,,2025-09-17 18:40:00+09:00,夕方通り雨,,2025-09-17 09:40:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|1|canonical:1 捕獲,,,missing GPS
 2,recovered,捕獲,1,,,25.5,2025-09-18,canonical:2 捕獲,,,ハブ,,,,2025-09-18 19:00:00+09:00,夕方通り雨,,2025-09-18 10:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|2|canonical:2 捕獲,,,missing GPS
 3,recovered,捕獲,1,,,27.5,2025-09-20,canonical:3 捕獲,,,ハブ,,,,2025-09-20 20:00:00+09:00,晴れ,,2025-09-20 11:00:00+00:00|ハブ|捕獲|<missing_lat>|<missing_lon>|3|canonical:3 捕獲,,,missing GPS

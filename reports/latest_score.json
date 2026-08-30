@@ -2,6 +2,6 @@
   "status": "ok",
   "rows": 5,
   "positive_rows": 5,
-  "mean_pred_prob": 0.9999999716276367,
-  "max_pred_prob": 0.9999999999988831
+  "mean_pred_prob": 0.9999996609280715,
+  "max_pred_prob": 0.9999999998874483
 }
