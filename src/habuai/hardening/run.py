@@ -2,9 +2,9 @@ from __future__ import annotations
 import json
 import numpy as np
 import pandas as pd
-from .canonical import add_canonical_audit,build_positive_label_audit,load_canonical_capture_master,match_events_preserve_all,merge_canonical_capture_master
+from .canonical import add_canonical_audit,build_positive_label_audit,load_canonical_habu_events,match_events_preserve_all,merge_canonical_capture_master
 from .environmental import add_lunar_features,add_weather_derived_features,join_optional_tide_features
-from .events import collapse_nearest_event_matches,dedupe_events,join_weather,slope_features,species_from_text,strict_holdout_score
+from .events import dedupe_events,join_weather,slope_features,species_from_text,strict_holdout_score
 from .features import add_outcomes_bio,add_static_context
 from .modeling import fit_model,score_holdout
 from .output import write_map,write_qa
@@ -15,10 +15,10 @@ def apply_hardening(pipeline):
     def hardened_run(root):
         cfg=pipeline.load_config(root);paths=pipeline.Paths(root);pipeline.ensure_dirs(paths);osm_segs=pipeline.build_10m_segments(root,cfg);points=pipeline.read_gpx_files(root);osm_mp=pipeline.map_match_gpx(points,osm_segs,cfg)
         files=sorted((root/"data"/"raw"/"logs").glob("*.txt"));raw_logs=pd.concat([original_parse(p) for p in files],ignore_index=True) if files else pd.DataFrame()
-        canonical=load_canonical_capture_master(root)
-        # Canonical data is authoritative only for Habu captures. Keep Habu no-capture,
-        # sighting and roadkill events from raw logs so negative/auxiliary evidence survives.
-        if not raw_logs.empty:raw_logs=raw_logs[~((raw_logs.species=="ハブ")&(raw_logs.event_type=="捕獲"))].copy()
+        canonical=load_canonical_habu_events(root)
+        # The integrated workbook is authoritative for every Habu outcome. Keep raw logs
+        # only for non-Habu biological reactions to avoid duplicate Habu events.
+        if not raw_logs.empty:raw_logs=raw_logs[raw_logs.species!="ハブ"].copy()
         raw=merge_canonical_capture_master(raw_logs,canonical);events,removed=dedupe_events(raw);pre_match_rows=len(events)
         events_osm=match_events_preserve_all(pipeline,events,osm_segs) if not events.empty else events
         if len(events_osm)>pre_match_rows:raise RuntimeError(f"event road matching expanded rows: {pre_match_rows} -> {len(events_osm)}")
@@ -30,6 +30,10 @@ def apply_hardening(pipeline):
         if not events.empty:
             missing_gps=events.lat.isna()|events.lon.isna();events["unmatched_reason"]=np.where(missing_gps,"missing GPS",np.where(events.segment_id.isna(),"nearest mapped road exceeds match threshold",""))
         canonical_audit=add_canonical_audit(events)
+        canonical_audit["canonical_habu_events_total"]=int((events.species=="ハブ").sum())
+        canonical_audit["no_capture_events"]=int(((events.species=="ハブ")&(events.event_type=="no_capture")).sum())
+        canonical_audit["roadkill_events"]=int(((events.species=="ハブ")&events.event_type.isin(["轢死","roadkill_sighting"])).sum())
+        canonical_audit["sighting_events"]=int(((events.species=="ハブ")&events.event_type.isin(["目撃","sighting"])).sum())
         (paths.reports/"canonical_master_audit.json").write_text(json.dumps(canonical_audit,ensure_ascii=False,indent=2),encoding="utf-8")
         (paths.reports/"gpx_road_recovery.json").write_text(json.dumps({"recovered_segment_count":int(len(supplemental)),"recovered_roads":recovery_audit},ensure_ascii=False,indent=2),encoding="utf-8")
         weather_events=events.dropna(subset=["timestamp"]) if not events.empty else events
