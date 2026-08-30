@@ -16,6 +16,17 @@
     "duplicate_hausdorff_m": 20.0,
     "event_corroboration_m": 25.0
   },
+  "historical_route_reconstruction": {
+    "enabled": true,
+    "start": "2026-05-01",
+    "end": "2026-08-01",
+    "template_start": "2026-08-13",
+    "padding_segments": 40,
+    "candidate_coverage_delta": 0.15,
+    "min_candidate_coverage": 0.30,
+    "high_confidence_coverage": 1.0,
+    "high_confidence_min_support_sessions": 2
+  },
   "walk_forward_backtest": {
     "enabled": true,
     "top_k_segments": 30,
