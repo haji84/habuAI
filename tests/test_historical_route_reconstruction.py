@@ -1,5 +1,7 @@
 from pathlib import Path
+import geopandas as gpd
 import pandas as pd
+from shapely.geometry import LineString
 from habuai.hardening.reconstruct import reconstruct_historical_routes
 
 
@@ -26,9 +28,7 @@ def test_reconstruction_does_not_copy_future_timestamps(tmp_path:Path):
 def test_c_low_is_rescued_when_capture_anchors_are_split_across_gpx_sessions(tmp_path:Path):
     _dirs(tmp_path);t=pd.Timestamp("2026-06-20T22:00:00+09:00")
     events=pd.DataFrame([{"species":"ハブ","event_type":"捕獲","timestamp":t+pd.Timedelta(minutes=10*i),"segment_id":seg} for i,seg in enumerate(["C1","C2","C3"])])
-    # No single session covers >=50% of the three anchors. Together, observed GPX adjacencies connect all three.
-    seqs={"2026-08-13.gpx":["C1","A","J"],"2026-08-15.gpx":["J","B","C2"],"2026-08-17.gpx":["J","D","C3"]}
-    rows=[]
+    seqs={"2026-08-13.gpx":["C1","A","J"],"2026-08-15.gpx":["J","B","C2"],"2026-08-17.gpx":["J","D","C3"]};rows=[]
     for session,seq in seqs.items():
         for i,seg in enumerate(seq):rows.append({"session_file":session,"visit_index":i,"segment_id":seg,"entered_at":pd.Timestamp("2026-08-13T20:00:00+09:00")+pd.Timedelta(minutes=i)})
     cfg={"night_rollover_hour":7,"historical_route_reconstruction":{"enabled":True,"start":"2026-05-01","end":"2026-08-01","template_start":"2026-08-13","padding_segments":0,"min_candidate_coverage":0.3,"rescue_min_anchor_coverage":1.0,"rescue_high_median_edge_support":2.0}}
@@ -36,12 +36,23 @@ def test_c_low_is_rescued_when_capture_anchors_are_split_across_gpx_sessions(tmp
     assert report["rescued_nights"]==1;assert report["remaining_c_low_nights"]==0;assert set(["C1","C2","C3"]).issubset(set(out.segment_id));assert out.reconstruction_source.eq("multi_gpx_union_graph_rescue").all();assert out.reconstruction_confidence.eq("B-medium").all();assert not out.historical_time_reconstructed.any()
 
 
-def test_c_low_is_not_promoted_when_an_anchor_is_absent_from_all_later_gpx(tmp_path:Path):
+def test_c_low_stays_low_without_network_when_anchor_absent_from_all_later_gpx(tmp_path:Path):
     _dirs(tmp_path);t=pd.Timestamp("2026-07-10T22:00:00+09:00")
-    events=pd.DataFrame([{"species":"ハブ","event_type":"捕獲","timestamp":t,"segment_id":"C1"},{"species":"ハブ","event_type":"捕獲","timestamp":t+pd.Timedelta(minutes=20),"segment_id":"MISSING"},{"species":"ハブ","event_type":"捕獲","timestamp":t+pd.Timedelta(minutes=40),"segment_id":"C3"}])
-    rows=[]
+    events=pd.DataFrame([{"species":"ハブ","event_type":"捕獲","timestamp":t,"segment_id":"C1"},{"species":"ハブ","event_type":"捕獲","timestamp":t+pd.Timedelta(minutes=20),"segment_id":"MISSING"},{"species":"ハブ","event_type":"捕獲","timestamp":t+pd.Timedelta(minutes=40),"segment_id":"C3"}]);rows=[]
     for session,seq in {"2026-08-13.gpx":["C1","A","J"],"2026-08-15.gpx":["J","B","C3"]}.items():
         for i,seg in enumerate(seq):rows.append({"session_file":session,"visit_index":i,"segment_id":seg,"entered_at":pd.Timestamp("2026-08-13T20:00:00+09:00")+pd.Timedelta(minutes=i)})
     cfg={"night_rollover_hour":7,"historical_route_reconstruction":{"enabled":True,"start":"2026-05-01","end":"2026-08-01","template_start":"2026-08-13","padding_segments":0,"min_candidate_coverage":0.3,"rescue_min_anchor_coverage":1.0}}
     out,report=reconstruct_historical_routes(tmp_path,events,pd.DataFrame(rows),cfg)
     assert report["rescued_nights"]==0;assert report["remaining_c_low_nights"]==1;assert out.reconstruction_confidence.eq("C-low").all()
+
+
+def test_road_network_rescue_promotes_anchor_missing_from_later_gpx(tmp_path:Path):
+    _dirs(tmp_path);t=pd.Timestamp("2026-07-12T22:00:00+09:00")
+    events=pd.DataFrame([{"species":"ハブ","event_type":"捕獲","timestamp":t+pd.Timedelta(minutes=20*i),"segment_id":seg} for i,seg in enumerate(["C1","C2","C3"])])
+    rows=[]
+    for session,seq in {"2026-08-13.gpx":["C1","S1"],"2026-08-15.gpx":["S3","C3"]}.items():
+        for i,seg in enumerate(seq):rows.append({"session_file":session,"visit_index":i,"segment_id":seg,"entered_at":pd.Timestamp("2026-08-13T20:00:00+09:00")+pd.Timedelta(minutes=i)})
+    ids=["C1","S1","C2","S3","C3"];geoms=[LineString([(i*10,0),((i+1)*10,0)]) for i in range(len(ids))];segs=gpd.GeoDataFrame({"segment_id":ids},geometry=geoms,crs="EPSG:6669")
+    cfg={"night_rollover_hour":7,"historical_route_reconstruction":{"enabled":True,"start":"2026-05-01","end":"2026-08-01","template_start":"2026-08-13","padding_segments":0,"min_candidate_coverage":0.3,"rescue_min_anchor_coverage":1.0,"road_rescue_max_detour_ratio":1.6,"road_rescue_unseen_penalty":2.5}}
+    out,report=reconstruct_historical_routes(tmp_path,events,pd.DataFrame(rows),cfg,segs=segs)
+    assert report["road_network_rescued_nights"]==1;assert report["remaining_c_low_nights"]==0;assert set(["C1","C2","C3"]).issubset(set(out.segment_id));assert out.reconstruction_source.eq("road_network_gpx_prior_rescue").all();assert out.reconstruction_confidence.isin(["B-high","B-medium"]).all();assert not out.historical_time_reconstructed.any()
