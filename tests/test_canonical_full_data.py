@@ -1,6 +1,9 @@
 from pathlib import Path
 
-from habuai.hardening.canonical import load_canonical_capture_master,load_canonical_habu_events
+import numpy as np
+import pandas as pd
+
+from habuai.hardening.canonical import load_canonical_capture_master,load_canonical_habu_events,match_events_preserve_all
 
 
 def test_canonical_capture_master_totals():
@@ -30,3 +33,21 @@ def test_night_rollover_is_0700():
     df=load_canonical_capture_master(root)
     r=df[df.canonical_id=="11"].iloc[0]
     assert str(r.night_date)=="2025-10-12"
+
+
+def test_match_preserves_missing_gps_and_named_source_index():
+    class FakePipeline:
+        @staticmethod
+        def match_events(df,segs):
+            out=df.copy()
+            out["segment_id"]="OSM_test"
+            out["event_match_distance_m"]=1.0
+            return out
+    events=pd.DataFrame([
+        {"canonical_id":"a","lat":28.1,"lon":129.3},
+        {"canonical_id":"b","lat":np.nan,"lon":np.nan},
+    ])
+    out=match_events_preserve_all(FakePipeline(),events,None)
+    assert len(out)==2
+    assert out.loc[0,"segment_id"]=="OSM_test"
+    assert pd.isna(out.loc[1,"segment_id"])
