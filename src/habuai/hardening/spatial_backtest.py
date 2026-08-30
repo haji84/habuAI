@@ -25,26 +25,29 @@ def _features(data:pd.DataFrame,feature_mode:str)->list[str]:
     static=[c for c in STATIC_SPATIAL_FEATURES if c in data.columns]
     if feature_mode=="static":return static
     hist=[c for c in data.columns if c.startswith("hist_") or c.startswith("days_since_capture_")]
-    # Availability is an audit flag, not a biological signal.
     return static+sorted(hist)
 
 
-def run_reconstructed_spatial_backtest(root:Path,data:pd.DataFrame,cfg:dict,feature_mode:str="static")->dict:
+def run_reconstructed_spatial_backtest(root:Path,data:pd.DataFrame,cfg:dict,feature_mode:str="static",feature_columns:list[str]|None=None,output_tag:str|None=None)->dict:
     """Leakage-safe walk-forward over trusted May-July reconstructed routes.
 
     feature_mode='static' reproduces the original terrain/road baseline.
     feature_mode='enhanced' adds only point-in-time historical features already frozen at the
     start-of-night 07:00 cutoff by spatial_history.add_historical_spatial_features.
+    feature_columns/output_tag are used by ablation runs so every variant uses the exact same
+    nights, labels, estimator and scoring logic as the full enhanced model.
     """
     out_dir=root/"reports";out_dir.mkdir(parents=True,exist_ok=True)
-    suffix="" if feature_mode=="static" else "_enhanced"
+    if output_tag is not None:suffix=f"_{output_tag}"
+    else:suffix="" if feature_mode=="static" else "_enhanced"
     summary_path=out_dir/f"historical_spatial_backtest_summary{suffix}.json"
     nightly_path=out_dir/f"historical_spatial_backtest_nightly{suffix}.csv"
     ranks_path=out_dir/f"historical_spatial_backtest_segment_ranks{suffix}.csv"
     if data.empty:
         result={"status":"empty","nights":0,"feature_mode":feature_mode};summary_path.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8");return result
     bcfg=cfg.get("historical_spatial_backtest",{});top_k=int(bcfg.get("top_k_segments",30));min_pos=int(bcfg.get("min_train_positives",3));min_neg=int(bcfg.get("min_train_negatives",30))
-    feats=_features(data,feature_mode)
+    if feature_columns is None:feats=_features(data,feature_mode)
+    else:feats=[c for c in feature_columns if c in data.columns]
     rows=[];ranks=[]
     for night in sorted(data.night.astype(str).unique()):
         train=data[data.night.astype(str)<night].copy();test=data[data.night.astype(str)==night].copy();pos=int(train.spatial_label.sum());neg=int((train.spatial_label==0).sum());base={"night":night,"train_rows":int(len(train)),"train_positive_segments":pos,"train_negative_segments":neg,"candidate_segments":int(len(test)),"actual_positive_segments":int(test.spatial_label.sum())}
@@ -56,7 +59,7 @@ def run_reconstructed_spatial_backtest(root:Path,data:pd.DataFrame,cfg:dict,feat
         ranks.append(test[["night","segment_id","spatial_label","reconstruction_confidence","sample_weight","rank","rank_percentile","pred_prob"]])
     detail=pd.DataFrame(rows);detail.to_csv(nightly_path,index=False)
     if ranks:pd.concat(ranks,ignore_index=True).to_csv(ranks_path,index=False)
-    ok=detail[detail.status=="ok"] if not detail.empty else pd.DataFrame();summary={"status":"ok" if not ok.empty else "insufficient-data","feature_mode":feature_mode,"method":"walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time","nights_total":int(len(detail)),"nights_scored":int(len(ok)),"nights_skipped":int(len(detail)-len(ok)),"top_k_segments":top_k,"features":feats,"feature_count":len(feats)}
+    ok=detail[detail.status=="ok"] if not detail.empty else pd.DataFrame();summary={"status":"ok" if not ok.empty else "insufficient-data","feature_mode":feature_mode,"output_tag":output_tag,"method":"walk-forward by operational night using B-high/B-medium reconstructed route negatives; enhanced mode uses only historical evidence frozen before each night's 07:00 cutoff; no fabricated historical clock time","nights_total":int(len(detail)),"nights_scored":int(len(ok)),"nights_skipped":int(len(detail)-len(ok)),"top_k_segments":top_k,"features":feats,"feature_count":len(feats)}
     if not ok.empty:
         eligible=int(ok.actual_positive_segments.sum());summary.update({"location_eligible_positive_segments":eligible,"location_hits_top_k":int(ok.location_hits_top_k.sum()),"location_hit_rate_top_k":None if eligible==0 else float(ok.location_hits_top_k.sum()/eligible),"location_hits_top_1pct":int(ok.location_hits_top_1pct.sum()),"location_hit_rate_top_1pct":None if eligible==0 else float(ok.location_hits_top_1pct.sum()/eligible),"location_hits_top_5pct":int(ok.location_hits_top_5pct.sum()),"location_hit_rate_top_5pct":None if eligible==0 else float(ok.location_hits_top_5pct.sum()/eligible),"location_hits_top_10pct":int(ok.location_hits_top_10pct.sum()),"location_hit_rate_top_10pct":None if eligible==0 else float(ok.location_hits_top_10pct.sum()/eligible),"median_actual_rank_percentile":float(ok.actual_capture_median_rank_percentile.dropna().median()) if ok.actual_capture_median_rank_percentile.notna().any() else None})
     summary_path.write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding="utf-8");return summary
