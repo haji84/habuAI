@@ -42,8 +42,6 @@ def apply_hardening(pipeline):
         files=sorted((root/"data"/"raw"/"logs").glob("*.txt"));raw_logs=pd.concat([original_parse(p) for p in files],ignore_index=True) if files else pd.DataFrame()
         canonical=load_canonical_habu_events(root)
         _require_expected_canonical(_full_canonical_audit(canonical),"canonical-load")
-        # The integrated workbook is authoritative for every Habu outcome. Keep raw logs
-        # only for non-Habu biological reactions to avoid duplicate Habu events.
         if not raw_logs.empty:raw_logs=raw_logs[raw_logs.species!="ハブ"].copy()
         raw=merge_canonical_capture_master(raw_logs,canonical);events,removed=dedupe_events(raw);pre_match_rows=len(events)
         canonical_after_dedupe=events[events.species=="ハブ"].copy()
@@ -70,7 +68,7 @@ def apply_hardening(pipeline):
         label_ok=int((label_audit.audit_status=="ok").sum()) if not label_audit.empty else 0
         qa["canonical_master"]=canonical_audit;qa["positive_label_audit"]={"capture_events":int(len(label_audit)),"labeled_ok":label_ok,"not_labeled":int(len(label_audit)-label_ok),"status_counts":label_audit.audit_status.value_counts(dropna=False).to_dict() if not label_audit.empty else {}}
         qa["foundation_steps"]["2_full_capture_master_road_match_and_label_audit"]="complete" if canonical_audit==EXPECTED_CANONICAL and label_ok>0 else "partial"
-        env_cols=["moon_age_days","moon_illumination","moon_phase_sin","moon_phase_cos","fog_flag","fog_proxy","temperature_change_3h_c","cloud_cover_pct","surface_pressure_hpa","tide_cm","tide_rising","minutes_to_tide_turn"]
+        env_cols=["moon_age_days","moon_illumination","moon_phase_sin","moon_phase_cos","fog_wmo_flag","temp_dewpoint_spread_c","fog_proxy_flag","temperature_change_3visits_c","tide_height_cm","tide_change_1h_cm","tide_state_code","minutes_to_nearest_turning_tide","tide_source_available"]
         qa["environmental_feature_missing_rate"]={c:(None if c not in data else float(data[c].isna().mean())) for c in env_cols}
         qa["feature_sources"]={"lunar":"deterministic synodic calculation","fog":"Open-Meteo WMO code 45/48 plus temperature-dewpoint proxy","temperature":"Open-Meteo hourly","tide":"JMA Amami O9 hourly predicted tide table; local authoritative tide_hourly.csv overrides when supplied"}
         (paths.reports/"qa_summary.json").write_text(json.dumps(qa,ensure_ascii=False,indent=2),encoding="utf-8")
