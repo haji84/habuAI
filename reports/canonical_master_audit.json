@@ -1,0 +1,11 @@
+{
+  "capture_events": 206,
+  "capture_individuals": 208,
+  "gps_capture_events": 150,
+  "gps_capture_individuals": 151,
+  "gps_missing_capture_events": 56,
+  "canonical_habu_events_total": 247,
+  "no_capture_events": 2,
+  "roadkill_events": 33,
+  "sighting_events": 6
+}

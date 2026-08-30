@@ -1,7 +1,7 @@
 {
   "status": "ok",
-  "rows": 26103,
-  "positives": 11,
+  "rows": 26135,
+  "positives": 13,
   "features": [
     "sin_hour",
     "cos_hour",
@@ -14,9 +14,25 @@
     "rain_24h_mm",
     "rain_48h_mm",
     "temperature_c",
+    "temperature_change_3visits_c",
     "humidity_pct",
     "dew_point_c",
+    "temp_dewpoint_spread_c",
     "hours_since_rain",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "fog_wmo_flag",
+    "fog_proxy_flag",
+    "moon_age_days",
+    "moon_phase_sin",
+    "moon_phase_cos",
+    "moon_illumination",
+    "tide_height_cm",
+    "tide_change_1h_cm",
+    "tide_state_code",
+    "minutes_to_nearest_turning_tide",
+    "tide_source_available",
     "curvature_deg",
     "segment_prior_visits",
     "slope_observed_deg",
@@ -129,74 +145,75 @@
     "bio_クロウサギ_30m_250m_count",
     "bio_クロウサギ_30m_500m_count"
   ],
-  "brier_train": 0.01144890640937415,
+  "brier_train": 0.01306774563985744,
   "cv_method": "leave-one-survey-night-out",
   "cv_folds": [
     {
       "night": "2026-08-13",
       "status": "ok",
-      "rows": 2815,
-      "positives": 1,
-      "brier": 0.01252106770343876,
-      "pr_auc": 0.0015360983102918587
+      "rows": 2796,
+      "positives": 2,
+      "brier": 0.034786427771346475,
+      "pr_auc": 0.0013111725119929482
     },
     {
       "night": "2026-08-15",
       "status": "ok",
-      "rows": 3997,
-      "positives": 1,
-      "brier": 0.0017650691721344213,
-      "pr_auc": 0.0004906771344455348
+      "rows": 4063,
+      "positives": 3,
+      "brier": 0.06306313005542794,
+      "pr_auc": 0.000882232544537902
     },
     {
       "night": "2026-08-17",
       "status": "ok",
-      "rows": 2531,
-      "positives": 0,
-      "brier": 0.06501524126066165
+      "rows": 2485,
+      "positives": 1,
+      "brier": 0.030171236254346763,
+      "pr_auc": 0.0012300123001230013
     },
     {
       "night": "2026-08-19",
       "status": "ok",
-      "rows": 3798,
+      "rows": 3863,
       "positives": 2,
-      "brier": 0.004862047413395507,
-      "pr_auc": 0.001763986711639008
+      "brier": 0.0005190073893111703,
+      "pr_auc": 0.0023297153438559645
     },
     {
       "night": "2026-08-21",
       "status": "ok",
-      "rows": 2632,
+      "rows": 2640,
       "positives": 0,
-      "brier": 0.022540469600653232
+      "brier": 0.055220126833288974
     },
     {
       "night": "2026-08-23",
       "status": "ok",
-      "rows": 3832,
-      "positives": 2,
-      "brier": 0.0032394934194410908,
-      "pr_auc": 0.0026463339405541444
+      "rows": 3812,
+      "positives": 1,
+      "brier": 0.009476459808651388,
+      "pr_auc": 0.0005583472920156337
     },
     {
       "night": "2026-08-24",
       "status": "ok",
-      "rows": 3344,
-      "positives": 2,
-      "brier": 0.09642578438269454,
-      "pr_auc": 0.0010011883541295305
+      "rows": 3329,
+      "positives": 3,
+      "brier": 0.003188939525063985,
+      "pr_auc": 0.0006615470868092656
     },
     {
       "night": "2026-08-27",
       "status": "ok",
-      "rows": 3154,
-      "positives": 3,
-      "brier": 0.6621104666720451,
-      "pr_auc": 0.0009409459740115678
+      "rows": 3147,
+      "positives": 1,
+      "brier": 0.15604450729521935,
+      "pr_auc": 0.00032414910858995135
     }
   ],
-  "brier_loono": 0.10373542919988472,
-  "pr_auc_loono": 0.0006056164128290544,
-  "oof_rows": 26103,
-  "oof_positives": 11
+  "brier_loono": 0.04262721411395846,
+  "pr_auc_loono": 0.00045285226961442785,
+  "oof_rows": 26135,
+  "oof_positives": 13
 }

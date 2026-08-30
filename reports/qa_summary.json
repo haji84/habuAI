@@ -1,30 +1,387 @@
 {
   "status": "ok",
-  "generated_at": "2026-08-30T07:38:21.432769+09:00",
+  "generated_at": "2026-08-30T16:42:52.951977+09:00",
   "gpx_sessions": 8,
   "gpx_points": 153397,
-  "raw_event_rows": 892,
-  "deduplicated_event_rows": 892,
+  "raw_event_rows": 1089,
+  "deduplicated_event_rows": 1089,
   "duplicates_removed": 0,
-  "baseline_main_capture_events": 39,
-  "baseline_main_individuals": 40,
-  "baseline_matched_capture_events": 38,
-  "baseline_matched_individuals": 39,
-  "baseline_unmatched_capture_events": 1,
-  "baseline_unmatched_individuals": 1,
+  "baseline_main_capture_events": 196,
+  "baseline_main_individuals": 197,
+  "baseline_matched_capture_events": 144,
+  "baseline_matched_individuals": 145,
+  "baseline_unmatched_capture_events": 52,
+  "baseline_unmatched_individuals": 52,
   "unmatched": [
     {
-      "timestamp": "2026-08-16 00:25:00+09:00",
-      "lat": 28.17024216566392,
-      "lon": 129.3029272593291,
-      "nearest_osm_distance_m": 317.12899398930176,
-      "reason": "nearest OSM highway exceeds match threshold"
+      "timestamp": "2025-09-17 18:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-09-18 19:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-09-20 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-09-22 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-09-25 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-09-26 22:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-09-28 21:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-12 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-13 01:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-15 21:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-17 21:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-17 22:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-18 18:30:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-18 23:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-19 21:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-21 21:50:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-21 22:10:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-21 22:20:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-22 00:10:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-26 20:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-26 21:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-26 21:30:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-28 22:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-10-31 21:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-04 21:30:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-05 22:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-06 19:10:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-06 19:50:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-08 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-09 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-18 18:30:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-18 23:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-21 18:30:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2025-11-21 20:00:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-13 21:35:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-15 20:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-17 21:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-17 22:20:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-19 21:40:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-19 22:20:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-20 22:05:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-04-20 22:10:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-01 22:10:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-03 21:46:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-18 23:09:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-27 23:06:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-29 23:49:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-30 00:17:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-05-30 00:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-06-22 20:58:00+09:00",
+      "lat": 28.14887845231345,
+      "lon": 129.3591007025003,
+      "nearest_osm_distance_m": 190.79536683145417,
+      "reason": "nearest mapped road exceeds match threshold"
+    },
+    {
+      "timestamp": "2026-07-20 22:25:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
+    },
+    {
+      "timestamp": "2026-08-20 01:49:00+09:00",
+      "lat": null,
+      "lon": null,
+      "nearest_osm_distance_m": null,
+      "reason": "missing GPS"
     }
   ],
-  "learning_rows_baseline": 26103,
-  "positive_rows_baseline": 11,
-  "zero_rows_baseline": 26092,
-  "unique_visited_segments_baseline": 8000,
+  "learning_rows_baseline": 26135,
+  "positive_rows_baseline": 13,
+  "zero_rows_baseline": 26122,
+  "unique_visited_segments_baseline": 7916,
   "feature_completeness": {
     "time": {
       "present": [
@@ -291,9 +648,9 @@
       "missing": [],
       "missing_rate": {
         "elevation_m": 0.0,
-        "slope_observed_deg": 0.00030647818258437725,
+        "slope_observed_deg": 0.0003061029271092405,
         "local_relief_proxy_m": 0.0,
-        "curvature_deg": 0.0,
+        "curvature_deg": 0.005586378419743639,
         "junction_distance_m": 0.0,
         "stream_distance_m": 0.0,
         "coast_distance_m": 0.0,
@@ -305,12 +662,12 @@
   },
   "foundation_steps": {
     "1_zero_data": "complete",
-    "2_40_habu_same_osm_10m": "partial",
     "3_exposure_corrected_time": "complete",
     "4_weather_join": "complete",
     "5_bio_time_and_distance": "complete",
     "6_terrain_features": "complete",
-    "7_prediction_actual_scoring": "complete"
+    "7_prediction_actual_scoring": "complete",
+    "2_full_capture_master_road_match_and_label_audit": "complete"
   },
   "strict_holdout": {
     "status": "ok",
@@ -345,5 +702,49 @@
     ],
     "note": "Strict windows frozen; 01:22 remains outside the main window."
   },
-  "note": "Step 2 stays partial if a capture is intentionally left unmatched; distant forced matches are prohibited."
+  "note": "Canonical captures without GPS remain intentionally unmatched; distant forced matches are prohibited.",
+  "canonical_master": {
+    "capture_events": 206,
+    "capture_individuals": 208,
+    "gps_capture_events": 150,
+    "gps_capture_individuals": 151,
+    "gps_missing_capture_events": 56,
+    "canonical_habu_events_total": 247,
+    "no_capture_events": 2,
+    "roadkill_events": 33,
+    "sighting_events": 6
+  },
+  "positive_label_audit": {
+    "capture_events": 206,
+    "labeled_ok": 12,
+    "not_labeled": 194,
+    "status_counts": {
+      "no_visit_within_10_minutes": 128,
+      "missing_gps": 56,
+      "ok": 12,
+      "segment_not_visited_in_gpx": 9,
+      "road_unmatched": 1
+    }
+  },
+  "environmental_feature_missing_rate": {
+    "moon_age_days": 0.0,
+    "moon_illumination": 0.0,
+    "moon_phase_sin": 0.0,
+    "moon_phase_cos": 0.0,
+    "fog_wmo_flag": 0.0,
+    "temp_dewpoint_spread_c": 0.0,
+    "fog_proxy_flag": 0.0,
+    "temperature_change_3visits_c": 0.0009183087813277214,
+    "tide_height_cm": 0.0,
+    "tide_change_1h_cm": 0.0,
+    "tide_state_code": 0.0,
+    "minutes_to_nearest_turning_tide": 0.0,
+    "tide_source_available": 0.0
+  },
+  "feature_sources": {
+    "lunar": "deterministic synodic calculation",
+    "fog": "Open-Meteo WMO code 45/48 plus temperature-dewpoint proxy",
+    "temperature": "Open-Meteo hourly",
+    "tide": "JMA Amami O9 hourly predicted tide table; local authoritative tide_hourly.csv overrides when supplied"
+  }
 }
