@@ -1,7 +1,7 @@
 {
   "status": "ok",
-  "rows": 26135,
-  "positives": 13,
+  "rows": 26267,
+  "positives": 145,
   "features": [
     "sin_hour",
     "cos_hour",
@@ -145,75 +145,362 @@
     "bio_クロウサギ_30m_250m_count",
     "bio_クロウサギ_30m_500m_count"
   ],
-  "brier_train": 0.01306774563985744,
+  "brier_train": 0.006311967172260371,
   "cv_method": "leave-one-survey-night-out",
   "cv_folds": [
+    {
+      "night": "2026-05-13",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-05-15",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-05-18",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-05-19",
+      "status": "ok",
+      "rows": 1,
+      "positives": 1,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-05-21",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-05-23",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-05-24",
+      "status": "ok",
+      "rows": 1,
+      "positives": 1,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-04",
+      "status": "ok",
+      "rows": 5,
+      "positives": 5,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-06",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-10",
+      "status": "ok",
+      "rows": 5,
+      "positives": 5,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-12",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-13",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-16",
+      "status": "ok",
+      "rows": 1,
+      "positives": 1,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-17",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-18",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-20",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 5.1022091074114e-25
+    },
+    {
+      "night": "2026-06-22",
+      "status": "ok",
+      "rows": 5,
+      "positives": 5,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-23",
+      "status": "ok",
+      "rows": 5,
+      "positives": 5,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-24",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 2.4891848480161345e-28
+    },
+    {
+      "night": "2026-06-28",
+      "status": "ok",
+      "rows": 10,
+      "positives": 10,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-06-30",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-01",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-08",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-09",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-10",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-16",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-17",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 1.3312027775604574e-30
+    },
+    {
+      "night": "2026-07-20",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-22",
+      "status": "ok",
+      "rows": 1,
+      "positives": 1,
+      "brier": 4.773870654035475e-26
+    },
+    {
+      "night": "2026-07-24",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-25",
+      "status": "ok",
+      "rows": 5,
+      "positives": 5,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-26",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-30",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-07-31",
+      "status": "ok",
+      "rows": 1,
+      "positives": 1,
+      "brier": 0.0
+    },
+    {
+      "night": "2026-08-01",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 4.078624529821128e-27
+    },
+    {
+      "night": "2026-08-02",
+      "status": "ok",
+      "rows": 3,
+      "positives": 3,
+      "brier": 8.937549341489472e-16
+    },
+    {
+      "night": "2026-08-03",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 3.865893231733326e-22
+    },
+    {
+      "night": "2026-08-05",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 9.833748169847156e-21
+    },
+    {
+      "night": "2026-08-09",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 0.42597863965144267
+    },
+    {
+      "night": "2026-08-11",
+      "status": "ok",
+      "rows": 2,
+      "positives": 2,
+      "brier": 1.7820311456555246e-20
+    },
+    {
+      "night": "2026-08-12",
+      "status": "ok",
+      "rows": 4,
+      "positives": 4,
+      "brier": 7.218651767798083e-13
+    },
     {
       "night": "2026-08-13",
       "status": "ok",
       "rows": 2796,
       "positives": 2,
-      "brier": 0.034786427771346475,
-      "pr_auc": 0.0013111725119929482
+      "brier": 0.020285072391236333,
+      "pr_auc": 0.0012195628872835888
     },
     {
       "night": "2026-08-15",
       "status": "ok",
-      "rows": 4063,
-      "positives": 3,
-      "brier": 0.06306313005542794,
-      "pr_auc": 0.000882232544537902
+      "rows": 4064,
+      "positives": 4,
+      "brier": 0.016500743111388425,
+      "pr_auc": 0.2511168810496035
     },
     {
       "night": "2026-08-17",
       "status": "ok",
-      "rows": 2485,
-      "positives": 1,
-      "brier": 0.030171236254346763,
-      "pr_auc": 0.0012300123001230013
+      "rows": 2486,
+      "positives": 2,
+      "brier": 0.014887722256476076,
+      "pr_auc": 0.5011990407673861
     },
     {
       "night": "2026-08-19",
       "status": "ok",
-      "rows": 3863,
-      "positives": 2,
-      "brier": 0.0005190073893111703,
-      "pr_auc": 0.0023297153438559645
+      "rows": 3865,
+      "positives": 4,
+      "brier": 0.0005186012693647423,
+      "pr_auc": 0.5035667515124687
     },
     {
       "night": "2026-08-21",
       "status": "ok",
       "rows": 2640,
       "positives": 0,
-      "brier": 0.055220126833288974
+      "brier": 0.028673219662381837
     },
     {
       "night": "2026-08-23",
       "status": "ok",
-      "rows": 3812,
-      "positives": 1,
-      "brier": 0.009476459808651388,
-      "pr_auc": 0.0005583472920156337
+      "rows": 3814,
+      "positives": 3,
+      "brier": 0.003042290021006796,
+      "pr_auc": 0.6671848013816926
     },
     {
       "night": "2026-08-24",
       "status": "ok",
       "rows": 3329,
       "positives": 3,
-      "brier": 0.003188939525063985,
-      "pr_auc": 0.0006615470868092656
+      "brier": 0.0019785994825703423,
+      "pr_auc": 0.0006583809254987062
     },
     {
       "night": "2026-08-27",
       "status": "ok",
-      "rows": 3147,
-      "positives": 1,
-      "brier": 0.15604450729521935,
-      "pr_auc": 0.00032414910858995135
+      "rows": 3149,
+      "positives": 3,
+      "brier": 0.25808655216342846,
+      "pr_auc": 0.002374207510831516
     }
   ],
-  "brier_loono": 0.04262721411395846,
-  "pr_auc_loono": 0.00045285226961442785,
-  "oof_rows": 26135,
-  "oof_positives": 13
+  "brier_loono": 0.0407448591622378,
+  "pr_auc_loono": 0.16528426887632747,
+  "oof_rows": 26267,
+  "oof_positives": 145
 }
