@@ -18,7 +18,7 @@ def fit_model(root,data,cfg):
         "temperature_c","temperature_change_3visits_c","humidity_pct","dew_point_c","temp_dewpoint_spread_c","hours_since_rain",
         "weather_code","surface_pressure","cloud_cover","fog_wmo_flag","fog_proxy_flag",
         "moon_age_days","moon_phase_sin","moon_phase_cos","moon_illumination",
-        "tide_height_cm","tide_state_code","tide_source_available",
+        "tide_height_cm","tide_change_1h_cm","tide_state_code","minutes_to_nearest_turning_tide","tide_source_available",
         "curvature_deg","segment_prior_visits","slope_observed_deg","local_relief_proxy_m","road_class_code",
         "junction_distance_m","stream_distance_m","coast_distance_m","forest_distance_m","farmland_distance_m","residential_distance_m"
     ]
