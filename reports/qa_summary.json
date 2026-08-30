@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-08-30T21:57:32.249450+09:00",
+  "generated_at": "2026-08-30T22:26:28.017364+09:00",
   "gpx_sessions": 8,
   "gpx_points": 153397,
   "raw_event_rows": 1089,
@@ -751,7 +751,10 @@
   "learning_sources": {
     "gpx_visit_rows": 26150,
     "capture_gps_anchor_rows": 137,
-    "note": "capture anchors are model evidence only and do not count as GPX exploration visits"
+    "reconstructed_spatial_rows": 30059,
+    "reconstructed_spatial_positive_rows": 87,
+    "reconstructed_spatial_negative_rows": 29972,
+    "note": "B-high/B-medium reconstruction is spatial/location evidence only; no fabricated historical time enters temporal model"
   },
   "model_roles": {
     "evaluation": {
@@ -1233,5 +1236,44 @@
       }
     ],
     "warning": "Routes are reconstructed spatial exposure only. Later GPX timestamps are never copied into May-July, so exact historical traversal time is not fabricated."
+  },
+  "reconstructed_spatial_learning": {
+    "status": "ok",
+    "rows": 30059,
+    "nights": 31,
+    "positive_segment_rows": 87,
+    "negative_segment_rows": 29972,
+    "confidence_counts": {
+      "B-medium": 25423,
+      "B-high": 4636
+    },
+    "usage": "spatial/location model only; excluded from temporal/weather/time-of-night model",
+    "c_low_excluded": 162
+  },
+  "historical_spatial_backtest": {
+    "status": "ok",
+    "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives and static road/terrain features only; no fabricated historical clock time",
+    "nights_total": 31,
+    "nights_scored": 29,
+    "nights_skipped": 2,
+    "top_k_segments": 30,
+    "features": [
+      "length_m",
+      "bearing_deg",
+      "curvature_deg",
+      "road_class_code",
+      "junction_distance_m",
+      "stream_distance_m",
+      "coast_distance_m",
+      "forest_distance_m",
+      "farmland_distance_m",
+      "residential_distance_m"
+    ],
+    "location_eligible_positive_segments": 84,
+    "location_hits_top_k": 1,
+    "location_hit_rate_top_k": 0.011904761904761904,
+    "location_hits_top_10pct": 10,
+    "location_hit_rate_top_10pct": 0.11904761904761904,
+    "median_actual_rank_percentile": 0.42748091603053434
   }
 }

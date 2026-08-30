@@ -1,0 +1,26 @@
+{
+  "status": "ok",
+  "method": "walk-forward by operational night using B-high/B-medium reconstructed route negatives and static road/terrain features only; no fabricated historical clock time",
+  "nights_total": 31,
+  "nights_scored": 29,
+  "nights_skipped": 2,
+  "top_k_segments": 30,
+  "features": [
+    "length_m",
+    "bearing_deg",
+    "curvature_deg",
+    "road_class_code",
+    "junction_distance_m",
+    "stream_distance_m",
+    "coast_distance_m",
+    "forest_distance_m",
+    "farmland_distance_m",
+    "residential_distance_m"
+  ],
+  "location_eligible_positive_segments": 84,
+  "location_hits_top_k": 1,
+  "location_hit_rate_top_k": 0.011904761904761904,
+  "location_hits_top_10pct": 10,
+  "location_hit_rate_top_10pct": 0.11904761904761904,
+  "median_actual_rank_percentile": 0.42748091603053434
+}
