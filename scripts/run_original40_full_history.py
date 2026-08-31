@@ -63,11 +63,9 @@ def main():
     confirmation_nights = nights[split_idx:]
 
     variants = []
-    rank = 0
     for radius in [250, 500, 1000, 2000, 3000]:
         for bw in [0.75, 1.0, 1.5, 2.0]:
             for tau in [None, 120]:
-                rank += 1
                 params = {
                     "radius_m": radius,
                     "bandwidth_h": bw,
@@ -91,11 +89,13 @@ def main():
                 variants.append(row)
 
     out = pd.DataFrame(variants)
+    # Model selection MUST use the early selection period only. Confirmation metrics
+    # are retained for descriptive reporting but never participate in ranking.
     out = out.sort_values(
-        ["confirmation_selection_score", "confirmation_within_60m_rate", "confirmation_median_error_min", "all_selection_score"],
-        ascending=[False, False, True, False],
+        ["selection_selection_score", "selection_within_30m_rate", "selection_within_60m_rate", "selection_median_error_min"],
+        ascending=[False, False, False, True],
     ).reset_index(drop=True)
-    out.insert(0, "rank", np.arange(1, len(out) + 1))
+    out.insert(0, "selection_rank", np.arange(1, len(out) + 1))
     out.to_csv(reports / "original40_full_history_tournament.csv", index=False)
 
     top = out.iloc[0].to_dict() if not out.empty else {}
@@ -107,9 +107,9 @@ def main():
         "selection_nights": int(len(selection_nights)),
         "confirmation_nights": int(len(confirmation_nights)),
         "variants": int(len(out)),
-        "ranking_primary": "frozen confirmation-period score",
-        "best": top,
-        "guardrail": "The all-history walk-forward results are descriptive. The later 30% chronological confirmation metrics are the primary reliability check because the 40 variants are not allowed to tune on that period.",
+        "ranking_primary": "selection-period score only; confirmation period untouched",
+        "best_selected_on_early_period": top,
+        "guardrail": "The 40 variants are ranked exclusively on the early 70% selection period. The later 30% confirmation metrics for the selected winner are untouched and are the primary reliability estimate. All-history metrics are descriptive only.",
     }
     (reports / "original40_full_history_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2, default=str), encoding="utf-8"
