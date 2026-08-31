@@ -34,11 +34,21 @@ jobs:
           import json
           p='reports/personal_route_score_strict_summary.json'
           x=json.load(open(p,encoding='utf-8'))
-          s=json.dumps(x,ensure_ascii=False)
-          banned=['latitude','longitude','road_name','segment_id']
-          bad=[b for b in banned if b in s]
-          if bad: raise SystemExit('privacy leak: '+','.join(bad))
-          print('privacy gate passed')
+          banned={'lat','lon','latitude','longitude','road_name','segment_id'}
+          leaks=[]
+          def walk(v,path='root'):
+              if isinstance(v,dict):
+                  for k,val in v.items():
+                      if str(k).lower() in banned:
+                          leaks.append(f'{path}.{k}')
+                      walk(val,f'{path}.{k}')
+              elif isinstance(v,list):
+                  for i,val in enumerate(v):
+                      walk(val,f'{path}[{i}]')
+          walk(x)
+          if leaks:
+              raise SystemExit('privacy leak keys: '+','.join(leaks))
+          print('privacy gate passed: no raw location identifier keys')
           PY
       - name: Commit report
         run: |
