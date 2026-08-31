@@ -1,0 +1,716 @@
+{
+  "status": "ok",
+  "protocol": {
+    "mode": "pre-night fixed 10-minute schedule ranking tournament v2",
+    "actual_gpx_nights": 8,
+    "selection_nights": 4,
+    "confirmation_nights": 4,
+    "prediction_counts": [
+      10,
+      20,
+      30,
+      50,
+      100,
+      200,
+      300,
+      500
+    ],
+    "distance_thresholds_m": [
+      50,
+      100,
+      250
+    ],
+    "time_windows_min": [
+      10,
+      20,
+      30
+    ],
+    "candidate_roads": "owner-traversed road segments known before target night only",
+    "weather_leakage_guard": "only 18:00 target-night context and prior 24/48h rainfall/history are used; future realized target-night weather is not used",
+    "outcome_leakage_guard": "target-night captures and GPX passage times are hidden when schedule is generated",
+    "privacy": "raw road names, coordinates, segment IDs and hotspot rankings are not exported"
+  },
+  "components": {
+    "spatial": "daily-updated occupancy features",
+    "local_time": "point-conditioned KDE using only prior captures",
+    "season_weather_memory": "45-day cyclic season similarity + 18:00 weather/rain/fog context + weak 365-day recency + 60-minute capture-time kernel",
+    "personal_detection_proxy": "(prior positive GPX visits + 1)/(prior GPX visits + 12)",
+    "exposure_bias_control": "1/sqrt(1 + prior GPX visits)"
+  },
+  "variants": [
+    {
+      "name": "baseline",
+      "a_spatial": 1.0,
+      "b_local_time": 1.0,
+      "c_memory": 0.0,
+      "d_detection": 0.0,
+      "e_exposure": 0.0
+    },
+    {
+      "name": "memory",
+      "a_spatial": 1.0,
+      "b_local_time": 1.0,
+      "c_memory": 1.0,
+      "d_detection": 0.0,
+      "e_exposure": 0.0
+    },
+    {
+      "name": "detection",
+      "a_spatial": 1.0,
+      "b_local_time": 1.0,
+      "c_memory": 0.0,
+      "d_detection": 0.5,
+      "e_exposure": 0.0
+    },
+    {
+      "name": "memory_detection",
+      "a_spatial": 1.0,
+      "b_local_time": 1.0,
+      "c_memory": 1.0,
+      "d_detection": 0.5,
+      "e_exposure": 0.0
+    },
+    {
+      "name": "full_balanced",
+      "a_spatial": 1.0,
+      "b_local_time": 1.0,
+      "c_memory": 1.0,
+      "d_detection": 0.5,
+      "e_exposure": 0.25
+    },
+    {
+      "name": "full_time_heavy",
+      "a_spatial": 1.0,
+      "b_local_time": 2.0,
+      "c_memory": 1.0,
+      "d_detection": 0.5,
+      "e_exposure": 0.25
+    },
+    {
+      "name": "full_spatial_heavy",
+      "a_spatial": 2.0,
+      "b_local_time": 1.0,
+      "c_memory": 1.0,
+      "d_detection": 0.5,
+      "e_exposure": 0.25
+    },
+    {
+      "name": "full_memory_heavy",
+      "a_spatial": 1.0,
+      "b_local_time": 1.0,
+      "c_memory": 2.0,
+      "d_detection": 0.5,
+      "e_exposure": 0.25
+    }
+  ],
+  "selection_scores": {
+    "baseline": 1.5555555555555554,
+    "memory": 0.4444444444444444,
+    "detection": 0.7777777777777778,
+    "memory_detection": 0.4444444444444444,
+    "full_balanced": 0.4444444444444444,
+    "full_time_heavy": 0.4444444444444444,
+    "full_spatial_heavy": 0.4444444444444444,
+    "full_memory_heavy": 0.2222222222222222
+  },
+  "best_selected_on_early_gpx_nights": "baseline",
+  "best_selection": [
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 10,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 20,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 30,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 50,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 100,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 200,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.2222222222222222,
+        "100m_20min": 0.2222222222222222,
+        "100m_30min": 0.2222222222222222,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 300,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.2222222222222222,
+        "100m_20min": 0.2222222222222222,
+        "100m_30min": 0.2222222222222222,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "selection",
+      "variant": "baseline",
+      "n_predictions": 500,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.2222222222222222,
+        "100m_20min": 0.2222222222222222,
+        "100m_30min": 0.2222222222222222,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    }
+  ],
+  "best_confirmation": [
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 10,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 20,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 30,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 50,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 100,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 200,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 300,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 500,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    }
+  ],
+  "baseline_confirmation": [
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 10,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 20,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 30,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 50,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 100,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 200,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 300,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "variant": "baseline",
+      "n_predictions": 500,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    }
+  ],
+  "best_all_scored": [
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 10,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.05555555555555555,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.05555555555555555
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 20,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.05555555555555555,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.05555555555555555
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 30,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.05555555555555555,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 50,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.05555555555555555,
+        "50m_20min": 0.05555555555555555,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 100,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.05555555555555555,
+        "50m_20min": 0.05555555555555555,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.16666666666666666
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 200,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.16666666666666666,
+        "100m_20min": 0.16666666666666666,
+        "100m_30min": 0.16666666666666666,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 300,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.16666666666666666,
+        "100m_20min": 0.16666666666666666,
+        "100m_30min": 0.16666666666666666,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "all",
+      "variant": "baseline",
+      "n_predictions": 500,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.16666666666666666,
+        "100m_20min": 0.16666666666666666,
+        "100m_30min": 0.16666666666666666,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    }
+  ],
+  "target": {
+    "coverage_goal": 0.9,
+    "smallest_confirmation_prediction_count_reaching_90pct": {
+      "50m_10min": null,
+      "50m_20min": null,
+      "50m_30min": null,
+      "100m_10min": null,
+      "100m_20min": null,
+      "100m_30min": null,
+      "250m_10min": null,
+      "250m_20min": null,
+      "250m_30min": null
+    }
+  },
+  "guardrail": "Variant selection uses early GPX nights only. Confirmation results are not used to choose the variant. Candidate count alone must not be treated as model improvement."
+}
