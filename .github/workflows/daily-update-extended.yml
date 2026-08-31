@@ -1,0 +1,44 @@
+name: Daily Update Extended Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/run_daily_update_extended.py'
+      - 'scripts/run_original40_full_history.py'
+      - '.github/workflows/daily-update-extended.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-update-extended
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Corrected Original 40
+        run: python scripts/run_original40_full_history.py
+      - name: Daily refit across Occupancy Hazard and Hurdle
+        run: python scripts/run_daily_update_extended.py
+      - name: Commit reports
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git pull --rebase origin agent/full-data-baseline-refresh-data
+          git add reports data/processed/cache || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refresh daily update extended validation'
+            git pull --rebase origin agent/full-data-baseline-refresh-data
+            git push
+          fi
