@@ -1,0 +1,67 @@
+name: Advanced Habu Model Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/run_advanced_time_models.py'
+      - 'scripts/run_occupancy_detection_ranking.py'
+      - 'scripts/run_hurdle_count_model.py'
+      - 'scripts/run_original40_full_history.py'
+      - '.github/workflows/advanced-models.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: advanced-habu-model-validation
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install Python dependencies
+        run: pip install -e '.[dev]'
+
+      - name: Confirm processed inputs
+        run: |
+          test -f data/processed/events_matched.csv
+          test -f data/processed/learning_10m_road.csv
+          test -f data/processed/reconstructed_spatial_learning_2026-05_07.csv
+
+      - name: Original 40 full-history benchmark
+        run: python scripts/run_original40_full_history.py
+
+      - name: Environmental hazard and hierarchical time
+        run: python scripts/run_advanced_time_models.py
+
+      - name: Occupancy detection and exposure-corrected ranking
+        run: python scripts/run_occupancy_detection_ranking.py
+
+      - name: Hurdle count model
+        run: python scripts/run_hurdle_count_model.py
+
+      - name: Commit validation reports
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add reports data/processed/cache || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refresh advanced Habu model validation'
+            git push
+          fi
+
+      - name: Upload advanced validation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: advanced-habu-model-validation
+          path: reports
