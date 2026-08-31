@@ -1,22 +1,168 @@
 {
-  "status":"ok",
-  "common_rule":"chronological walk-forward only; each target night is scored from prior nights",
-  "occupancy_component":{
-    "training_rows":31726,
-    "reconstructed_nights":33,
-    "positive_segment_rows":93,
-    "spatial_features":45,
-    "naive_occupancy_ranking":{"nights_scored":30,"eligible_positive_segments":88,"top30_hits":12,"top30_rate":0.13636363636363635,"top1pct_hits":3,"top1pct_rate":0.03409090909090909,"top5pct_hits":14,"top5pct_rate":0.1590909090909091,"top10pct_hits":25,"top10pct_rate":0.2840909090909091,"median_rank_pct":0.29467477015254295}
+  "status": "ok",
+  "common_rule": "chronological walk-forward only; each target night is scored from prior nights",
+  "occupancy_component": {
+    "training_rows": 31726,
+    "reconstructed_nights": 33,
+    "positive_segment_rows": 93,
+    "spatial_features": 45,
+    "naive_occupancy_ranking": {
+      "nights_scored": 30,
+      "eligible_positive_segments": 88,
+      "top30_hits": 12,
+      "top30_rate": 0.13636363636363635,
+      "top1pct_hits": 3,
+      "top1pct_rate": 0.03409090909090909,
+      "top5pct_hits": 14,
+      "top5pct_rate": 0.1590909090909091,
+      "top10pct_hits": 25,
+      "top10pct_rate": 0.2840909090909091,
+      "median_rank_pct": 0.29467477015254295
+    }
   },
-  "occupancy_x_detection_strict_gpx":{
-    "occupancy_only":{"nights_scored":6,"positive_visit_rows":8,"top30_hits":0,"top30_rate":0.0,"top10pct_hits":1,"top10pct_rate":0.125,"median_rank_pct_nightly_mean":0.3503100781877683},
-    "detection_only":{"nights_scored":6,"positive_visit_rows":8,"top30_hits":4,"top30_rate":0.5,"top10pct_hits":4,"top10pct_rate":0.5,"median_rank_pct_nightly_mean":0.16702719885887565},
-    "occupancy_x_detection":{"nights_scored":6,"positive_visit_rows":8,"top30_hits":2,"top30_rate":0.25,"top10pct_hits":4,"top10pct_rate":0.5,"median_rank_pct_nightly_mean":0.18843096918590205}
+  "occupancy_x_detection_strict_gpx": {
+    "occupancy_only": {
+      "nights_scored": 6,
+      "positive_visit_rows": 8,
+      "top30_hits": 0,
+      "top30_rate": 0.0,
+      "top10pct_hits": 1,
+      "top10pct_rate": 0.125,
+      "median_rank_pct_nightly_mean": 0.35036988680020853
+    },
+    "detection_only": {
+      "nights_scored": 6,
+      "positive_visit_rows": 8,
+      "top30_hits": 4,
+      "top30_rate": 0.5,
+      "top10pct_hits": 4,
+      "top10pct_rate": 0.5,
+      "median_rank_pct_nightly_mean": 0.16677298849980354
+    },
+    "occupancy_x_detection": {
+      "nights_scored": 6,
+      "positive_visit_rows": 8,
+      "top30_hits": 2,
+      "top30_rate": 0.25,
+      "top10pct_hits": 4,
+      "top10pct_rate": 0.5,
+      "median_rank_pct_nightly_mean": 0.18843096918590205
+    },
+    "nightly_rows": [
+      {
+        "night": "2026-08-17",
+        "positive_visit_rows": 1,
+        "candidate_visit_rows": 2485,
+        "occupancy_p_top30_hits": 0,
+        "occupancy_p_top10pct_hits": 0,
+        "occupancy_p_median_rank_pct": 0.5030181086519114,
+        "detection_p_top30_hits": 0,
+        "detection_p_top10pct_hits": 0,
+        "detection_p_median_rank_pct": 0.4277665995975855,
+        "occ_x_det_top30_hits": 0,
+        "occ_x_det_top10pct_hits": 0,
+        "occ_x_det_median_rank_pct": 0.41851106639839036
+      },
+      {
+        "night": "2026-08-19",
+        "positive_visit_rows": 2,
+        "candidate_visit_rows": 3863,
+        "occupancy_p_top30_hits": 0,
+        "occupancy_p_top10pct_hits": 0,
+        "occupancy_p_median_rank_pct": 0.355034946932436,
+        "detection_p_top30_hits": 1,
+        "detection_p_top10pct_hits": 1,
+        "detection_p_median_rank_pct": 0.29614289412373807,
+        "occ_x_det_top30_hits": 1,
+        "occ_x_det_top10pct_hits": 1,
+        "occ_x_det_median_rank_pct": 0.289412373802744
+      },
+      {
+        "night": "2026-08-21",
+        "positive_visit_rows": 0,
+        "candidate_visit_rows": 2640,
+        "occupancy_p_top30_hits": 0,
+        "occupancy_p_top10pct_hits": 0,
+        "occupancy_p_median_rank_pct": NaN,
+        "detection_p_top30_hits": 0,
+        "detection_p_top10pct_hits": 0,
+        "detection_p_median_rank_pct": NaN,
+        "occ_x_det_top30_hits": 0,
+        "occ_x_det_top10pct_hits": 0,
+        "occ_x_det_median_rank_pct": NaN
+      },
+      {
+        "night": "2026-08-23",
+        "positive_visit_rows": 1,
+        "candidate_visit_rows": 3812,
+        "occupancy_p_top30_hits": 0,
+        "occupancy_p_top10pct_hits": 0,
+        "occupancy_p_median_rank_pct": 0.20750262329485833,
+        "detection_p_top30_hits": 1,
+        "detection_p_top10pct_hits": 1,
+        "detection_p_median_rank_pct": 0.00026232948583420777,
+        "occ_x_det_top30_hits": 0,
+        "occ_x_det_top10pct_hits": 1,
+        "occ_x_det_median_rank_pct": 0.034365162644281216
+      },
+      {
+        "night": "2026-08-24",
+        "positive_visit_rows": 3,
+        "candidate_visit_rows": 3344,
+        "occupancy_p_top30_hits": 0,
+        "occupancy_p_top10pct_hits": 1,
+        "occupancy_p_median_rank_pct": 0.19407894736842105,
+        "detection_p_top30_hits": 1,
+        "detection_p_top10pct_hits": 1,
+        "detection_p_median_rank_pct": 0.1055622009569378,
+        "occ_x_det_top30_hits": 1,
+        "occ_x_det_top10pct_hits": 2,
+        "occ_x_det_median_rank_pct": 0.07117224880382775
+      },
+      {
+        "night": "2026-08-27",
+        "positive_visit_rows": 1,
+        "candidate_visit_rows": 3147,
+        "occupancy_p_top30_hits": 0,
+        "occupancy_p_top10pct_hits": 0,
+        "occupancy_p_median_rank_pct": 0.492214807753416,
+        "detection_p_top30_hits": 1,
+        "detection_p_top10pct_hits": 1,
+        "detection_p_median_rank_pct": 0.004130918334922148,
+        "occ_x_det_top30_hits": 0,
+        "occ_x_det_top10pct_hits": 0,
+        "occ_x_det_median_rank_pct": 0.12869399428026693
+      }
+    ]
   },
-  "detection_guardrail":"Detection requires actual timed visits. Reconstructed May-Jul routes improve occupancy but are never used as fabricated timed detection negatives. Therefore strict occupancy x detection evaluation is limited by actual GPX-positive visit rows.",
-  "exposure_bias_test":{
-    "naive_ranking":{"nights_scored":30,"eligible_positive_segments":88,"top30_hits":12,"top30_rate":0.13636363636363635,"top1pct_hits":3,"top1pct_rate":0.03409090909090909,"top5pct_hits":14,"top5pct_rate":0.1590909090909091,"top10pct_hits":25,"top10pct_rate":0.2840909090909091,"median_rank_pct":0.29467477015254295},
-    "exposure_corrected_ranking":{"nights_scored":30,"eligible_positive_segments":88,"top30_hits":9,"top30_rate":0.10227272727272728,"top1pct_hits":4,"top1pct_rate":0.045454545454545456,"top5pct_hits":12,"top5pct_rate":0.13636363636363635,"top10pct_hits":16,"top10pct_rate":0.18181818181818182,"median_rank_pct":0.45114837768866206},
-    "correction":"add prior exposure count as a feature, down-weight repeatedly exposed training rows, and divide test priority by sqrt(1+prior exposure). This directly tests whether ranking merely rewards roads searched more often."
+  "detection_guardrail": "Detection requires actual timed visits. Reconstructed May-Jul routes improve occupancy but are never used as fabricated timed detection negatives. Therefore strict occupancy x detection evaluation is limited by actual GPX-positive visit rows.",
+  "exposure_bias_test": {
+    "naive_ranking": {
+      "nights_scored": 30,
+      "eligible_positive_segments": 88,
+      "top30_hits": 12,
+      "top30_rate": 0.13636363636363635,
+      "top1pct_hits": 3,
+      "top1pct_rate": 0.03409090909090909,
+      "top5pct_hits": 14,
+      "top5pct_rate": 0.1590909090909091,
+      "top10pct_hits": 25,
+      "top10pct_rate": 0.2840909090909091,
+      "median_rank_pct": 0.29467477015254295
+    },
+    "exposure_corrected_ranking": {
+      "nights_scored": 30,
+      "eligible_positive_segments": 88,
+      "top30_hits": 9,
+      "top30_rate": 0.10227272727272728,
+      "top1pct_hits": 4,
+      "top1pct_rate": 0.045454545454545456,
+      "top5pct_hits": 12,
+      "top5pct_rate": 0.13636363636363635,
+      "top10pct_hits": 16,
+      "top10pct_rate": 0.18181818181818182,
+      "median_rank_pct": 0.45114837768866206
+    },
+    "correction": "add prior exposure count as a feature, down-weight repeatedly exposed training rows, and divide test priority by sqrt(1+prior exposure). This directly tests whether ranking merely rewards roads searched more often."
   }
 }
