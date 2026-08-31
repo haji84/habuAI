@@ -1,0 +1,38 @@
+name: Advanced Core Habu Results
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/advanced-core-results.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: pip install -e '.[dev]'
+      - name: Original 40 benchmark
+        run: python scripts/run_original40_full_history.py
+      - name: Environmental hazard and hierarchical time
+        run: python scripts/run_advanced_time_models.py
+      - name: Occupancy detection and ranking
+        run: python scripts/run_occupancy_detection_ranking.py
+      - name: Commit reports
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add reports data/processed/cache || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: persist advanced core Habu results'
+            git push
+          fi
