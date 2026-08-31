@@ -1,0 +1,61 @@
+name: Pre-night Ranker V2 Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/run_prenight_ranker_v2.py'
+      - '.github/workflows/prenight-ranker-v2.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prenight-ranker-v2
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Run strengthened ranker backtest
+        run: python scripts/run_prenight_ranker_v2.py
+      - name: Validate outputs and privacy
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('reports/prenight_ranker_v2_summary.json')
+          x=json.loads(p.read_text(encoding='utf-8'))
+          assert x['status']=='ok'
+          assert x['protocol']['prediction_counts']==[10,20,30,50,100,200,300,500]
+          assert x['best_selected_on_early_gpx_nights']
+          forbidden={'lat','lon','latitude','longitude','road_name','segment_id'}
+          def walk(v):
+              if isinstance(v,dict):
+                  for k,z in v.items():
+                      if str(k).lower() in forbidden: raise SystemExit('privacy key leak: '+str(k))
+                      walk(z)
+              elif isinstance(v,list):
+                  for z in v: walk(z)
+          walk(x)
+          print('ranker v2 validation passed')
+          PY
+      - name: Commit reports
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add reports/prenight_ranker_v2_summary.json reports/prenight_ranker_v2_public_audit.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: add strengthened pre-night ranker validation'
+            git pull --rebase origin agent/full-data-baseline-refresh-data
+            git push
+          fi
