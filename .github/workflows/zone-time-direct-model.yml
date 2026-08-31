@@ -1,0 +1,55 @@
+name: Zone Time Direct Model Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/run_zone_time_direct_model.py'
+      - '.github/workflows/zone-time-direct-model.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zone-time-direct-model-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Run direct zone-time model
+        run: python scripts/run_zone_time_direct_model.py
+      - name: Validate output and privacy
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('reports/zone_time_direct_model_summary.json')
+          x=json.loads(p.read_text(encoding='utf-8'))
+          assert x['status']=='ok'
+          assert x['legacy_model_preserved'] is True
+          assert x['protocol']['zone_sizes_m']==[100,250,500,1000]
+          assert x['protocol']['prediction_counts']==[30,50,100]
+          text=p.read_text(encoding='utf-8').lower()
+          for forbidden in ['latitude','longitude','road_name','segment_id','zone_id']:
+              assert forbidden not in text
+          print('zone-time direct model validation passed')
+          PY
+      - name: Commit report
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add reports/zone_time_direct_model_summary.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: add zone-time direct model validation'
+            git pull --rebase origin agent/full-data-baseline-refresh-data
+            git push
+          fi
