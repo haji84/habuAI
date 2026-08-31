@@ -1,0 +1,26 @@
+{
+  "status": "ok",
+  "purpose": "Compare fixed coefficients versus refitting after each completed night while keeping each target night's outcome hidden until after prediction.",
+  "occupancy": {
+    "protocol": {"reconstructed_nights": 33, "selection_nights": 23, "confirmation_nights": 10, "features": 45},
+    "frozen_model": {"nights_scored": 10, "eligible_positive_segments": 26, "top30_hits": 4, "top30_rate": 0.15384615384615385, "top10pct_hits": 9, "top10pct_rate": 0.34615384615384615, "median_rank_pct": 0.5152560793456157},
+    "expanding_daily_refit": {"nights_scored": 10, "eligible_positive_segments": 26, "top30_hits": 6, "top30_rate": 0.23076923076923078, "top10pct_hits": 9, "top10pct_rate": 0.34615384615384615, "median_rank_pct": 0.3447477729956961},
+    "guardrail": "Historical reconstructed routes are spatial-only. No fabricated passage times are used."
+  },
+  "hazard_v2": {
+    "protocol": {"capture_nights": 50, "selection_nights": 35, "confirmation_nights": 15, "confirmation_capture_events": 40, "feature_stage": "+fog (weather + rain24/48 + hours_since_rain + fog)"},
+    "frozen_coefficients": {"eligible": 40, "nights_scored": 15, "median_error_min": 69.0, "mean_error_min": 82.825, "within_30m_hits": 10, "within_30m_rate": 0.25, "within_60m_hits": 18, "within_60m_rate": 0.45, "within_90m_hits": 25, "within_90m_rate": 0.625, "within_120m_hits": 32, "within_120m_rate": 0.8},
+    "expanding_daily_refit": {"eligible": 40, "nights_scored": 15, "median_error_min": 49.5, "mean_error_min": 76.925, "within_30m_hits": 11, "within_30m_rate": 0.275, "within_60m_hits": 21, "within_60m_rate": 0.525, "within_90m_hits": 26, "within_90m_rate": 0.65, "within_120m_hits": 32, "within_120m_rate": 0.8},
+    "guardrail": "Both strategies use only features available before/scorable for the target night; same-night capture labels are outcomes only. Frozen coefficients still receive target-night environmental inputs."
+  },
+  "hurdle_count": {
+    "protocol": {"field_evidence_nights": 89, "selection_nights": 62, "confirmation_nights": 27, "zero_field_evidence_nights": 7},
+    "frozen_coefficients": {"eligible_nights": 27, "zero_nights": 1, "positive_nights": 26, "actual_total_captures": 72, "predicted_total_expected": 86.6107366526399, "count_mae": 1.3062692670384488, "zero_brier": 0.037464572100176, "multi2_eligible_positive_nights": 26, "multi2_actual_rate": 0.8846153846153846, "multi2_brier": 0.1092828256113229, "multi3_eligible_positive_nights": 26, "multi3_actual_rate": 0.5769230769230769, "multi3_brier": 0.33292420242320464, "multi5_eligible_positive_nights": 26, "multi5_actual_rate": 0.07692307692307693, "multi5_brier": 0.3895880555179051},
+    "expanding_daily_refit": {"eligible_nights": 27, "zero_nights": 1, "positive_nights": 26, "actual_total_captures": 72, "predicted_total_expected": 73.71961208204065, "count_mae": 1.234209845653172, "zero_brier": 0.051373155892950884, "multi2_eligible_positive_nights": 26, "multi2_actual_rate": 0.8846153846153846, "multi2_brier": 0.12111659765331814, "multi3_eligible_positive_nights": 26, "multi3_actual_rate": 0.5769230769230769, "multi3_brier": 0.3146189833638354, "multi5_eligible_positive_nights": 26, "multi5_actual_rate": 0.07692307692307693, "multi5_brier": 0.2781066175721861},
+    "guardrail": "Zero-night evidence remains sparse and includes weak field-evidence nights, so P(0) calibration is provisional."
+  },
+  "integration_readiness": {
+    "recommended_daily_cycle": ["freeze target-night outcome at 07:00", "predict count/location/time", "after the night, append verified observations", "score prior prediction", "refit only the model families proven to benefit from daily refit", "issue next-night integrated recommendation"],
+    "warning": "Do not claim a single integrated accuracy yet because occupancy, time, and count are evaluated on different observational units. A joint route-level prospective score is the next required validation."
+  }
+}
