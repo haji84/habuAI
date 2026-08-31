@@ -42,11 +42,21 @@ jobs:
       - name: Original 40 full-history benchmark
         run: python scripts/run_original40_full_history.py
 
-      - name: Environmental hazard and hierarchical time
-        run: python scripts/run_advanced_time_models.py
-
       - name: Enriched environmental hazard v2
         run: python scripts/run_environmental_hazard_v2.py
+
+      - name: Commit environmental hazard v2 report early
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add reports/environmental_hazard_v2_* data/processed/cache || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refresh environmental hazard v2 validation'
+            git push
+          fi
+
+      - name: Environmental hazard and hierarchical time
+        run: python scripts/run_advanced_time_models.py
 
       - name: Occupancy detection and exposure-corrected ranking
         run: python scripts/run_occupancy_detection_ranking.py
