@@ -83,6 +83,15 @@ jobs:
       - name: Re-evaluate original 40 time models on full history
         run: python scripts/run_original40_full_history.py
 
+      - name: Run environmental hazard and hierarchical time models
+        run: python scripts/run_advanced_time_models.py
+
+      - name: Run occupancy detection and exposure-bias ranking tests
+        run: python scripts/run_occupancy_detection_ranking.py
+
+      - name: Run hurdle nightly count model
+        run: python scripts/run_hurdle_count_model.py
+
       - name: Run joint point-time backtest
         run: python scripts/run_joint_point_time_backtest_v2.py
 
