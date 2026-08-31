@@ -1,0 +1,38 @@
+{
+  "status": "ok",
+  "method": "fast chronological hurdle baseline using only pre-night count/season history; any event-log night is weak field-evidence for a zero night",
+  "field_evidence_nights": 89,
+  "capture_positive_nights": 82,
+  "zero_field_evidence_nights": 7,
+  "all_walkforward": {
+    "eligible_nights": 77,
+    "zero_nights": 4,
+    "positive_nights": 73,
+    "actual_total": 192,
+    "predicted_expected_total": 156.7784250445444,
+    "count_mae": 1.3417447285694732,
+    "zero_brier": 0.14077260936921088,
+    "ge2_actual_rate": 0.7142857142857143,
+    "ge2_brier": 0.24406924705598032,
+    "ge3_actual_rate": 0.44155844155844154,
+    "ge3_brier": 0.22330040926517294,
+    "ge5_actual_rate": 0.09090909090909091,
+    "ge5_brier": 0.20393929434446992
+  },
+  "frozen_confirmation": {
+    "eligible_nights": 27,
+    "zero_nights": 1,
+    "positive_nights": 26,
+    "actual_total": 72,
+    "predicted_expected_total": 66.8545071646925,
+    "count_mae": 1.1714089684650764,
+    "zero_brier": 0.05368026184684051,
+    "ge2_actual_rate": 0.8518518518518519,
+    "ge2_brier": 0.18999289881725664,
+    "ge3_actual_rate": 0.5555555555555556,
+    "ge3_brier": 0.32236436329457047,
+    "ge5_actual_rate": 0.07407407407407407,
+    "ge5_brier": 0.2074845724715834
+  },
+  "guardrail": "Zero field-evidence nights are not all GPX-confirmed full surveys, so p_zero is provisional. The weather-enhanced hurdle model is evaluated separately."
+}
