@@ -1,0 +1,71 @@
+{
+  "status": "ok",
+  "profile_mode": "owner_personal",
+  "privacy": {
+    "secret_hotspot_protected": true,
+    "raw_location_identifiers_exported": false,
+    "other_user_profiles_isolated": true
+  },
+  "protocol": {
+    "actual_gpx_nights": 8,
+    "scored_nights": 7,
+    "scored_captures": 20,
+    "selection_nights": 4,
+    "selection_captures": 11,
+    "confirmation_nights_scored": 3,
+    "confirmation_captures": 9,
+    "distance_thresholds_m": [50, 100, 250],
+    "time_thresholds_min": [10, 20, 30, 60],
+    "candidate_scope": "actual owner GPX visits at actual passage times",
+    "strict_rule": "Only top-ranked route visits count. Whole-route coverage is not counted as prediction accuracy.",
+    "leakage_guard": "Target-night captures are hidden from model training."
+  },
+  "score": "route_score = spatial_occupancy^alpha * point_conditioned_time^beta",
+  "selected_variant": {
+    "alpha": 1.0,
+    "beta": 1.0,
+    "selection_note": "All tested alpha/beta variants tied on the early selection score, so this is a deterministic tie-break rather than evidence that 1.0/1.0 is uniquely best.",
+    "confirmation": {
+      "top1": {
+        "50m": {"10min": 0.0, "20min": 0.0, "30min": 0.0},
+        "100m": {"10min": 0.0, "20min": 0.0, "30min": 0.0},
+        "250m": {"10min": 0.0, "20min": 0.0, "30min": 0.0}
+      },
+      "top5": {
+        "50m": {"10min": 0.1111111111, "20min": 0.1111111111, "30min": 0.1111111111},
+        "100m": {"10min": 0.1111111111, "20min": 0.1111111111, "30min": 0.1111111111},
+        "250m": {"10min": 0.1111111111, "20min": 0.1111111111, "30min": 0.1111111111}
+      },
+      "top10pct": {
+        "50m": {"10min": 0.2222222222, "20min": 0.2222222222, "30min": 0.2222222222},
+        "100m": {"10min": 0.2222222222, "20min": 0.2222222222, "30min": 0.2222222222},
+        "250m": {"10min": 0.3333333333, "20min": 0.3333333333, "30min": 0.3333333333}
+      },
+      "top20pct": {
+        "50m": {"10min": 0.4444444444, "20min": 0.4444444444, "30min": 0.4444444444},
+        "100m": {"10min": 0.5555555556, "20min": 0.5555555556, "30min": 0.5555555556},
+        "250m": {"10min": 0.6666666667, "20min": 0.6666666667, "30min": 0.6666666667}
+      }
+    },
+    "all_scored": {
+      "top5_100m_10min": 0.05,
+      "top10pct_100m_10min": 0.15,
+      "top20pct_100m_10min": 0.35,
+      "top20pct_250m_10min": 0.50
+    }
+  },
+  "exploratory_only": {
+    "alpha1_beta2_confirmation": {
+      "top10pct_100m_10min": 0.3333333333,
+      "top10pct_250m_10min": 0.5555555556,
+      "top20pct_100m_10min": 0.5555555556,
+      "top20pct_250m_10min": 0.6666666667
+    },
+    "warning": "These confirmation results must not be used to select alpha/beta because that would contaminate the holdout."
+  },
+  "interpretation": {
+    "time_thresholds_identical_reason": "For captures recovered by a high-ranked spatial candidate, the realized GPX passage was already within 10 minutes. Therefore 10/20/30/60 minute rates are identical in this replay and the result is dominated by spatial prioritization, not proof of 10-minute forecasting accuracy.",
+    "current_answer": "The owner-personal score shows useful route prioritization signal in the upper 10-20 percent of actually driven visits, but top-1/top-5 precision remains weak and the strict confirmation sample is only 9 captures.",
+    "next_required_validation": "Generate road-by-10-minute candidate slots before the night, compare against random/exposure baselines, and score a precommitted route schedule against future captures."
+  }
+}
