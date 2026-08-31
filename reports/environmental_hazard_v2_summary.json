@@ -1,0 +1,92 @@
+{
+  "status": "ok",
+  "protocol": {
+    "gps_timestamp_capture_events": 150,
+    "capture_nights": 50,
+    "selection_nights": 35,
+    "confirmation_nights": 15,
+    "rollover": "07:00 Asia/Tokyo",
+    "min_prior_captures": 10,
+    "slot_minutes": 30
+  },
+  "data_sources": {
+    "weather": "Open-Meteo Historical Weather API; hourly temperature, humidity, dew point, precipitation, weather code, surface pressure, cloud cover. Derived rain_24h, rain_48h, hours_since_rain and fog proxies.",
+    "moon": "deterministic astronomical phase from synodic month; no external lookup required",
+    "tide": "Japan Meteorological Agency tide table station O9, Amami (Naze Kominato), used as regional proxy"
+  },
+  "feature_groups": {
+    "baseline_clock_priors": [
+      "sin_hour",
+      "cos_hour",
+      "sin_doy",
+      "cos_doy",
+      "global_prior",
+      "local3km_prior"
+    ],
+    "weather_current": [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "dew_point_2m",
+      "precipitation",
+      "weather_code",
+      "surface_pressure",
+      "cloud_cover"
+    ],
+    "rain_history": [
+      "rain_24h_mm",
+      "rain_48h_mm",
+      "hours_since_rain"
+    ],
+    "fog": [
+      "fog_wmo_flag",
+      "fog_proxy_flag",
+      "fog_any_flag"
+    ],
+    "moon": [
+      "moon_age_days",
+      "moon_illumination",
+      "moon_phase_sin",
+      "moon_phase_cos"
+    ],
+    "tide": [
+      "tide_height_cm",
+      "tide_change_1h_cm",
+      "tide_state_code",
+      "minutes_to_nearest_turning_tide"
+    ]
+  },
+  "best_stage_by_frozen_confirmation": {
+    "model": "+fog",
+    "feature_count": 19,
+    "all_eligible": 128,
+    "all_nights_scored": 41,
+    "all_median_error_min": 79.0,
+    "all_mean_error_min": 100.109375,
+    "all_within_30m_hits": 34,
+    "all_within_30m_rate": 0.265625,
+    "all_within_60m_hits": 55,
+    "all_within_60m_rate": 0.4296875,
+    "all_within_90m_hits": 73,
+    "all_within_90m_rate": 0.5703125,
+    "all_within_120m_hits": 94,
+    "all_within_120m_rate": 0.734375,
+    "confirmation_eligible": 40,
+    "confirmation_nights_scored": 15,
+    "confirmation_median_error_min": 49.5,
+    "confirmation_mean_error_min": 76.925,
+    "confirmation_within_30m_hits": 11,
+    "confirmation_within_30m_rate": 0.275,
+    "confirmation_within_60m_hits": 21,
+    "confirmation_within_60m_rate": 0.525,
+    "confirmation_within_90m_hits": 26,
+    "confirmation_within_90m_rate": 0.65,
+    "confirmation_within_120m_hits": 32,
+    "confirmation_within_120m_rate": 0.8
+  },
+  "guardrails": [
+    "same-night capture outcomes are hidden at 07:00",
+    "reconstructed historical routes are not assigned fabricated clock times",
+    "JMA O9 tide is a regional proxy for Setouchi, not a local tide gauge",
+    "Open-Meteo historical weather is gridded/reanalysis data, not a road-level station observation"
+  ]
+}

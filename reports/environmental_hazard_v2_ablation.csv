@@ -1,0 +1,7 @@
+model,feature_count,all_eligible,all_nights_scored,all_median_error_min,all_mean_error_min,all_within_30m_hits,all_within_30m_rate,all_within_60m_hits,all_within_60m_rate,all_within_90m_hits,all_within_90m_rate,all_within_120m_hits,all_within_120m_rate,confirmation_eligible,confirmation_nights_scored,confirmation_median_error_min,confirmation_mean_error_min,confirmation_within_30m_hits,confirmation_within_30m_rate,confirmation_within_60m_hits,confirmation_within_60m_rate,confirmation_within_90m_hits,confirmation_within_90m_rate,confirmation_within_120m_hits,confirmation_within_120m_rate
+baseline,6,128,41,64.5,91.453125,34,0.265625,59,0.4609375,79,0.6171875,96,0.75,40,15,62.0,74.275,11,0.275,19,0.475,29,0.725,35,0.875
++weather,13,128,41,87.0,99.5625,26,0.203125,52,0.40625,68,0.53125,91,0.7109375,40,15,61.0,81.925,7,0.175,20,0.5,25,0.625,31,0.775
++rain24_48_since,16,128,41,78.0,97.4375,30,0.234375,51,0.3984375,75,0.5859375,92,0.71875,40,15,63.5,81.075,8,0.2,19,0.475,25,0.625,32,0.8
++fog,19,128,41,79.0,100.109375,34,0.265625,55,0.4296875,73,0.5703125,94,0.734375,40,15,49.5,76.925,11,0.275,21,0.525,26,0.65,32,0.8
++moon,23,128,41,84.0,102.0625,29,0.2265625,51,0.3984375,71,0.5546875,93,0.7265625,40,15,60.0,77.825,9,0.225,20,0.5,26,0.65,32,0.8
+full_environment_plus_tide,27,128,41,77.5,100.203125,24,0.1875,53,0.4140625,74,0.578125,90,0.703125,40,15,66.5,84.675,8,0.2,19,0.475,26,0.65,30,0.75
