@@ -1,0 +1,22 @@
+{
+  "status":"ok",
+  "common_rule":"chronological walk-forward only; each target night is scored from prior nights",
+  "occupancy_component":{
+    "training_rows":31726,
+    "reconstructed_nights":33,
+    "positive_segment_rows":93,
+    "spatial_features":45,
+    "naive_occupancy_ranking":{"nights_scored":30,"eligible_positive_segments":88,"top30_hits":12,"top30_rate":0.13636363636363635,"top1pct_hits":3,"top1pct_rate":0.03409090909090909,"top5pct_hits":14,"top5pct_rate":0.1590909090909091,"top10pct_hits":25,"top10pct_rate":0.2840909090909091,"median_rank_pct":0.29467477015254295}
+  },
+  "occupancy_x_detection_strict_gpx":{
+    "occupancy_only":{"nights_scored":6,"positive_visit_rows":8,"top30_hits":0,"top30_rate":0.0,"top10pct_hits":1,"top10pct_rate":0.125,"median_rank_pct_nightly_mean":0.3503100781877683},
+    "detection_only":{"nights_scored":6,"positive_visit_rows":8,"top30_hits":4,"top30_rate":0.5,"top10pct_hits":4,"top10pct_rate":0.5,"median_rank_pct_nightly_mean":0.16702719885887565},
+    "occupancy_x_detection":{"nights_scored":6,"positive_visit_rows":8,"top30_hits":2,"top30_rate":0.25,"top10pct_hits":4,"top10pct_rate":0.5,"median_rank_pct_nightly_mean":0.18843096918590205}
+  },
+  "detection_guardrail":"Detection requires actual timed visits. Reconstructed May-Jul routes improve occupancy but are never used as fabricated timed detection negatives. Therefore strict occupancy x detection evaluation is limited by actual GPX-positive visit rows.",
+  "exposure_bias_test":{
+    "naive_ranking":{"nights_scored":30,"eligible_positive_segments":88,"top30_hits":12,"top30_rate":0.13636363636363635,"top1pct_hits":3,"top1pct_rate":0.03409090909090909,"top5pct_hits":14,"top5pct_rate":0.1590909090909091,"top10pct_hits":25,"top10pct_rate":0.2840909090909091,"median_rank_pct":0.29467477015254295},
+    "exposure_corrected_ranking":{"nights_scored":30,"eligible_positive_segments":88,"top30_hits":9,"top30_rate":0.10227272727272728,"top1pct_hits":4,"top1pct_rate":0.045454545454545456,"top5pct_hits":12,"top5pct_rate":0.13636363636363635,"top10pct_hits":16,"top10pct_rate":0.18181818181818182,"median_rank_pct":0.45114837768866206},
+    "correction":"add prior exposure count as a feature, down-weight repeatedly exposed training rows, and divide test priority by sqrt(1+prior exposure). This directly tests whether ranking merely rewards roads searched more often."
+  }
+}
