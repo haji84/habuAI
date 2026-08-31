@@ -1,0 +1,636 @@
+{
+  "status": "ok",
+  "model": "zone_time_direct_experimental",
+  "legacy_model_preserved": true,
+  "protocol": {
+    "zone_sizes_m": [
+      100,
+      250,
+      500,
+      1000
+    ],
+    "prediction_counts": [
+      30,
+      50,
+      100
+    ],
+    "slot_minutes": 10,
+    "actual_gpx_nights": 8,
+    "selection_rule": "zone scale selected only on early GPX nights; later confirmation untouched",
+    "candidate_zones": "owner-traversed zones known before target night only",
+    "privacy": "aggregate metrics only; no raw zone ids, road names, coordinates or hotspot rankings exported"
+  },
+  "feature_groups": [
+    "zone occupancy proxy",
+    "personal detection proxy",
+    "zone capture recency 30/90d",
+    "global and zone-specific time prior",
+    "season cyclic terms",
+    "18:00 temperature/RH/rain24/rain48/hours-since-rain/fog"
+  ],
+  "selection_scores": {
+    "100": 0.16666666666666666,
+    "250": 0.6666666666666666,
+    "500": 0.0,
+    "1000": 0.0
+  },
+  "best_zone_size_selected_on_early_nights": 250,
+  "results": [
+    {
+      "zone_size_m": 100,
+      "phase": "selection",
+      "n_predictions": 30,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "selection",
+      "n_predictions": 50,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "selection",
+      "n_predictions": 100,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.16666666666666666,
+        "250m_20min": 0.16666666666666666,
+        "250m_30min": 0.16666666666666666
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "confirmation",
+      "n_predictions": 30,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "confirmation",
+      "n_predictions": 50,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "confirmation",
+      "n_predictions": 100,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "all",
+      "n_predictions": 30,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "all",
+      "n_predictions": 50,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 100,
+      "phase": "all",
+      "n_predictions": 100,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.13333333333333333,
+        "250m_20min": 0.13333333333333333,
+        "250m_30min": 0.13333333333333333
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "selection",
+      "n_predictions": 30,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "selection",
+      "n_predictions": 50,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "selection",
+      "n_predictions": 100,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.16666666666666666,
+        "100m_20min": 0.16666666666666666,
+        "100m_30min": 0.16666666666666666,
+        "250m_10min": 0.16666666666666666,
+        "250m_20min": 0.16666666666666666,
+        "250m_30min": 0.16666666666666666
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "confirmation",
+      "n_predictions": 30,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "confirmation",
+      "n_predictions": 50,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "confirmation",
+      "n_predictions": 100,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "all",
+      "n_predictions": 30,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "all",
+      "n_predictions": 50,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "all",
+      "n_predictions": 100,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.06666666666666667,
+        "100m_20min": 0.06666666666666667,
+        "100m_30min": 0.06666666666666667,
+        "250m_10min": 0.06666666666666667,
+        "250m_20min": 0.2,
+        "250m_30min": 0.2
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "selection",
+      "n_predictions": 30,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "selection",
+      "n_predictions": 50,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "selection",
+      "n_predictions": 100,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "confirmation",
+      "n_predictions": 30,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "confirmation",
+      "n_predictions": 50,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "confirmation",
+      "n_predictions": 100,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "all",
+      "n_predictions": 30,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "all",
+      "n_predictions": 50,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 500,
+      "phase": "all",
+      "n_predictions": 100,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "selection",
+      "n_predictions": 30,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "selection",
+      "n_predictions": 50,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "selection",
+      "n_predictions": 100,
+      "eligible_captures": 6,
+      "nights_scored": 2,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "confirmation",
+      "n_predictions": 30,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "confirmation",
+      "n_predictions": 50,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "confirmation",
+      "n_predictions": 100,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.2222222222222222,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.3333333333333333
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "all",
+      "n_predictions": 30,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "all",
+      "n_predictions": 50,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 1000,
+      "phase": "all",
+      "n_predictions": 100,
+      "eligible_captures": 15,
+      "nights_scored": 5,
+      "coverage": {
+        "100m_10min": 0.06666666666666667,
+        "100m_20min": 0.06666666666666667,
+        "100m_30min": 0.13333333333333333,
+        "250m_10min": 0.06666666666666667,
+        "250m_20min": 0.06666666666666667,
+        "250m_30min": 0.2
+      }
+    }
+  ],
+  "best_confirmation": [
+    {
+      "zone_size_m": 250,
+      "phase": "confirmation",
+      "n_predictions": 30,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "confirmation",
+      "n_predictions": 50,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "zone_size_m": 250,
+      "phase": "confirmation",
+      "n_predictions": 100,
+      "eligible_captures": 9,
+      "nights_scored": 3,
+      "coverage": {
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    }
+  ],
+  "smallest_confirmation_prediction_count_reaching_90pct": {
+    "100m_10min": null,
+    "100m_20min": null,
+    "100m_30min": null,
+    "250m_10min": null,
+    "250m_20min": null,
+    "250m_30min": null
+  },
+  "guardrail": "Experimental additional model. It does not replace the existing segment-based model. Zone size can improve ranking efficiency but may lose fine spatial detail."
+}
