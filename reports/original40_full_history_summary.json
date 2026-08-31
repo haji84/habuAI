@@ -26,6 +26,7 @@
     "all_within_90m_rate": 0.6159420289855072,
     "all_within_120m_hits": 97.0,
     "all_within_120m_rate": 0.7028985507246377,
+    "all_selection_score": 3.9572765700483092,
     "selection_eligible": 98.0,
     "selection_nights_scored": 29.0,
     "selection_median_error_min": 74.0,
