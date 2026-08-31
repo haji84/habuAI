@@ -1,0 +1,24 @@
+{
+  "status": "ok",
+  "common_protocol": {
+    "gps_timestamp_capture_events": 150,
+    "gps_timestamp_capture_nights": 50,
+    "selection_nights": 35,
+    "confirmation_nights": 15,
+    "rollover": "07:00 Asia/Tokyo",
+    "min_prior_captures": 10,
+    "slot_minutes": 30
+  },
+  "hierarchical_empirical_bayes": {
+    "description": "partial pooling of global, seasonal +-35d, and local capture-time KDE; local/season weights shrink automatically when evidence is sparse",
+    "best_selected_on_early70pct": {"radius":3000.0,"bw":2.0,"k_local":5.0,"k_season":5.0,"tau_days":120.0},
+    "all_walkforward": {"eligible":138,"nights_scored":44,"median_error_min":73.0,"mean_error_min":96.02173913043478,"within_30m_hits":28,"within_30m_rate":0.2028985507246377,"within_60m_hits":61,"within_60m_rate":0.4420289855072464,"within_90m_hits":82,"within_90m_rate":0.5942028985507246,"within_120m_hits":99,"within_120m_rate":0.717391304347826},
+    "frozen_confirmation": {"eligible":40,"nights_scored":15,"median_error_min":59.0,"mean_error_min":72.925,"within_30m_hits":9,"within_30m_rate":0.225,"within_60m_hits":21,"within_60m_rate":0.525,"within_90m_hits":29,"within_90m_rate":0.725,"within_120m_hits":32,"within_120m_rate":0.8}
+  },
+  "environmental_hazard": {
+    "description": "discrete 30-min hazard ranking using clock, season, temperature, humidity, dew point, precipitation, weather code, pressure, cloud cover, and leakage-safe local/global capture-time priors; historical hourly weather from Open-Meteo archive",
+    "all_walkforward": {"eligible":128,"nights_scored":41,"median_error_min":87.0,"mean_error_min":100.34375,"within_30m_hits":26,"within_30m_rate":0.203125,"within_60m_hits":51,"within_60m_rate":0.3984375,"within_90m_hits":68,"within_90m_rate":0.53125,"within_120m_hits":90,"within_120m_rate":0.703125},
+    "frozen_confirmation": {"eligible":40,"nights_scored":15,"median_error_min":58.0,"mean_error_min":80.675,"within_30m_hits":8,"within_30m_rate":0.2,"within_60m_hits":20,"within_60m_rate":0.5,"within_90m_hits":25,"within_90m_rate":0.625,"within_120m_hits":31,"within_120m_rate":0.775}
+  },
+  "guardrail": "Environmental hazard uses historical archive weather only. Same-night capture outcomes are hidden at 07:00. The later 30% of nights is the primary confirmation period."
+}
