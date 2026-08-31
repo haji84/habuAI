@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/run_advanced_time_models.py'
+      - 'scripts/run_environmental_hazard_v2.py'
       - 'scripts/run_occupancy_detection_ranking.py'
       - 'scripts/run_hurdle_count_model.py'
       - 'scripts/run_original40_full_history.py'
@@ -43,6 +44,9 @@ jobs:
 
       - name: Environmental hazard and hierarchical time
         run: python scripts/run_advanced_time_models.py
+
+      - name: Enriched environmental hazard v2
+        run: python scripts/run_environmental_hazard_v2.py
 
       - name: Occupancy detection and exposure-corrected ranking
         run: python scripts/run_occupancy_detection_ranking.py
