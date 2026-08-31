@@ -1,0 +1,36 @@
+name: Daily Update Strategy Backtest
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/run_daily_update_strategy_backtest.py'
+      - '.github/workflows/daily-update-strategy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Run daily update strategy backtest
+        run: python scripts/run_daily_update_strategy_backtest.py
+      - name: Commit reports
+        run: |
+          git config user.name 'habuAI-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git pull --rebase origin agent/full-data-baseline-refresh-data
+          git add reports/daily_update_strategy_*.csv reports/daily_update_strategy_summary.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refresh daily update strategy backtest'
+            git push
+          fi
