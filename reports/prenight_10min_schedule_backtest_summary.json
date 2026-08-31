@@ -1,0 +1,356 @@
+{
+  "status": "ok",
+  "protocol": {
+    "mode": "pre-night fixed schedule",
+    "actual_gpx_nights": 8,
+    "selection_nights": 4,
+    "confirmation_nights": 4,
+    "slot_minutes": 10,
+    "prediction_counts": [
+      10,
+      20,
+      30,
+      50,
+      100,
+      200
+    ],
+    "distance_thresholds_m": [
+      50,
+      100,
+      250
+    ],
+    "time_windows_min": [
+      10,
+      20,
+      30
+    ],
+    "candidate_roads": "owner-traversed road segments known before target night only",
+    "schedule_window_local": "18:00-07:00 JST",
+    "leakage_guard": "target-night GPX passage times and target-night captures are not used to generate the schedule",
+    "diversity_guard": "near-duplicate candidates within 40m and 20min are suppressed"
+  },
+  "target": {
+    "coverage_goal": 0.9,
+    "meaning": "fraction of actual captures covered by the pre-night candidate list; not Top-1 precision",
+    "smallest_confirmation_prediction_count_reaching_90pct": {
+      "50m_10min": null,
+      "50m_20min": null,
+      "50m_30min": null,
+      "100m_10min": null,
+      "100m_20min": null,
+      "100m_30min": null,
+      "250m_10min": null,
+      "250m_20min": null,
+      "250m_30min": null
+    }
+  },
+  "results": [
+    {
+      "phase": "selection",
+      "n_predictions": 10,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "phase": "selection",
+      "n_predictions": 20,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.0
+      }
+    },
+    {
+      "phase": "selection",
+      "n_predictions": 30,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.0,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "selection",
+      "n_predictions": 50,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "selection",
+      "n_predictions": 100,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.0,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "selection",
+      "n_predictions": 200,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.2222222222222222,
+        "100m_20min": 0.2222222222222222,
+        "100m_30min": 0.2222222222222222,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "n_predictions": 10,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "n_predictions": 20,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "n_predictions": 30,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "n_predictions": 50,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "confirmation",
+      "n_predictions": 100,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "confirmation",
+      "n_predictions": 200,
+      "nights_scored": 3,
+      "eligible_captures": 9,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    },
+    {
+      "phase": "all",
+      "n_predictions": 10,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.05555555555555555,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.05555555555555555
+      }
+    },
+    {
+      "phase": "all",
+      "n_predictions": 20,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.05555555555555555,
+        "250m_10min": 0.0,
+        "250m_20min": 0.0,
+        "250m_30min": 0.05555555555555555
+      }
+    },
+    {
+      "phase": "all",
+      "n_predictions": 30,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.0,
+        "50m_20min": 0.0,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.0,
+        "100m_20min": 0.0,
+        "100m_30min": 0.05555555555555555,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "all",
+      "n_predictions": 50,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.05555555555555555,
+        "50m_20min": 0.05555555555555555,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.1111111111111111
+      }
+    },
+    {
+      "phase": "all",
+      "n_predictions": 100,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.05555555555555555,
+        "50m_20min": 0.05555555555555555,
+        "50m_30min": 0.05555555555555555,
+        "100m_10min": 0.1111111111111111,
+        "100m_20min": 0.1111111111111111,
+        "100m_30min": 0.1111111111111111,
+        "250m_10min": 0.1111111111111111,
+        "250m_20min": 0.1111111111111111,
+        "250m_30min": 0.16666666666666666
+      }
+    },
+    {
+      "phase": "all",
+      "n_predictions": 200,
+      "nights_scored": 6,
+      "eligible_captures": 18,
+      "coverage": {
+        "50m_10min": 0.1111111111111111,
+        "50m_20min": 0.1111111111111111,
+        "50m_30min": 0.1111111111111111,
+        "100m_10min": 0.16666666666666666,
+        "100m_20min": 0.16666666666666666,
+        "100m_30min": 0.16666666666666666,
+        "250m_10min": 0.2222222222222222,
+        "250m_20min": 0.2222222222222222,
+        "250m_30min": 0.2222222222222222
+      }
+    }
+  ],
+  "guardrail": "Increasing candidate count can raise coverage mechanically. Production selection should minimize candidate count subject to coverage, travel-time, and route-length constraints."
+}
