@@ -1,0 +1,4219 @@
+{
+  "status": "ok",
+  "method": "89-night sequential PDCA walk-forward with vectorized bounded candidate generation; existing segment model preserved alongside 100/250/500/1000m zone x 10-minute models",
+  "field_evidence_nights_total": 89,
+  "gps_timestamp_capture_events_total": 149,
+  "gps_timestamp_capture_nights_total": 50,
+  "protocol": {
+    "cycle": "predict -> reveal -> score -> add verified night -> retrain -> next prediction",
+    "schemes": [
+      "segment",
+      "zone100",
+      "zone250",
+      "zone500",
+      "zone1000"
+    ],
+    "prediction_counts": [
+      30,
+      50,
+      100
+    ],
+    "distance_m": [
+      50,
+      100,
+      250
+    ],
+    "time_windows_min": [
+      10,
+      20,
+      30
+    ],
+    "slot_minutes": 10,
+    "min_prior_gps_captures": 10,
+    "max_preselected_units": 500,
+    "prescreen": "pre-night verified captures/visits only",
+    "no_future_gpx": true,
+    "no_target_outcome_before_prediction": true
+  },
+  "model_availability": {
+    "segment": {
+      "strict_scored_nights": 44,
+      "strict_first_night_index": 43,
+      "strict_last_night_index": 89
+    },
+    "zone100": {
+      "strict_scored_nights": 44,
+      "strict_first_night_index": 43,
+      "strict_last_night_index": 89
+    },
+    "zone250": {
+      "strict_scored_nights": 44,
+      "strict_first_night_index": 43,
+      "strict_last_night_index": 89
+    },
+    "zone500": {
+      "strict_scored_nights": 44,
+      "strict_first_night_index": 43,
+      "strict_last_night_index": 89
+    },
+    "zone1000": {
+      "strict_scored_nights": 44,
+      "strict_first_night_index": 43,
+      "strict_last_night_index": 89
+    }
+  },
+  "overall": [
+    {
+      "scheme": "segment",
+      "n_predictions": 30,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.014598540145985401,
+        "50m_20min": 0.021897810218978103,
+        "50m_30min": 0.029197080291970802,
+        "100m_10min": 0.014598540145985401,
+        "100m_20min": 0.021897810218978103,
+        "100m_30min": 0.0364963503649635,
+        "250m_10min": 0.058394160583941604,
+        "250m_20min": 0.072992700729927,
+        "250m_30min": 0.0948905109489051
+      }
+    },
+    {
+      "scheme": "segment",
+      "n_predictions": 50,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.014598540145985401,
+        "50m_20min": 0.029197080291970802,
+        "50m_30min": 0.029197080291970802,
+        "100m_10min": 0.014598540145985401,
+        "100m_20min": 0.0364963503649635,
+        "100m_30min": 0.0364963503649635,
+        "250m_10min": 0.06569343065693431,
+        "250m_20min": 0.0948905109489051,
+        "250m_30min": 0.10948905109489052
+      }
+    },
+    {
+      "scheme": "segment",
+      "n_predictions": 100,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.021897810218978103,
+        "50m_20min": 0.0364963503649635,
+        "50m_30min": 0.043795620437956206,
+        "100m_10min": 0.029197080291970802,
+        "100m_20min": 0.043795620437956206,
+        "100m_30min": 0.058394160583941604,
+        "250m_10min": 0.12408759124087591,
+        "250m_20min": 0.15328467153284672,
+        "250m_30min": 0.18248175182481752
+      }
+    },
+    {
+      "scheme": "zone100",
+      "n_predictions": 30,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.021897810218978103,
+        "50m_20min": 0.029197080291970802,
+        "50m_30min": 0.029197080291970802,
+        "100m_10min": 0.043795620437956206,
+        "100m_20min": 0.043795620437956206,
+        "100m_30min": 0.051094890510948905,
+        "250m_10min": 0.08029197080291971,
+        "250m_20min": 0.08029197080291971,
+        "250m_30min": 0.08759124087591241
+      }
+    },
+    {
+      "scheme": "zone100",
+      "n_predictions": 50,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.0364963503649635,
+        "50m_20min": 0.043795620437956206,
+        "50m_30min": 0.051094890510948905,
+        "100m_10min": 0.058394160583941604,
+        "100m_20min": 0.058394160583941604,
+        "100m_30min": 0.08759124087591241,
+        "250m_10min": 0.11678832116788321,
+        "250m_20min": 0.11678832116788321,
+        "250m_30min": 0.1386861313868613
+      }
+    },
+    {
+      "scheme": "zone100",
+      "n_predictions": 100,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.051094890510948905,
+        "50m_20min": 0.06569343065693431,
+        "50m_30min": 0.072992700729927,
+        "100m_10min": 0.08029197080291971,
+        "100m_20min": 0.0948905109489051,
+        "100m_30min": 0.10948905109489052,
+        "250m_10min": 0.16058394160583941,
+        "250m_20min": 0.18248175182481752,
+        "250m_30min": 0.20437956204379562
+      }
+    },
+    {
+      "scheme": "zone250",
+      "n_predictions": 30,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.0364963503649635,
+        "50m_20min": 0.051094890510948905,
+        "50m_30min": 0.058394160583941604,
+        "100m_10min": 0.043795620437956206,
+        "100m_20min": 0.06569343065693431,
+        "100m_30min": 0.072992700729927,
+        "250m_10min": 0.08029197080291971,
+        "250m_20min": 0.11678832116788321,
+        "250m_30min": 0.12408759124087591
+      }
+    },
+    {
+      "scheme": "zone250",
+      "n_predictions": 50,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.051094890510948905,
+        "50m_20min": 0.051094890510948905,
+        "50m_30min": 0.08029197080291971,
+        "100m_10min": 0.072992700729927,
+        "100m_20min": 0.072992700729927,
+        "100m_30min": 0.10218978102189781,
+        "250m_10min": 0.145985401459854,
+        "250m_20min": 0.145985401459854,
+        "250m_30min": 0.18248175182481752
+      }
+    },
+    {
+      "scheme": "zone250",
+      "n_predictions": 100,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.0948905109489051,
+        "50m_20min": 0.11678832116788321,
+        "50m_30min": 0.13138686131386862,
+        "100m_10min": 0.11678832116788321,
+        "100m_20min": 0.1386861313868613,
+        "100m_30min": 0.16058394160583941,
+        "250m_10min": 0.19708029197080293,
+        "250m_20min": 0.21897810218978103,
+        "250m_30min": 0.24087591240875914
+      }
+    },
+    {
+      "scheme": "zone500",
+      "n_predictions": 30,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.043795620437956206,
+        "50m_20min": 0.051094890510948905,
+        "50m_30min": 0.08029197080291971,
+        "100m_10min": 0.043795620437956206,
+        "100m_20min": 0.058394160583941604,
+        "100m_30min": 0.08759124087591241,
+        "250m_10min": 0.058394160583941604,
+        "250m_20min": 0.072992700729927,
+        "250m_30min": 0.0948905109489051
+      }
+    },
+    {
+      "scheme": "zone500",
+      "n_predictions": 50,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.10948905109489052,
+        "50m_20min": 0.10948905109489052,
+        "50m_30min": 0.11678832116788321,
+        "100m_10min": 0.11678832116788321,
+        "100m_20min": 0.11678832116788321,
+        "100m_30min": 0.12408759124087591,
+        "250m_10min": 0.12408759124087591,
+        "250m_20min": 0.12408759124087591,
+        "250m_30min": 0.1386861313868613
+      }
+    },
+    {
+      "scheme": "zone500",
+      "n_predictions": 100,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.13138686131386862,
+        "50m_20min": 0.145985401459854,
+        "50m_30min": 0.16058394160583941,
+        "100m_10min": 0.145985401459854,
+        "100m_20min": 0.16058394160583941,
+        "100m_30min": 0.17518248175182483,
+        "250m_10min": 0.18248175182481752,
+        "250m_20min": 0.19708029197080293,
+        "250m_30min": 0.21897810218978103
+      }
+    },
+    {
+      "scheme": "zone1000",
+      "n_predictions": 30,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.08029197080291971,
+        "50m_20min": 0.10218978102189781,
+        "50m_30min": 0.10948905109489052,
+        "100m_10min": 0.08759124087591241,
+        "100m_20min": 0.10948905109489052,
+        "100m_30min": 0.11678832116788321,
+        "250m_10min": 0.08759124087591241,
+        "250m_20min": 0.10948905109489052,
+        "250m_30min": 0.11678832116788321
+      }
+    },
+    {
+      "scheme": "zone1000",
+      "n_predictions": 50,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.1386861313868613,
+        "50m_20min": 0.145985401459854,
+        "50m_30min": 0.1897810218978102,
+        "100m_10min": 0.145985401459854,
+        "100m_20min": 0.15328467153284672,
+        "100m_30min": 0.19708029197080293,
+        "250m_10min": 0.145985401459854,
+        "250m_20min": 0.15328467153284672,
+        "250m_30min": 0.20437956204379562
+      }
+    },
+    {
+      "scheme": "zone1000",
+      "n_predictions": 100,
+      "eligible_capture_events": 137,
+      "eligible_nights": 44,
+      "coverage": {
+        "50m_10min": 0.25547445255474455,
+        "50m_20min": 0.291970802919708,
+        "50m_30min": 0.31386861313868614,
+        "100m_10min": 0.26277372262773724,
+        "100m_20min": 0.29927007299270075,
+        "100m_30min": 0.32116788321167883,
+        "250m_10min": 0.27007299270072993,
+        "250m_20min": 0.31386861313868614,
+        "250m_30min": 0.3357664233576642
+      }
+    }
+  ],
+  "progression_thirds": {
+    "segment": {
+      "block_1": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.0,
+            "50m_30min": 0.0,
+            "100m_10min": 0.0,
+            "100m_20min": 0.0,
+            "100m_30min": 0.016666666666666666,
+            "250m_10min": 0.03333333333333333,
+            "250m_20min": 0.03333333333333333,
+            "250m_30min": 0.06666666666666667
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.0,
+            "50m_30min": 0.0,
+            "100m_10min": 0.0,
+            "100m_20min": 0.016666666666666666,
+            "100m_30min": 0.016666666666666666,
+            "250m_10min": 0.05,
+            "250m_20min": 0.06666666666666667,
+            "250m_30min": 0.08333333333333333
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.016666666666666666,
+            "50m_20min": 0.016666666666666666,
+            "50m_30min": 0.03333333333333333,
+            "100m_10min": 0.03333333333333333,
+            "100m_20min": 0.03333333333333333,
+            "100m_30min": 0.05,
+            "250m_10min": 0.11666666666666667,
+            "250m_20min": 0.15,
+            "250m_30min": 0.15
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_2": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.025,
+            "50m_30min": 0.05,
+            "100m_10min": 0.0,
+            "100m_20min": 0.025,
+            "100m_30min": 0.05,
+            "250m_10min": 0.075,
+            "250m_20min": 0.1,
+            "250m_30min": 0.125
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.05,
+            "50m_30min": 0.05,
+            "100m_10min": 0.0,
+            "100m_20min": 0.05,
+            "100m_30min": 0.05,
+            "250m_10min": 0.075,
+            "250m_20min": 0.125,
+            "250m_30min": 0.15
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.05,
+            "50m_30min": 0.05,
+            "100m_10min": 0.0,
+            "100m_20min": 0.05,
+            "100m_30min": 0.075,
+            "250m_10min": 0.1,
+            "250m_20min": 0.15,
+            "250m_30min": 0.225
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_3": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.05405405405405406,
+            "50m_20min": 0.05405405405405406,
+            "50m_30min": 0.05405405405405406,
+            "100m_10min": 0.05405405405405406,
+            "100m_20min": 0.05405405405405406,
+            "100m_30min": 0.05405405405405406,
+            "250m_10min": 0.08108108108108109,
+            "250m_20min": 0.10810810810810811,
+            "250m_30min": 0.10810810810810811
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.05405405405405406,
+            "50m_20min": 0.05405405405405406,
+            "50m_30min": 0.05405405405405406,
+            "100m_10min": 0.05405405405405406,
+            "100m_20min": 0.05405405405405406,
+            "100m_30min": 0.05405405405405406,
+            "250m_10min": 0.08108108108108109,
+            "250m_20min": 0.10810810810810811,
+            "250m_30min": 0.10810810810810811
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.05405405405405406,
+            "50m_20min": 0.05405405405405406,
+            "50m_30min": 0.05405405405405406,
+            "100m_10min": 0.05405405405405406,
+            "100m_20min": 0.05405405405405406,
+            "100m_30min": 0.05405405405405406,
+            "250m_10min": 0.16216216216216217,
+            "250m_20min": 0.16216216216216217,
+            "250m_30min": 0.1891891891891892
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ]
+    },
+    "zone100": {
+      "block_1": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.0,
+            "50m_30min": 0.0,
+            "100m_10min": 0.0,
+            "100m_20min": 0.0,
+            "100m_30min": 0.0,
+            "250m_10min": 0.03333333333333333,
+            "250m_20min": 0.03333333333333333,
+            "250m_30min": 0.03333333333333333
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.0,
+            "50m_20min": 0.0,
+            "50m_30min": 0.016666666666666666,
+            "100m_10min": 0.0,
+            "100m_20min": 0.0,
+            "100m_30min": 0.03333333333333333,
+            "250m_10min": 0.08333333333333333,
+            "250m_20min": 0.08333333333333333,
+            "250m_30min": 0.1
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.016666666666666666,
+            "50m_20min": 0.03333333333333333,
+            "50m_30min": 0.05,
+            "100m_10min": 0.05,
+            "100m_20min": 0.06666666666666667,
+            "100m_30min": 0.06666666666666667,
+            "250m_10min": 0.16666666666666666,
+            "250m_20min": 0.18333333333333332,
+            "250m_30min": 0.18333333333333332
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_2": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.05,
+            "50m_20min": 0.075,
+            "50m_30min": 0.075,
+            "100m_10min": 0.125,
+            "100m_20min": 0.125,
+            "100m_30min": 0.15,
+            "250m_10min": 0.125,
+            "250m_20min": 0.125,
+            "250m_30min": 0.15
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.075,
+            "50m_20min": 0.1,
+            "50m_30min": 0.1,
+            "100m_10min": 0.15,
+            "100m_20min": 0.15,
+            "100m_30min": 0.2,
+            "250m_10min": 0.15,
+            "250m_20min": 0.15,
+            "250m_30min": 0.2
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.1,
+            "50m_20min": 0.1,
+            "50m_30min": 0.1,
+            "100m_10min": 0.15,
+            "100m_20min": 0.15,
+            "100m_30min": 0.2,
+            "250m_10min": 0.175,
+            "250m_20min": 0.175,
+            "250m_30min": 0.25
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_3": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.02702702702702703,
+            "50m_20min": 0.02702702702702703,
+            "50m_30min": 0.02702702702702703,
+            "100m_10min": 0.02702702702702703,
+            "100m_20min": 0.02702702702702703,
+            "100m_30min": 0.02702702702702703,
+            "250m_10min": 0.10810810810810811,
+            "250m_20min": 0.10810810810810811,
+            "250m_30min": 0.10810810810810811
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.05405405405405406,
+            "50m_20min": 0.05405405405405406,
+            "50m_30min": 0.05405405405405406,
+            "100m_10min": 0.05405405405405406,
+            "100m_20min": 0.05405405405405406,
+            "100m_30min": 0.05405405405405406,
+            "250m_10min": 0.13513513513513514,
+            "250m_20min": 0.13513513513513514,
+            "250m_30min": 0.13513513513513514
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.05405405405405406,
+            "50m_20min": 0.08108108108108109,
+            "50m_30min": 0.08108108108108109,
+            "100m_10min": 0.05405405405405406,
+            "100m_20min": 0.08108108108108109,
+            "100m_30min": 0.08108108108108109,
+            "250m_10min": 0.13513513513513514,
+            "250m_20min": 0.1891891891891892,
+            "250m_30min": 0.1891891891891892
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ]
+    },
+    "zone250": {
+      "block_1": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.016666666666666666,
+            "50m_20min": 0.05,
+            "50m_30min": 0.06666666666666667,
+            "100m_10min": 0.03333333333333333,
+            "100m_20min": 0.08333333333333333,
+            "100m_30min": 0.1,
+            "250m_10min": 0.05,
+            "250m_20min": 0.1,
+            "250m_30min": 0.11666666666666667
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.05,
+            "50m_20min": 0.05,
+            "50m_30min": 0.08333333333333333,
+            "100m_10min": 0.08333333333333333,
+            "100m_20min": 0.08333333333333333,
+            "100m_30min": 0.11666666666666667,
+            "250m_10min": 0.13333333333333333,
+            "250m_20min": 0.13333333333333333,
+            "250m_30min": 0.18333333333333332
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.08333333333333333,
+            "50m_20min": 0.11666666666666667,
+            "50m_30min": 0.11666666666666667,
+            "100m_10min": 0.11666666666666667,
+            "100m_20min": 0.15,
+            "100m_30min": 0.16666666666666666,
+            "250m_10min": 0.18333333333333332,
+            "250m_20min": 0.2,
+            "250m_30min": 0.21666666666666667
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_2": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.075,
+            "50m_20min": 0.075,
+            "50m_30min": 0.075,
+            "100m_10min": 0.075,
+            "100m_20min": 0.075,
+            "100m_30min": 0.075,
+            "250m_10min": 0.125,
+            "250m_20min": 0.125,
+            "250m_30min": 0.125
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.075,
+            "50m_20min": 0.075,
+            "50m_30min": 0.075,
+            "100m_10min": 0.1,
+            "100m_20min": 0.1,
+            "100m_30min": 0.1,
+            "250m_10min": 0.15,
+            "250m_20min": 0.15,
+            "250m_30min": 0.15
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.125,
+            "50m_20min": 0.125,
+            "50m_30min": 0.175,
+            "100m_10min": 0.15,
+            "100m_20min": 0.15,
+            "100m_30min": 0.2,
+            "250m_10min": 0.2,
+            "250m_20min": 0.225,
+            "250m_30min": 0.25
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_3": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.02702702702702703,
+            "50m_20min": 0.02702702702702703,
+            "50m_30min": 0.02702702702702703,
+            "100m_10min": 0.02702702702702703,
+            "100m_20min": 0.02702702702702703,
+            "100m_30min": 0.02702702702702703,
+            "250m_10min": 0.08108108108108109,
+            "250m_20min": 0.13513513513513514,
+            "250m_30min": 0.13513513513513514
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.02702702702702703,
+            "50m_20min": 0.02702702702702703,
+            "50m_30min": 0.08108108108108109,
+            "100m_10min": 0.02702702702702703,
+            "100m_20min": 0.02702702702702703,
+            "100m_30min": 0.08108108108108109,
+            "250m_10min": 0.16216216216216217,
+            "250m_20min": 0.16216216216216217,
+            "250m_30min": 0.21621621621621623
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.08108108108108109,
+            "50m_20min": 0.10810810810810811,
+            "50m_30min": 0.10810810810810811,
+            "100m_10min": 0.08108108108108109,
+            "100m_20min": 0.10810810810810811,
+            "100m_30min": 0.10810810810810811,
+            "250m_10min": 0.21621621621621623,
+            "250m_20min": 0.24324324324324326,
+            "250m_30min": 0.2702702702702703
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ]
+    },
+    "zone500": {
+      "block_1": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.05,
+            "50m_20min": 0.06666666666666667,
+            "50m_30min": 0.11666666666666667,
+            "100m_10min": 0.05,
+            "100m_20min": 0.08333333333333333,
+            "100m_30min": 0.13333333333333333,
+            "250m_10min": 0.06666666666666667,
+            "250m_20min": 0.1,
+            "250m_30min": 0.13333333333333333
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.13333333333333333,
+            "50m_20min": 0.13333333333333333,
+            "50m_30min": 0.15,
+            "100m_10min": 0.15,
+            "100m_20min": 0.15,
+            "100m_30min": 0.16666666666666666,
+            "250m_10min": 0.15,
+            "250m_20min": 0.15,
+            "250m_30min": 0.18333333333333332
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.16666666666666666,
+            "50m_20min": 0.18333333333333332,
+            "50m_30min": 0.2,
+            "100m_10min": 0.18333333333333332,
+            "100m_20min": 0.2,
+            "100m_30min": 0.21666666666666667,
+            "250m_10min": 0.21666666666666667,
+            "250m_20min": 0.23333333333333334,
+            "250m_30min": 0.25
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_2": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.05,
+            "50m_20min": 0.05,
+            "50m_30min": 0.075,
+            "100m_10min": 0.05,
+            "100m_20min": 0.05,
+            "100m_30min": 0.075,
+            "250m_10min": 0.05,
+            "250m_20min": 0.05,
+            "250m_30min": 0.075
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.15,
+            "50m_20min": 0.15,
+            "50m_30min": 0.15,
+            "100m_10min": 0.15,
+            "100m_20min": 0.15,
+            "100m_30min": 0.15,
+            "250m_10min": 0.15,
+            "250m_20min": 0.15,
+            "250m_30min": 0.15
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.175,
+            "50m_20min": 0.175,
+            "50m_30min": 0.2,
+            "100m_10min": 0.175,
+            "100m_20min": 0.175,
+            "100m_30min": 0.2,
+            "250m_10min": 0.2,
+            "250m_20min": 0.2,
+            "250m_30min": 0.225
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ],
+      "block_3": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.02702702702702703,
+            "50m_20min": 0.02702702702702703,
+            "50m_30min": 0.02702702702702703,
+            "100m_10min": 0.02702702702702703,
+            "100m_20min": 0.02702702702702703,
+            "100m_30min": 0.02702702702702703,
+            "250m_10min": 0.05405405405405406,
+            "250m_20min": 0.05405405405405406,
+            "250m_30min": 0.05405405405405406
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.02702702702702703,
+            "50m_20min": 0.02702702702702703,
+            "50m_30min": 0.02702702702702703,
+            "100m_10min": 0.02702702702702703,
+            "100m_20min": 0.02702702702702703,
+            "100m_30min": 0.02702702702702703,
+            "250m_10min": 0.05405405405405406,
+            "250m_20min": 0.05405405405405406,
+            "250m_30min": 0.05405405405405406
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.02702702702702703,
+            "50m_20min": 0.05405405405405406,
+            "50m_30min": 0.05405405405405406,
+            "100m_10min": 0.05405405405405406,
+            "100m_20min": 0.08108108108108109,
+            "100m_30min": 0.08108108108108109,
+            "250m_10min": 0.10810810810810811,
+            "250m_20min": 0.13513513513513514,
+            "250m_30min": 0.16216216216216217
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        }
+      ]
+    },
+    "zone1000": {
+      "block_1": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.11666666666666667,
+            "50m_20min": 0.16666666666666666,
+            "50m_30min": 0.18333333333333332,
+            "100m_10min": 0.11666666666666667,
+            "100m_20min": 0.16666666666666666,
+            "100m_30min": 0.18333333333333332,
+            "250m_10min": 0.11666666666666667,
+            "250m_20min": 0.16666666666666666,
+            "250m_30min": 0.18333333333333332
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.16666666666666666,
+            "50m_20min": 0.18333333333333332,
+            "50m_30min": 0.25,
+            "100m_10min": 0.16666666666666666,
+            "100m_20min": 0.18333333333333332,
+            "100m_30min": 0.25,
+            "250m_10min": 0.16666666666666666,
+            "250m_20min": 0.18333333333333332,
+            "250m_30min": 0.25
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 60,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.3,
+            "50m_20min": 0.3333333333333333,
+            "50m_30min": 0.35,
+            "100m_10min": 0.3,
+            "100m_20min": 0.3333333333333333,
+            "100m_30min": 0.35,
+            "250m_10min": 0.3,
+            "250m_20min": 0.3333333333333333,
+            "250m_30min": 0.35
+          }
+        }
+      ],
+      "block_2": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.025,
+            "50m_20min": 0.025,
+            "50m_30min": 0.025,
+            "100m_10min": 0.025,
+            "100m_20min": 0.025,
+            "100m_30min": 0.025,
+            "250m_10min": 0.025,
+            "250m_20min": 0.025,
+            "250m_30min": 0.025
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.1,
+            "50m_20min": 0.1,
+            "50m_30min": 0.125,
+            "100m_10min": 0.1,
+            "100m_20min": 0.1,
+            "100m_30min": 0.125,
+            "250m_10min": 0.1,
+            "250m_20min": 0.1,
+            "250m_30min": 0.15
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 40,
+          "eligible_nights": 15,
+          "coverage": {
+            "50m_10min": 0.2,
+            "50m_20min": 0.225,
+            "50m_30min": 0.25,
+            "100m_10min": 0.2,
+            "100m_20min": 0.225,
+            "100m_30min": 0.25,
+            "250m_10min": 0.225,
+            "250m_20min": 0.25,
+            "250m_30min": 0.275
+          }
+        }
+      ],
+      "block_3": [
+        {
+          "scheme": "segment",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "segment",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone100",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone250",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 30,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 50,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone500",
+          "n_predictions": 100,
+          "eligible_capture_events": 0,
+          "eligible_nights": 0,
+          "coverage": {
+            "50m_10min": null,
+            "50m_20min": null,
+            "50m_30min": null,
+            "100m_10min": null,
+            "100m_20min": null,
+            "100m_30min": null,
+            "250m_10min": null,
+            "250m_20min": null,
+            "250m_30min": null
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 30,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.08108108108108109,
+            "50m_20min": 0.08108108108108109,
+            "50m_30min": 0.08108108108108109,
+            "100m_10min": 0.10810810810810811,
+            "100m_20min": 0.10810810810810811,
+            "100m_30min": 0.10810810810810811,
+            "250m_10min": 0.10810810810810811,
+            "250m_20min": 0.10810810810810811,
+            "250m_30min": 0.10810810810810811
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 50,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.13513513513513514,
+            "50m_20min": 0.13513513513513514,
+            "50m_30min": 0.16216216216216217,
+            "100m_10min": 0.16216216216216217,
+            "100m_20min": 0.16216216216216217,
+            "100m_30min": 0.1891891891891892,
+            "250m_10min": 0.16216216216216217,
+            "250m_20min": 0.16216216216216217,
+            "250m_30min": 0.1891891891891892
+          }
+        },
+        {
+          "scheme": "zone1000",
+          "n_predictions": 100,
+          "eligible_capture_events": 37,
+          "eligible_nights": 14,
+          "coverage": {
+            "50m_10min": 0.24324324324324326,
+            "50m_20min": 0.2972972972972973,
+            "50m_30min": 0.32432432432432434,
+            "100m_10min": 0.2702702702702703,
+            "100m_20min": 0.32432432432432434,
+            "100m_30min": 0.35135135135135137,
+            "250m_10min": 0.2702702702702703,
+            "250m_20min": 0.35135135135135137,
+            "250m_30min": 0.3783783783783784
+          }
+        }
+      ]
+    }
+  },
+  "strict_100m_10min_comparison": {
+    "30": {
+      "segment": 0.014598540145985401,
+      "zone100": 0.043795620437956206,
+      "zone250": 0.043795620437956206,
+      "zone500": 0.043795620437956206,
+      "zone1000": 0.08759124087591241
+    },
+    "50": {
+      "segment": 0.014598540145985401,
+      "zone100": 0.058394160583941604,
+      "zone250": 0.072992700729927,
+      "zone500": 0.11678832116788321,
+      "zone1000": 0.145985401459854
+    },
+    "100": {
+      "segment": 0.029197080291970802,
+      "zone100": 0.08029197080291971,
+      "zone250": 0.11678832116788321,
+      "zone500": 0.145985401459854,
+      "zone1000": 0.26277372262773724
+    }
+  },
+  "best_scheme_by_prediction_count_100m_10min": {
+    "30": "zone1000",
+    "50": "zone1000",
+    "100": "zone1000"
+  },
+  "privacy": "aggregate metrics only; no dates, raw route/unit ids, coordinates, road names, or hotspot rankings exported",
+  "guardrail": "All 89 field-evidence nights advance the PDCA clock. Strict road-time accuracy is scored only on GPS+timestamp capture nights after sufficient prior verified capture history. Missing historical GPX is never fabricated."
+}
