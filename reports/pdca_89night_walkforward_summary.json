@@ -1,0 +1,77 @@
+{
+  "status": "ok",
+  "method": "night-by-night PDCA walk-forward: predict -> reveal result -> score -> add verified night -> adapt model choice -> next-night predict",
+  "field_evidence_nights_total": 89,
+  "capture_positive_nights": 82,
+  "zero_field_evidence_nights": 7,
+  "warmup_nights": 12,
+  "count_scored_nights": 77,
+  "count_overall": {
+    "nights": 77,
+    "actual_total": 192,
+    "predicted_total": 183.90634466514157,
+    "mae": 1.1667959760564521,
+    "median_abs_error": 0.7999999999999998,
+    "within_1_capture_rate": 0.5324675324675324,
+    "within_2_capture_rate": 0.8311688311688312
+  },
+  "count_progression_thirds": {
+    "block_1": {
+      "nights": 25,
+      "actual_total": 36,
+      "predicted_total": 31.37301133180822,
+      "mae": 0.8123982729205389,
+      "median_abs_error": 0.7333333333333334,
+      "within_1_capture_rate": 0.68,
+      "within_2_capture_rate": 0.96
+    },
+    "block_2": {
+      "nights": 26,
+      "actual_total": 86,
+      "predicted_total": 71.5,
+      "mae": 1.4935897435897436,
+      "median_abs_error": 1.1500000000000001,
+      "within_1_capture_rate": 0.46153846153846156,
+      "within_2_capture_rate": 0.6923076923076923
+    },
+    "block_3": {
+      "nights": 26,
+      "actual_total": 70,
+      "predicted_total": 81.03333333333332,
+      "mae": 1.1807692307692308,
+      "median_abs_error": 1.15,
+      "within_1_capture_rate": 0.46153846153846156,
+      "within_2_capture_rate": 0.8461538461538461
+    }
+  },
+  "count_selected_model_frequency": {
+    "prior30": 39,
+    "prior10": 29,
+    "prior5": 8,
+    "blend_hurdle_prior10": 1
+  },
+  "time_walkforward": {
+    "eligible_nights": 44,
+    "eligible_capture_events": 138,
+    "night_median_error_min_median": 72.0,
+    "within_10m_hits": 4,
+    "within_20m_hits": 10,
+    "within_30m_hits": 19,
+    "within_10m_rate": 0.028985507246376812,
+    "within_20m_rate": 0.07246376811594203,
+    "within_30m_rate": 0.13768115942028986
+  },
+  "adaptation": {
+    "count": "each night chooses the lowest trailing-20-night MAE among prior5/prior10/prior30/hurdle/blend using only already-scored nights",
+    "time": "each eligible night chooses bandwidth/recency from prior scored GPS capture events only, optimizing <=30min hit rate then median/mean error"
+  },
+  "route_zone_note": "All 89 field-evidence nights are processed in the outer PDCA loop. Road-zone ranking is not fabricated for nights lacking prior route/GPX support; route-specific validation remains limited to nights with valid route history.",
+  "privacy": "Only aggregate metrics are committed. Per-night dates, route identities, coordinates, and hotspot rankings are intentionally not exported from this public repository.",
+  "guardrails": [
+    "07:00 Asia/Tokyo operational-day rollover",
+    "target-night outcome is not used before prediction",
+    "each completed night becomes available only to later nights",
+    "field-evidence zero nights are weaker than GPX-confirmed complete zero surveys",
+    "time evaluation uses only GPS+timestamp captures and a pre-night global time forecast, not the target capture location"
+  ]
+}
