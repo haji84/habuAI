@@ -200,7 +200,6 @@ def main():
             'time_prediction_available': False,
         }
 
-        # PLAN: predict strictly before revealing target-night outcome.
         if len(tr) >= MIN_HISTORY_NIGHTS:
             candidates = _count_candidates(tr, te)
             selected_name = _choose_by_past_mae(count_history, list(candidates))
@@ -240,13 +239,10 @@ def main():
                 'time_within_30m': int(np.sum(np.array(event_errors) <= 30)),
             })
 
-        # CHECK: target-night result is now scored. ACT: append score/outcome for next-night selection.
         if rec['count_prediction_available']:
             count_history.append({'actual': actual_count, 'candidates': candidates, 'selected': rec['count_selected_model']})
         if rec['time_prediction_available']:
             time_history.extend(all_variant_errors)
-
-        # DATA ADDITION occurs naturally because all future iterations slice on timestamp/night < target.
         nightly_internal.append(rec)
 
     out = pd.DataFrame(nightly_internal)
@@ -266,10 +262,11 @@ def main():
             'within_2_capture_rate': float((x.count_abs_error <= 2.0).mean()),
         }
 
-    thirds = np.array_split(scored.reset_index(drop=True), 3) if not scored.empty else []
-    count_blocks = {
-        f'block_{i+1}': block_metrics(x) for i, x in enumerate(thirds)
-    }
+    base = scored.reset_index(drop=True)
+    cut1 = len(base) // 3
+    cut2 = (2 * len(base)) // 3
+    thirds = [base.iloc[:cut1].copy(), base.iloc[cut1:cut2].copy(), base.iloc[cut2:].copy()] if not base.empty else []
+    count_blocks = {f'block_{i+1}': block_metrics(x) for i, x in enumerate(thirds)}
 
     time_events = int(time_scored.time_events_scored.sum()) if not time_scored.empty else 0
     time_summary = {
