@@ -6,10 +6,15 @@ on:
       - agent/full-data-baseline-refresh-data
     paths:
       - 'scripts/run_five_models_89night_pdca.py'
+      - 'scripts/run_five_models_89night_pdca_fast.py'
       - '.github/workflows/five-models-89night-pdca.yml'
       - 'data/**'
       - 'src/**'
   workflow_dispatch:
+
+concurrency:
+  group: five-models-89night-pdca-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -26,8 +31,8 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: pip install -e '.[dev]'
-      - name: Run five-model 89-night PDCA tournament
-        run: python scripts/run_five_models_89night_pdca.py
+      - name: Run vectorized five-model 89-night PDCA tournament
+        run: python scripts/run_five_models_89night_pdca_fast.py
       - name: Validate output and privacy
         run: |
           python - <<'PY'
