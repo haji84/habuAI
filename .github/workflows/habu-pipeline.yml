@@ -29,7 +29,7 @@ jobs:
       - name: Install system GIS tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y osmium-tool gdal-bin unzip
+          sudo apt-get install -y osmium-tool gdal-bin unzip xz-utils
 
       - uses: actions/setup-python@v5
         with:
@@ -48,12 +48,24 @@ jobs:
           LOG_COUNT=$(find data/raw/logs -maxdepth 1 -type f -name '*.txt' | wc -l)
           echo "GPX_COUNT=$GPX_COUNT LOG_COUNT=$LOG_COUNT"
           if [ "$GPX_COUNT" -eq 0 ]; then
-            echo 'No GPX input found. Upload a zip bundle under data/raw/import/ or GPX files under data/raw/gpx/.'
+            echo 'No GPX input found. Upload a zip bundle under data/raw/import/ or validated .gpx.xz under data/raw/compressed_gpx/.'
             exit 2
           fi
           if [ "$LOG_COUNT" -eq 0 ]; then
             echo 'No field log found under data/raw/logs/.'
             exit 2
+          fi
+
+      - name: Check canonical ACTUAL_GPX inventory
+        id: inventory
+        shell: bash
+        run: |
+          python scripts/check_canonical_gpx_inventory.py | tee /tmp/canonical-gpx-inventory.log
+          if grep -q '^CANONICAL_GPX_COMPLETE=true$' /tmp/canonical-gpx-inventory.log; then
+            echo 'complete=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'complete=false' >> "$GITHUB_OUTPUT"
+            echo 'WARNING: canonical ACTUAL_GPX inventory is incomplete. Pipeline may run for diagnostics, but generated model/report outputs will not be pushed as canonical latest.'
           fi
 
       - name: Cache Kyushu OSM PBF
@@ -74,6 +86,7 @@ jobs:
         run: pytest -q
 
       - name: Commit generated outputs
+        if: steps.inventory.outputs.complete == 'true'
         run: |
           git config user.name 'habuAI-bot'
           git config user.email 'actions@users.noreply.github.com'
@@ -82,6 +95,12 @@ jobs:
             git commit -m 'data: refresh Habu learning outputs'
             git push
           fi
+
+      - name: Explain withheld canonical publish
+        if: steps.inventory.outputs.complete != 'true'
+        run: |
+          echo 'Canonical publish withheld because one or more expected ACTUAL_GPX originals are missing.'
+          cat reports/v2_actual_gpx_pipeline_inventory_status.json || true
 
       - name: Upload pipeline artifact
         if: always()
