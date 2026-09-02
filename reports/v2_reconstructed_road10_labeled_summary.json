@@ -1,0 +1,23 @@
+{
+  "strict_verified_intervals": 8,
+  "positive_intervals": 4,
+  "no_capture_observed_intervals": 4,
+  "operational_nights": 6,
+  "positive_operational_nights": [
+    "2026-05-23",
+    "2026-06-06",
+    "2026-07-08",
+    "2026-07-20"
+  ],
+  "no_capture_observed_operational_nights": [
+    "2026-05-23",
+    "2026-06-18",
+    "2026-07-25"
+  ],
+  "target_species": "ハブ",
+  "himehabu_excluded_from_main_target": true,
+  "semantics": "NO_CAPTURE_OBSERVED means a verified searched/traversed unique-route interval inside one 10-minute bin with no main-Habu event recorded; it is not proof of biological absence.",
+  "whole_night_promotion": false,
+  "final_for_these_8_intervals": true,
+  "canonical_population_final": false
+}
