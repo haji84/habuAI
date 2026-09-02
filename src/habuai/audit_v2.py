@@ -148,11 +148,7 @@ def _normalize_event_frame(events: pd.DataFrame) -> pd.DataFrame:
 
 
 def _exploration_session_nights(events: pd.DataFrame) -> set[str]:
-    """Return nights evidenced by explicit search start/end markers only.
-
-    Ordinary capture, sighting, roadkill and weather events do not create a
-    canonical exploration night by themselves.
-    """
+    """Return nights evidenced by explicit search start/end markers only."""
     if events.empty:
         return set()
     e = _normalize_event_frame(events)
@@ -305,13 +301,7 @@ def build_night_audit(
     gps_history: pd.DataFrame | None = None,
     exploration_nights: Iterable[str] | None = None,
 ) -> pd.DataFrame:
-    """Build the canonical audit from exploration evidence first.
-
-    Population sources are explicit exploration nights, timestamped GPX, device
-    GPS/location history, and explicit search-start/search-end markers. Capture,
-    sighting, roadkill, weather, and biological-event dates are joined only after
-    the exploration population has been fixed.
-    """
+    """Build the canonical audit from exploration evidence first."""
     gps_history = gps_history if gps_history is not None else pd.DataFrame()
     gpx = _actual_gpx_summary(gpx_points)
     ev = _event_summary(events)
@@ -364,8 +354,8 @@ def build_night_audit(
 
 def write_audit_outputs(audit: pd.DataFrame, out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
-    csv_path = out_dir / "v2_89_night_audit.csv"
-    json_path = out_dir / "v2_89_night_audit_summary.json"
+    csv_path = out_dir / "v2_night_audit.csv"
+    json_path = out_dir / "v2_night_audit_summary.json"
     audit.to_csv(csv_path, index=False)
 
     counts = audit["classification"].value_counts().reindex(sorted(ALL_CLASSES), fill_value=0)
@@ -383,5 +373,6 @@ def write_audit_outputs(audit: pd.DataFrame, out_dir: Path) -> None:
             "or explicit search start/end markers; ordinary events never create nights"
         ),
         "operational_boundary": "07:00 Asia/Tokyo",
+        "historical_89_is_not_forced": True,
     }
     json_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
