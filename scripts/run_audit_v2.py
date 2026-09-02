@@ -7,6 +7,7 @@ import pandas as pd
 
 from habuai.audit_v2 import build_night_audit, write_audit_outputs
 from habuai.evidence_policy import (
+    derive_dense_field_sequence_nights,
     derive_exploration_nights_from_events,
     load_population_conflicts,
     merge_exploration_night_sources,
@@ -62,13 +63,22 @@ def main() -> None:
     gps_history = _read_csv(args.gps_history)
     explicit_nights = _read_nights(args.exploration_nights)
 
-    # A confirmed self-capture proves that the user was exploring that night.
-    # Roadkill/sighting/weather events do not create exploration nights by themselves.
+    # Confirmed self-captures / explicit zero rows are strong event evidence, but
+    # historical recovered versions may still be quarantined when provenance conflicts.
     strong_event_nights = derive_exploration_nights_from_events(events)
-    proposed_nights = merge_exploration_night_sources(explicit_nights, strong_event_nights)
-
     conflicts = load_population_conflicts(args.population_conflicts)
-    nights, quarantined = quarantine_unresolved_nights(proposed_nights, conflicts)
+    safe_event_nights, quarantined = quarantine_unresolved_nights(
+        strong_event_nights, conflicts
+    )
+
+    # Dense time-ordered field sequences are independent exploration evidence.
+    # They can therefore establish a night even when a recovered capture row is weak.
+    dense_field_nights = derive_dense_field_sequence_nights(events)
+    nights = merge_exploration_night_sources(
+        explicit_nights,
+        safe_event_nights,
+        dense_field_nights,
+    )
 
     audit = build_night_audit(
         gpx_points=gpx,
@@ -94,7 +104,8 @@ def main() -> None:
         quarantined.to_csv(args.out_dir / "v2_population_quarantine.csv", index=False)
 
     print(f"strong_event_nights={len(strong_event_nights)}")
-    print(f"quarantined_nights={len(quarantined)}")
+    print(f"dense_field_nights={len(dense_field_nights)}")
+    print(f"quarantined_event_nights={len(quarantined)}")
     if not audit.empty:
         print(audit["classification"].value_counts().sort_index().to_string())
         print(f"road_10min_eval={int(audit['usable_road_10min_eval'].sum())}")
