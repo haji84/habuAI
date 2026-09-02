@@ -34,9 +34,7 @@ EXPLORATION_EVENT_TYPES = {
     "search_end",
 }
 
-# Necessary map-match quality for reconstructed anchors. This is NOT sufficient
-# by itself for strict Road×10min use: the route between anchors and its time window
-# must also be explicitly verified as temporally unambiguous.
+ACTUAL_GPX_STRICT_MIN_MATCH_RATIO = 0.80
 RECON_STRICT_MIN_MATCH_RATIO = 0.80
 RECON_STRICT_MAX_MEDIAN_MATCH_DISTANCE_M = 25.0
 
@@ -192,7 +190,7 @@ def _event_summary(events: pd.DataFrame) -> pd.DataFrame:
         gps_ok = x["lat"].notna() & x["lon"].notna()
         rows.append(
             {
-                "operational_date_0700": night,
+                "operational_date_0700": str(night),
                 "event_count": int(len(x)),
                 "capture_count": capture_rows(x),
                 "gps_anchor_count": int(gps_ok.sum()),
@@ -248,7 +246,7 @@ def _optional_gps_history_summary(gps_history: pd.DataFrame) -> pd.DataFrame:
         )
         rows.append(
             {
-                "operational_date_0700": night,
+                "operational_date_0700": str(night),
                 "history_anchor_count": anchor_count,
                 "history_start": t.min() if len(t) else pd.NaT,
                 "history_end": t.max() if len(t) else pd.NaT,
@@ -295,11 +293,23 @@ def classify_night(row: pd.Series) -> NightAudit:
 
     if actual_points >= 100 and gpx_duration >= 30:
         matched_ratio = min(1.0, matched_segment_points / max(actual_points, 1))
+        strict_ready = matched_ratio >= ACTUAL_GPX_STRICT_MIN_MATCH_RATIO
         route_conf = max(0.90, 0.90 + 0.10 * matched_ratio)
         time_conf = 0.99
         classification = CLASS_ACTUAL_GPX
-        evidence = f"timestamped actual GPX: {actual_points} points / {gpx_duration:.0f} min"
-        limitation = ""
+        evidence = (
+            f"timestamped actual GPX: {actual_points} points / {gpx_duration:.0f} min / "
+            f"road-map-match {matched_ratio:.1%}"
+        )
+        limitation = (
+            ""
+            if strict_ready
+            else (
+                f"actual GPX road-map coverage below {ACTUAL_GPX_STRICT_MIN_MATCH_RATIO:.0%}; "
+                "retain ACTUAL_GPX provenance but block strict Road×10min and "
+                "NO_CAPTURE_OBSERVED until map matching is complete"
+            )
+        )
     elif history_anchors >= 20 and history_span >= 90 and median_gap is not None and median_gap <= 10:
         route_conf = 0.85
         time_conf = 0.82
@@ -380,14 +390,20 @@ def build_night_audit(
     hist = _optional_gps_history_summary(gps_history)
 
     explicit = {str(x) for x in (exploration_nights or [])}
-    trajectory_nights = set(gpx.get("operational_date_0700", [])) | set(
-        hist.get("operational_date_0700", [])
+    trajectory_nights = set(map(str, gpx.get("operational_date_0700", []))) | set(
+        map(str, hist.get("operational_date_0700", []))
     )
     session_nights = _exploration_session_nights(events)
     nights = sorted(explicit | trajectory_nights | session_nights)
 
-    base = pd.DataFrame({"operational_date_0700": nights})
+    # Keep the join key as object even when the population is empty. Pandas 3
+    # otherwise infers float64 from an empty list and refuses to merge an event
+    # summary whose operational-date key is object/string.
+    base = pd.DataFrame({"operational_date_0700": pd.Series(nights, dtype="object")})
     for part in [gpx, ev, hist]:
+        if "operational_date_0700" in part.columns:
+            part = part.copy()
+            part["operational_date_0700"] = part["operational_date_0700"].astype("object")
         base = base.merge(part, on="operational_date_0700", how="left")
 
     numeric_zero = [
@@ -434,20 +450,38 @@ def write_audit_outputs(audit: pd.DataFrame, out_dir: Path) -> None:
     json_path = out_dir / "v2_night_audit_summary.json"
     audit.to_csv(csv_path, index=False)
 
-    counts = audit["classification"].value_counts().reindex(sorted(ALL_CLASSES), fill_value=0)
+    if audit.empty:
+        classification_counts = {k: 0 for k in sorted(ALL_CLASSES)}
+        road_train = 0
+        road_eval = 0
+        no_capture = 0
+        unknown = 0
+    else:
+        counts = audit["classification"].value_counts().reindex(sorted(ALL_CLASSES), fill_value=0)
+        classification_counts = {k: int(v) for k, v in counts.items()}
+        road_train = int(audit["usable_road_10min_train"].sum())
+        road_eval = int(audit["usable_road_10min_eval"].sum())
+        no_capture = int((audit["night_observation_label"] == "NO_CAPTURE_OBSERVED").sum())
+        unknown = int((audit["night_observation_label"] == "Unknown").sum())
+
     summary = {
         "night_count": int(len(audit)),
-        "classification_counts": {k: int(v) for k, v in counts.items()},
-        "road_10min_train_usable": int(audit["usable_road_10min_train"].sum()),
-        "road_10min_eval_usable": int(audit["usable_road_10min_eval"].sum()),
-        "no_capture_observed_nights": int(
-            (audit["night_observation_label"] == "NO_CAPTURE_OBSERVED").sum()
-        ),
-        "unknown_nights": int((audit["night_observation_label"] == "Unknown").sum()),
+        "classification_counts": classification_counts,
+        "road_10min_train_usable": road_train,
+        "road_10min_eval_usable": road_eval,
+        "no_capture_observed_nights": no_capture,
+        "unknown_nights": unknown,
         "population_rule": (
             "exploration evidence first: explicit session list, GPX, device GPS history, "
             "or explicit search start/end markers; ordinary events never create nights"
         ),
+        "strict_actual_gpx_gate": {
+            "min_point_map_match_ratio": ACTUAL_GPX_STRICT_MIN_MATCH_RATIO,
+            "rule": (
+                "ACTUAL_GPX provenance is retained even below threshold, but strict Road×10min "
+                "training/evaluation and NO_CAPTURE_OBSERVED require sufficient road-map coverage"
+            ),
+        },
         "strict_reconstruction_gate": {
             "min_anchor_match_ratio": RECON_STRICT_MIN_MATCH_RATIO,
             "max_anchor_median_match_distance_m": RECON_STRICT_MAX_MEDIAN_MATCH_DISTANCE_M,

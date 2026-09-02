@@ -19,22 +19,51 @@ def test_operational_date_0700_boundary():
     assert operational_date_0700("2026-07-23 07:00:00+09:00").isoformat() == "2026-07-23"
 
 
-def test_actual_gpx_no_capture_becomes_no_capture_observed():
-    ts = pd.date_range("2026-08-20 20:00", periods=120, freq="1min", tz="Asia/Tokyo")
-    gpx = pd.DataFrame(
+def _actual_gpx(matched_points: int, total_points: int = 120) -> pd.DataFrame:
+    ts = pd.date_range("2026-08-20 20:00", periods=total_points, freq="1min", tz="Asia/Tokyo")
+    return pd.DataFrame(
         {
-            "session_file": ["night.gpx"] * len(ts),
+            "session_file": ["night.gpx"] * total_points,
             "timestamp": ts,
-            "lat": [28.17] * len(ts),
-            "lon": [129.35] * len(ts),
-            "segment_id": ["seg-1"] * len(ts),
+            "lat": [28.17] * total_points,
+            "lon": [129.35] * total_points,
+            "segment_id": [
+                "seg-1" if i < matched_points else pd.NA for i in range(total_points)
+            ],
         }
     )
+
+
+def test_actual_gpx_no_capture_becomes_no_capture_observed_at_full_match():
+    gpx = _actual_gpx(120)
     audit = build_night_audit(gpx, pd.DataFrame(), exploration_nights=["2026-08-20"])
     row = audit.iloc[0]
     assert row.classification == CLASS_ACTUAL_GPX
     assert bool(row.can_generate_no_capture_observed)
     assert row.night_observation_label == "NO_CAPTURE_OBSERVED"
+
+
+def test_actual_gpx_below_80pct_keeps_provenance_but_blocks_strict_labels():
+    gpx = _actual_gpx(95, 120)  # 79.17%
+    audit = build_night_audit(gpx, pd.DataFrame(), exploration_nights=["2026-08-20"])
+    row = audit.iloc[0]
+    assert row.classification == CLASS_ACTUAL_GPX
+    assert row.usable_road
+    assert not row.usable_road_10min_train
+    assert not row.usable_road_10min_eval
+    assert not row.can_generate_no_capture_observed
+    assert row.night_observation_label == "Unknown"
+    assert "below 80%" in row.limitation_reason
+
+
+def test_actual_gpx_at_80pct_becomes_strict_eligible():
+    gpx = _actual_gpx(96, 120)  # exactly 80%
+    audit = build_night_audit(gpx, pd.DataFrame(), exploration_nights=["2026-08-20"])
+    row = audit.iloc[0]
+    assert row.classification == CLASS_ACTUAL_GPX
+    assert row.usable_road_10min_train
+    assert row.usable_road_10min_eval
+    assert row.can_generate_no_capture_observed
 
 
 def test_ordinary_event_only_night_does_not_create_population():
