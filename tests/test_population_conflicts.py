@@ -8,10 +8,22 @@ from habuai.evidence_policy import quarantine_unresolved_nights
 def _conflicts() -> pd.DataFrame:
     return pd.DataFrame(
         {
-            "operational_date_0700": ["2025-11-07", "2025-11-18", "2026-08-21"],
-            "status": ["SOURCE_CONFLICT", "DUPLICATE_SUSPECT", "SOURCE_CONFLICT"],
+            "operational_date_0700": [
+                "2025-11-07",
+                "2025-11-18",
+                "2026-08-21",
+            ],
+            "status": [
+                "SOURCE_CONFLICT",
+                "LIKELY_DATE_DUPLICATE",
+                "SOURCE_CONFLICT",
+            ],
             "include_by_default": [False, False, True],
-            "reason": ["version conflict", "duplicate suspicion", "independent GPX resolved"],
+            "reason": [
+                "version conflict",
+                "strong date-duplicate evidence",
+                "independent GPX resolved",
+            ],
             "source_evidence": ["db", "db", "actual gpx"],
         }
     )
