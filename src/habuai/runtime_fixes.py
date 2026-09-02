@@ -41,11 +41,7 @@ def canonicalize_operational_night(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def species_from_text_specific_first(text: str) -> str:
-    """Parse species without letting a short name swallow a longer one.
-
-    `ヒメハブ` contains the substring `ハブ`, so checking `ハブ` first labels
-    Himehabu as the main target species. Longer/specific snake names must win.
-    """
+    """Parse species without letting a short name swallow a longer one."""
     keys = [
         "ヒメハブ",
         "ガラスヒバァ",
@@ -68,11 +64,29 @@ def species_from_text_specific_first(text: str) -> str:
     return "その他"
 
 
+def mark_hindsight_weather_evaluation(score: dict) -> dict:
+    """Prevent archive-weather holdout scores from being reported as strict v2 accuracy.
+
+    Historical archive/reanalysis weather can be useful for retrospective model
+    development, but it was not necessarily available at the time the prediction
+    would have been generated. Strict v2 evaluation requires a frozen forecast
+    snapshot whose issued/acquired timestamps precede prediction generation.
+    """
+    out = dict(score or {})
+    out["evaluation_mode"] = "DIAGNOSTIC_HINDSIGHT_WEATHER"
+    out["strict_no_leakage_eligible"] = False
+    out["weather_feature_source"] = "open_meteo_archive_actual_or_reanalysis"
+    out["strict_blocker"] = (
+        "holdout features use archive weather; official v2 accuracy requires a frozen "
+        "forecast snapshot available at prediction generation time"
+    )
+    return out
+
+
 def apply_runtime_fixes(pipeline) -> None:
-    """Apply hardening, canonical night IDs, and safe species parsing."""
+    """Apply hardening, canonical IDs, species parsing, and no-leakage guards."""
     apply_hardening(pipeline)
 
-    # Fix the production parser before parse_field_log is captured below.
     pipeline._species_from_text = species_from_text_specific_first
     original_parse_field_log = pipeline.parse_field_log
 
@@ -80,3 +94,13 @@ def apply_runtime_fixes(pipeline) -> None:
         return canonicalize_operational_night(original_parse_field_log(path))
 
     pipeline.parse_field_log = parse_field_log_0700
+
+    # The current pipeline joins Open-Meteo archive weather to historical visits.
+    # Keep those results for retrospective diagnostics, but never let latest_score
+    # masquerade as the strict pre-search forecast evaluation required by Habu AI v2.
+    original_score_holdout = pipeline.score_holdout
+
+    def score_holdout_no_leakage(root, data, cfg):
+        return mark_hindsight_weather_evaluation(original_score_holdout(root, data, cfg))
+
+    pipeline.score_holdout = score_holdout_no_leakage
