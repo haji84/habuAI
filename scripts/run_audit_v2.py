@@ -6,6 +6,10 @@ from pathlib import Path
 import pandas as pd
 
 from habuai.audit_v2 import build_night_audit, write_audit_outputs
+from habuai.evidence_policy import (
+    derive_exploration_nights_from_events,
+    merge_exploration_night_sources,
+)
 
 
 def _read_csv(path: Path | None) -> pd.DataFrame:
@@ -49,7 +53,12 @@ def main() -> None:
     gpx = _read_csv(args.gpx_points)
     events = _read_csv(args.events)
     gps_history = _read_csv(args.gps_history)
-    nights = _read_nights(args.exploration_nights)
+    explicit_nights = _read_nights(args.exploration_nights)
+
+    # A confirmed self-capture proves that the user was exploring that night.
+    # Roadkill/sighting/weather events do not create exploration nights by themselves.
+    strong_event_nights = derive_exploration_nights_from_events(events)
+    nights = merge_exploration_night_sources(explicit_nights, strong_event_nights)
 
     audit = build_night_audit(
         gpx_points=gpx,
@@ -71,6 +80,7 @@ def main() -> None:
         raise SystemExit(f"duplicate operational nights: {duplicated}")
 
     write_audit_outputs(audit, args.out_dir)
+    print(f"strong_event_nights={len(strong_event_nights)}")
     if not audit.empty:
         print(audit["classification"].value_counts().sort_index().to_string())
         print(f"road_10min_eval={int(audit['usable_road_10min_eval'].sum())}")
