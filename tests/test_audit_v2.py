@@ -37,7 +37,7 @@ def test_actual_gpx_no_capture_becomes_no_capture_observed():
     assert row.night_observation_label == "NO_CAPTURE_OBSERVED"
 
 
-def test_event_only_night_is_not_automatically_zero_observed():
+def test_ordinary_event_only_night_does_not_create_population():
     events = pd.DataFrame(
         {
             "timestamp": [pd.Timestamp("2026-05-10 23:02", tz="Asia/Tokyo")],
@@ -48,10 +48,42 @@ def test_event_only_night_is_not_automatically_zero_observed():
         }
     )
     audit = build_night_audit(pd.DataFrame(), events)
+    assert audit.empty
+
+
+def test_event_is_joined_after_explicit_exploration_population_is_fixed():
+    events = pd.DataFrame(
+        {
+            "timestamp": [pd.Timestamp("2026-05-10 23:02", tz="Asia/Tokyo")],
+            "event_type": ["轢死"],
+            "species": ["ハブ"],
+            "lat": [28.25],
+            "lon": [129.33],
+        }
+    )
+    audit = build_night_audit(
+        pd.DataFrame(), events, exploration_nights=["2026-05-10"]
+    )
     row = audit.iloc[0]
     assert row.classification == CLASS_SPATIAL_ONLY
     assert row.capture_count == 0
     assert row.night_observation_label == "Unknown"
+
+
+def test_search_end_marker_creates_exploration_night_with_0700_boundary():
+    events = pd.DataFrame(
+        {
+            "timestamp": [pd.Timestamp("2026-08-20 02:52", tz="Asia/Tokyo")],
+            "event_type": ["探索終了"],
+            "species": [""],
+            "lat": [pd.NA],
+            "lon": [pd.NA],
+        }
+    )
+    audit = build_night_audit(pd.DataFrame(), events)
+    assert len(audit) == 1
+    assert audit.iloc[0].operational_date_0700 == "2026-08-19"
+    assert audit.iloc[0].night_observation_label == "Unknown"
 
 
 def test_dense_gps_history_is_high_reconstruction_candidate():
