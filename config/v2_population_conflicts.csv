@@ -1,0 +1,9 @@
+operational_date_0700,status,include_by_default,reason,source_evidence
+2025-09-22,WEAK_EVENT_ONLY,false,capture_or_sighting recovered candidate; no independent session/GPX evidence yet,2025-09 recovered DB
+2025-09-25,WEAK_EVENT_ONLY,false,capture_or_sighting recovered candidate; no independent session/GPX evidence yet,2025-09 recovered DB
+2025-09-26,WEAK_EVENT_ONLY,false,capture_or_sighting recovered candidate; no independent session/GPX evidence yet,2025-09 recovered DB
+2025-09-28,WEAK_EVENT_ONLY,false,capture_or_sighting recovered candidate; no independent session/GPX evidence yet,2025-09 recovered DB
+2025-10-12,SOURCE_CONFLICT,false,capture_or_sighting candidate shares operational night with a confirmed 01:40 capture but candidate row itself is ambiguous,2025-10 recovered DB
+2025-10-15,DUPLICATE_SUSPECT,false,confirmed capture row carries later-log duplicate warning,2025-10 recovered DB
+2025-11-07,SOURCE_CONFLICT,false,main/reconstructed DB says capture_or_sighting candidate while capture-label-corrected DB says confirmed capture,2025-11 DB versions
+2025-11-18,DUPLICATE_SUSPECT,false,two capture rows and roadkill carry 10/18 duplicate suspicion,2025-11 recovered DB
