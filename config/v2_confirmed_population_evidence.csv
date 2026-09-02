@@ -1,0 +1,9 @@
+operational_date_0700,evidence_type,evidence_count,span_minutes,source,old_89_member,status,notes
+2026-05-02,DENSE_FIELD_SEQUENCE,5,124,"timestamped field files 2026-05-02",false,CONFIRMED,"multi-place sequence Yamato -> Uken -> Setouchi; independent of capture rows"
+2026-05-10,DENSE_FIELD_SEQUENCE,17,194,"ハブログ5~7月.txt",false,CONFIRMED,"20:31-23:45 multi-area GPS-tagged sequence; Habu roadkill present but no self-capture required for population proof"
+2026-05-11,DENSE_FIELD_SEQUENCE,15,93,"ハブログ5~7月.txt",false,CONFIRMED,"22:08-23:41 sustained GPS-tagged multi-location sequence"
+2026-06-09,DENSE_FIELD_SEQUENCE,28,148,"ハブログ5~7月.txt",false,CONFIRMED,"22:00-00:28 sustained wet-weather field sequence across multiple roads"
+2026-07-02,DENSE_FIELD_SEQUENCE,15,233,"ハブログ5~7月.txt",false,CONFIRMED,"22:48-02:41 sustained multi-location sequence; operational night 2026-07-02"
+2026-07-04,DENSE_FIELD_SEQUENCE,25,253,"ハブログ5~7月.txt",false,CONFIRMED,"23:01-03:14 sustained multi-location sequence; operational night 2026-07-04"
+2026-08-21,ACTUAL_GPX,13913,236,"2026-08-21-探索.gpx + raw session markers",false,CONFIRMED,"actual timestamped GPX plus explicit search start/end evidence"
+2026-08-31,ACTUAL_GPX,17906,300,"2026-08-31-探索.gpx",false,CONFIRMED,"actual timestamped GPX; omitted because historical population ended at capture-driven list"
