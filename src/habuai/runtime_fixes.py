@@ -40,10 +40,40 @@ def canonicalize_operational_night(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def species_from_text_specific_first(text: str) -> str:
+    """Parse species without letting a short name swallow a longer one.
+
+    `ヒメハブ` contains the substring `ハブ`, so checking `ハブ` first labels
+    Himehabu as the main target species. Longer/specific snake names must win.
+    """
+    keys = [
+        "ヒメハブ",
+        "ガラスヒバァ",
+        "ガラスヒヴァ",
+        "リュウキュウアオヘビ",
+        "アカマタ",
+        "ヒャン",
+        "ハブ",
+        "オットンガエル",
+        "イシカワガエル",
+        "アマミハナサキガエル",
+        "カエル",
+        "ヤマシギ",
+        "クロウサギ",
+        "ネズミ",
+    ]
+    for key in keys:
+        if key in text:
+            return key
+    return "その他"
+
+
 def apply_runtime_fixes(pipeline) -> None:
-    """Apply hardening plus the canonical operational-night policy."""
+    """Apply hardening, canonical night IDs, and safe species parsing."""
     apply_hardening(pipeline)
 
+    # Fix the production parser before parse_field_log is captured below.
+    pipeline._species_from_text = species_from_text_specific_first
     original_parse_field_log = pipeline.parse_field_log
 
     def parse_field_log_0700(path):
