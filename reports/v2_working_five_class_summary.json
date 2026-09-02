@@ -1,0 +1,39 @@
+{
+  "scope_end": "2026-08-31",
+  "population_status": "WORKING_NOT_FINAL",
+  "working_canonical_nights": 87,
+  "classification_counts": {
+    "ACTUAL_GPX": 12,
+    "RECONSTRUCTED_GPS_HIGH": 21,
+    "RECONSTRUCTED_PARTIAL": 18,
+    "SPATIAL_ONLY_RECONSTRUCTION": 36,
+    "UNRECONSTRUCTABLE": 0
+  },
+  "derivation": {
+    "retained_historical_89": {
+      "ACTUAL_GPX": 10,
+      "RECONSTRUCTED_GPS_HIGH": 21,
+      "RECONSTRUCTED_PARTIAL": 13,
+      "SPATIAL_ONLY_RECONSTRUCTION": 35,
+      "UNRECONSTRUCTABLE": 0
+    },
+    "added_independent_nights": {
+      "2026-05-02": "SPATIAL_ONLY_RECONSTRUCTION",
+      "2026-05-10": "RECONSTRUCTED_PARTIAL",
+      "2026-05-11": "RECONSTRUCTED_PARTIAL",
+      "2026-06-09": "RECONSTRUCTED_PARTIAL",
+      "2026-07-02": "RECONSTRUCTED_PARTIAL",
+      "2026-07-04": "RECONSTRUCTED_PARTIAL",
+      "2026-08-21": "ACTUAL_GPX",
+      "2026-08-31": "ACTUAL_GPX"
+    }
+  },
+  "strict_temporal_policy": {
+    "actual_gpx": "eligible subject to GPX road-match quality",
+    "reconstructed_high": "candidate class only until road-network map matching passes >=80% matched anchors and <=25m median match distance",
+    "reconstructed_partial": "not globally eligible for Road x 10 min; only separately validated subsegments may later qualify",
+    "spatial_only": "not eligible for Road x 10 min temporal negatives"
+  },
+  "important_note": "The 21 high-reconstruction nights are not counted as strict Road x 10 min usable merely because they are classified HIGH. PR #19 added an explicit map-match gate.",
+  "final": false
+}
