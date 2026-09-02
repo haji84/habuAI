@@ -1,0 +1,13 @@
+{
+  "scope_end": "2026-09-02",
+  "actual_gpx_nights": 13,
+  "total_gps_points": 243747,
+  "total_duration_h": 68.030277,
+  "total_distance_km": 817.109419,
+  "all_nights_median_gap_s": 1.0,
+  "all_nights_p95_gap_s": 1.0,
+  "nights_with_gap_over_300s": 0,
+  "max_gap_s_overall": 148.999,
+  "quality_status": "PASS_FOR_STRICT_TEMPORAL_TRAJECTORY_INPUT",
+  "note": "Road x 10 min eligibility still requires road map-matching quality; this QC validates only raw timestamped GPX continuity and provenance."
+}

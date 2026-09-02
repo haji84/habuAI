@@ -1,13 +1,13 @@
 {
-  "scope_end": "2026-08-31",
+  "scope_end": "2026-09-02",
   "operational_boundary": "07:00 Asia/Tokyo",
   "historical_audit_nights": 89,
   "historical_nights_retained": 79,
   "historical_nights_quarantined_or_removed": 10,
-  "independently_confirmed_omitted_nights_added": 8,
-  "working_canonical_nights": 87,
+  "independently_confirmed_omitted_nights_added": 9,
+  "working_canonical_nights": 88,
   "working_source_breakdown": {
-    "unambiguous_self_capture_nights": 77,
+    "unambiguous_self_capture_nights": 78,
     "explicit_zero_nights": 2,
     "independent_omitted_evidence_nights": 8
   },
@@ -31,13 +31,14 @@
     "2026-07-02",
     "2026-07-04",
     "2026-08-21",
-    "2026-08-31"
+    "2026-08-31",
+    "2026-09-02"
   ],
   "final": false,
   "remaining_work": [
     "scan any remaining independent historical GPS/location-history evidence for quarantined or event-only nights",
-    "build per-night trajectory evidence and five-class reconstruction audit",
-    "map-match reconstructed GPS candidates before strict Road x 10 min eligibility",
-    "recompute NO_CAPTURE_OBSERVED from searched road/time evidence"
+    "keep five-class reconstruction audit synchronized with newly confirmed exploration nights",
+    "map-match all actual GPX and reconstructed GPS candidates before strict Road x 10 min eligibility",
+    "recompute Positive and NO_CAPTURE_OBSERVED from searched road/time evidence"
   ]
 }
