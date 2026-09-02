@@ -34,6 +34,11 @@ EXPLORATION_EVENT_TYPES = {
     "search_end",
 }
 
+# A high-density GPS history is only a reconstruction candidate until road-network
+# map matching confirms that most timed anchors can be placed on a coherent route.
+RECON_STRICT_MIN_MATCH_RATIO = 0.80
+RECON_STRICT_MAX_MEDIAN_MATCH_DISTANCE_M = 25.0
+
 
 @dataclass(frozen=True)
 class NightAudit:
@@ -82,10 +87,19 @@ def add_operational_date_0700(
     return out
 
 
-def _bool_thresholds(route_confidence: float, time_confidence: float) -> dict[str, bool]:
+def _bool_thresholds(
+    route_confidence: float,
+    time_confidence: float,
+    *,
+    strict_ready: bool = True,
+) -> dict[str, bool]:
     usable_1km = route_confidence >= 0.40
     usable_road = route_confidence >= 0.65
-    strict = route_confidence >= 0.85 and time_confidence >= 0.80
+    strict = (
+        strict_ready
+        and route_confidence >= 0.85
+        and time_confidence >= 0.80
+    )
     return {
         "usable_1km_area": usable_1km,
         "usable_road": usable_road,
@@ -200,32 +214,64 @@ def _optional_gps_history_summary(gps_history: pd.DataFrame) -> pd.DataFrame:
                 "history_end",
                 "history_span_minutes",
                 "history_median_gap_minutes",
+                "history_matched_anchor_count",
+                "history_match_ratio",
+                "history_median_match_distance_m",
             ]
         )
 
     h = add_operational_date_0700(gps_history, "timestamp")
     h["timestamp"] = h["timestamp"].map(_to_jst_timestamp)
+    if "segment_id" not in h.columns:
+        h["segment_id"] = pd.NA
+    if "match_distance_m" not in h.columns:
+        h["match_distance_m"] = pd.NA
     h = h.sort_values(["operational_date_0700", "timestamp"])
     rows = []
     for night, x in h.groupby("operational_date_0700"):
         lat = x.get("lat", pd.Series(index=x.index, dtype=float))
         lon = x.get("lon", pd.Series(index=x.index, dtype=float))
         gps_ok = lat.notna() & lon.notna()
-        t = x.loc[gps_ok, "timestamp"].sort_values()
+        timed = x.loc[gps_ok].copy()
+        t = timed["timestamp"].sort_values()
         gaps = t.diff().dt.total_seconds().div(60.0).dropna()
+        matched = timed["segment_id"].notna()
+        matched_count = int(matched.sum())
+        anchor_count = int(len(timed))
+        match_distances = pd.to_numeric(
+            timed.loc[matched, "match_distance_m"], errors="coerce"
+        ).dropna()
         rows.append(
             {
                 "operational_date_0700": night,
-                "history_anchor_count": int(len(t)),
+                "history_anchor_count": anchor_count,
                 "history_start": t.min() if len(t) else pd.NaT,
                 "history_end": t.max() if len(t) else pd.NaT,
                 "history_span_minutes": (
                     float((t.max() - t.min()).total_seconds() / 60.0) if len(t) >= 2 else 0.0
                 ),
                 "history_median_gap_minutes": float(gaps.median()) if len(gaps) else None,
+                "history_matched_anchor_count": matched_count,
+                "history_match_ratio": (
+                    float(matched_count / anchor_count) if anchor_count else 0.0
+                ),
+                "history_median_match_distance_m": (
+                    float(match_distances.median()) if len(match_distances) else None
+                ),
             }
         )
     return pd.DataFrame(rows)
+
+
+def _reconstruction_map_match_ready(row: pd.Series) -> bool:
+    match_ratio = float(row.get("history_match_ratio", 0.0) or 0.0)
+    median_distance = row.get("history_median_match_distance_m", None)
+    if median_distance is None or pd.isna(median_distance):
+        return False
+    return (
+        match_ratio >= RECON_STRICT_MIN_MATCH_RATIO
+        and float(median_distance) <= RECON_STRICT_MAX_MEDIAN_MATCH_DISTANCE_M
+    )
 
 
 def classify_night(row: pd.Series) -> NightAudit:
@@ -240,6 +286,7 @@ def classify_night(row: pd.Series) -> NightAudit:
     matched_segment_points = int(row.get("matched_segment_points", 0) or 0)
     median_gap = row.get("history_median_gap_minutes", None)
     history_span = float(row.get("history_span_minutes", 0.0) or 0.0)
+    strict_ready = True
 
     if actual_points >= 100 and gpx_duration >= 30:
         matched_ratio = min(1.0, matched_segment_points / max(actual_points, 1))
@@ -252,11 +299,30 @@ def classify_night(row: pd.Series) -> NightAudit:
         route_conf = 0.85
         time_conf = 0.82
         classification = CLASS_RECONSTRUCTED_HIGH
+        map_match_ready = _reconstruction_map_match_ready(row)
+        strict_ready = map_match_ready
+        match_ratio = float(row.get("history_match_ratio", 0.0) or 0.0)
+        median_distance = row.get("history_median_match_distance_m", None)
+        distance_text = (
+            f"{float(median_distance):.1f}m"
+            if median_distance is not None and not pd.isna(median_distance)
+            else "n/a"
+        )
         evidence = (
             f"device GPS history: {history_anchors} anchors / {history_span:.0f} min / "
-            f"median gap {median_gap:.1f} min"
+            f"median gap {median_gap:.1f} min / map-match {match_ratio:.0%}, "
+            f"median distance {distance_text}"
         )
-        limitation = "requires road-network map matching before strict use"
+        limitation = (
+            ""
+            if map_match_ready
+            else (
+                "high-reconstruction candidate only; strict Road×10min and "
+                "NO_CAPTURE_OBSERVED require road-network map matching "
+                f"(>= {RECON_STRICT_MIN_MATCH_RATIO:.0%} matched, median distance "
+                f"<= {RECON_STRICT_MAX_MEDIAN_MATCH_DISTANCE_M:.0f}m)"
+            )
+        )
     elif history_anchors >= 4 or event_gps >= 4:
         route_conf = 0.65
         time_conf = 0.55
@@ -279,7 +345,11 @@ def classify_night(row: pd.Series) -> NightAudit:
         evidence = "exploration night confirmed but no usable trajectory/GPS anchors found"
         limitation = "remain Unknown for Road×Time until additional evidence is supplied"
 
-    flags = _bool_thresholds(route_conf, time_conf)
+    flags = _bool_thresholds(
+        route_conf,
+        time_conf,
+        strict_ready=strict_ready,
+    )
     return NightAudit(
         operational_date_0700=night,
         classification=classification,
@@ -327,6 +397,8 @@ def build_night_audit(
         "history_anchor_count",
         "history_span_minutes",
         "gpx_duration_minutes",
+        "history_matched_anchor_count",
+        "history_match_ratio",
     ]
     for c in numeric_zero:
         if c in base.columns:
@@ -372,6 +444,15 @@ def write_audit_outputs(audit: pd.DataFrame, out_dir: Path) -> None:
             "exploration evidence first: explicit session list, GPX, device GPS history, "
             "or explicit search start/end markers; ordinary events never create nights"
         ),
+        "strict_reconstruction_gate": {
+            "min_match_ratio": RECON_STRICT_MIN_MATCH_RATIO,
+            "max_median_match_distance_m": RECON_STRICT_MAX_MEDIAN_MATCH_DISTANCE_M,
+            "rule": (
+                "RECONSTRUCTED_GPS_HIGH remains a candidate class until map matching "
+                "passes; before that it cannot train/evaluate Road×10min or generate "
+                "NO_CAPTURE_OBSERVED"
+            ),
+        },
         "operational_boundary": "07:00 Asia/Tokyo",
         "historical_89_is_not_forced": True,
     }
