@@ -35,7 +35,15 @@ def main() -> None:
     parser.add_argument("--gps-history", type=Path)
     parser.add_argument("--exploration-nights", type=Path)
     parser.add_argument("--out-dir", type=Path, default=Path("reports/v2_audit"))
-    parser.add_argument("--expected-nights", type=int, default=89)
+    parser.add_argument(
+        "--expected-nights",
+        type=int,
+        default=None,
+        help=(
+            "Optional validation only. Do not use this to force the historical 89-night count; "
+            "canonical population is derived from exploration evidence."
+        ),
+    )
     args = parser.parse_args()
 
     gpx = _read_csv(args.gpx_points)
@@ -50,26 +58,27 @@ def main() -> None:
         exploration_nights=nights,
     )
 
-    if args.expected_nights and len(audit) != args.expected_nights:
+    if args.expected_nights is not None and len(audit) != args.expected_nights:
         raise SystemExit(
             f"audit population mismatch: expected {args.expected_nights}, got {len(audit)}. "
             "Fix exploration evidence population instead of padding/removing nights."
         )
 
-    if audit["operational_date_0700"].duplicated().any():
+    if not audit.empty and audit["operational_date_0700"].duplicated().any():
         duplicated = audit.loc[
             audit["operational_date_0700"].duplicated(), "operational_date_0700"
         ].tolist()
         raise SystemExit(f"duplicate operational nights: {duplicated}")
 
     write_audit_outputs(audit, args.out_dir)
-    print(audit["classification"].value_counts().sort_index().to_string())
+    if not audit.empty:
+        print(audit["classification"].value_counts().sort_index().to_string())
+        print(f"road_10min_eval={int(audit['usable_road_10min_eval'].sum())}")
+        print(
+            "no_capture_observed="
+            f"{int((audit['night_observation_label'] == 'NO_CAPTURE_OBSERVED').sum())}"
+        )
     print(f"nights={len(audit)}")
-    print(f"road_10min_eval={int(audit['usable_road_10min_eval'].sum())}")
-    print(
-        "no_capture_observed="
-        f"{int((audit['night_observation_label'] == 'NO_CAPTURE_OBSERVED').sum())}"
-    )
 
 
 if __name__ == "__main__":
