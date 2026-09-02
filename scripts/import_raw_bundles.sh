@@ -16,6 +16,12 @@ for bundle in "${bundles[@]}"; do
   rm -rf "$tmp"
 done
 
+# Historical 2026-08-28 data was previously uploaded as split base64 parts.
+# Try to reconstruct it, but accept it only if the decompressed raw GPX matches
+# the independently verified canonical SHA-256. A failed reconstruction remains
+# quarantined and never blocks the rest of the pipeline.
+bash scripts/recover_legacy_holdout_parts.sh
+
 # Validated compressed GPX originals may be stored in data/raw/compressed_gpx.
 # This path is intentionally separate from the legacy root-level holdout file.
 # Every .xz is integrity-tested and its decompressed XML is minimally validated
@@ -53,9 +59,10 @@ done
 
 # IMPORTANT: data/raw/holdout_2026-08-28.gpx.xz is a legacy corrupt
 # reconstruction and is deliberately NOT part of the compressed_gpx glob above.
-# A new byte-valid 2026-08-28 original under data/raw/compressed_gpx is allowed.
+# A canonical legacy-parts reconstruction or a new byte-valid 2026-08-28
+# original under data/raw/compressed_gpx is allowed.
 
 printf 'GPX files: '; find data/raw/gpx -maxdepth 1 -type f -name '*.gpx' -size +0c | wc -l
 printf 'Log files: '; find data/raw/logs -maxdepth 1 -type f -name '*.txt' -size +0c | wc -l
 
-echo 'Legacy corrupt 2026-08-28 holdout remains quarantined; validated compressed GPX originals are accepted.'
+echo 'Legacy root holdout remains quarantined; only canonical-SHA legacy recovery or validated compressed originals are accepted.'
