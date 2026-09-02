@@ -5,15 +5,11 @@ import pandas as pd
 from .hardening import apply_hardening
 
 OPERATIONAL_BOUNDARY_HOUR = 7
+ACTUAL_GPX_STRICT_MIN_MATCH_RATIO = 0.80
 
 
 def canonicalize_operational_night(df: pd.DataFrame) -> pd.DataFrame:
-    """Apply the single canonical 07:00 Asia/Tokyo operational-night rule.
-
-    00:00:00 through 06:59:59 belong to the previous operational night. The
-    timestamp column is authoritative; an earlier session-start date must not
-    silently override the shared audit/training boundary.
-    """
+    """Apply the single canonical 07:00 Asia/Tokyo operational-night rule."""
     if df is None or df.empty or "timestamp" not in df.columns:
         return df.copy() if df is not None else pd.DataFrame()
 
@@ -43,20 +39,9 @@ def canonicalize_operational_night(df: pd.DataFrame) -> pd.DataFrame:
 def species_from_text_specific_first(text: str) -> str:
     """Parse species without letting a short name swallow a longer one."""
     keys = [
-        "ヒメハブ",
-        "ガラスヒバァ",
-        "ガラスヒヴァ",
-        "リュウキュウアオヘビ",
-        "アカマタ",
-        "ヒャン",
-        "ハブ",
-        "オットンガエル",
-        "イシカワガエル",
-        "アマミハナサキガエル",
-        "カエル",
-        "ヤマシギ",
-        "クロウサギ",
-        "ネズミ",
+        "ヒメハブ", "ガラスヒバァ", "ガラスヒヴァ", "リュウキュウアオヘビ",
+        "アカマタ", "ヒャン", "ハブ", "オットンガエル", "イシカワガエル",
+        "アマミハナサキガエル", "カエル", "ヤマシギ", "クロウサギ", "ネズミ",
     ]
     for key in keys:
         if key in text:
@@ -65,13 +50,7 @@ def species_from_text_specific_first(text: str) -> str:
 
 
 def mark_hindsight_weather_evaluation(score: dict) -> dict:
-    """Prevent archive-weather holdout scores from being reported as strict v2 accuracy.
-
-    Historical archive/reanalysis weather can be useful for retrospective model
-    development, but it was not necessarily available at the time the prediction
-    would have been generated. Strict v2 evaluation requires a frozen forecast
-    snapshot whose issued/acquired timestamps precede prediction generation.
-    """
+    """Prevent archive-weather holdout scores from being reported as strict v2 accuracy."""
     out = dict(score or {})
     out["evaluation_mode"] = "DIAGNOSTIC_HINDSIGHT_WEATHER"
     out["strict_no_leakage_eligible"] = False
@@ -83,8 +62,33 @@ def mark_hindsight_weather_evaluation(score: dict) -> dict:
     return out
 
 
+def enforce_actual_gpx_session_match_gate(matched: pd.DataFrame) -> pd.DataFrame:
+    """Invalidate entire GPX sessions whose road-map coverage is below 80%.
+
+    Using only the matched subset of a poor session would create selective Road×Time
+    exposure and false negatives. Keep the raw matched rows for QC, but clear their
+    `segment_id` so the downstream `segment_visits()` step cannot use that session for
+    strict training/evaluation. The match ratio is attached to every row for audit.
+    """
+    if matched is None or matched.empty or "session_file" not in matched.columns:
+        return matched.copy() if matched is not None else pd.DataFrame()
+
+    out = matched.copy()
+    if "segment_id" not in out.columns:
+        out["segment_id"] = pd.NA
+
+    ratios = out.groupby("session_file")["segment_id"].apply(lambda s: float(s.notna().mean()))
+    out["session_map_match_ratio"] = out["session_file"].map(ratios)
+    out["strict_session_eligible"] = (
+        out["session_map_match_ratio"] >= ACTUAL_GPX_STRICT_MIN_MATCH_RATIO
+    )
+    bad = ~out["strict_session_eligible"]
+    out.loc[bad, "segment_id"] = pd.NA
+    return out
+
+
 def apply_runtime_fixes(pipeline) -> None:
-    """Apply hardening, canonical IDs, species parsing, and no-leakage guards."""
+    """Apply canonical IDs, label guards, map-match gates, and no-leakage guards."""
     apply_hardening(pipeline)
 
     pipeline._species_from_text = species_from_text_specific_first
@@ -95,9 +99,16 @@ def apply_runtime_fixes(pipeline) -> None:
 
     pipeline.parse_field_log = parse_field_log_0700
 
-    # The current pipeline joins Open-Meteo archive weather to historical visits.
-    # Keep those results for retrospective diagnostics, but never let latest_score
-    # masquerade as the strict pre-search forecast evaluation required by Habu AI v2.
+    # Enforce the same ACTUAL_GPX strict map-match rule in the production dataset
+    # builder that the v2 audit already uses. Poor sessions cannot contribute a
+    # cherry-picked matched subset as Road×10min exposure/negatives.
+    original_map_match_gpx = pipeline.map_match_gpx
+
+    def map_match_gpx_strict(points, segs, cfg):
+        return enforce_actual_gpx_session_match_gate(original_map_match_gpx(points, segs, cfg))
+
+    pipeline.map_match_gpx = map_match_gpx_strict
+
     original_score_holdout = pipeline.score_holdout
 
     def score_holdout_no_leakage(root, data, cfg):
