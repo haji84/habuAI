@@ -1,0 +1,75 @@
+{
+  "as_of": "2026-09-02",
+  "population": {
+    "working_canonical_nights": 88,
+    "final": false,
+    "actual_gpx_nights": 13,
+    "reconstructed_gps_high": 21,
+    "reconstructed_partial": 18,
+    "spatial_only_reconstruction": 36,
+    "unreconstructable": 0
+  },
+  "actual_gpx_raw_qc": {
+    "status": "PASS",
+    "nights": 13,
+    "points": 243747,
+    "duration_h": 68.030277,
+    "distance_km": 817.109419,
+    "nights_with_gap_over_300s": 0
+  },
+  "strict_road_10min_policy": {
+    "actual_gpx_requires_road_map_match": true,
+    "actual_gpx_min_matched_point_ratio": 0.8,
+    "reconstructed_high_requires_anchor_map_match": true,
+    "reconstructed_high_requires_time_resolved_route_verification": true,
+    "reconstructed_partial_only_separately_verified_intervals": true,
+    "no_capture_label": "NO_CAPTURE_OBSERVED",
+    "biological_absence_claimed": false
+  },
+  "reconstructed_strict_salvage": {
+    "source_intervals": 1196,
+    "explicit_unique_route_intervals": 14,
+    "strict_same_10min_bin_intervals": 8,
+    "labeled_positive": 4,
+    "labeled_no_capture_observed": 4
+  },
+  "runtime_safety_fixes": [
+    "historical population lists cannot bypass provenance quarantine",
+    "RECONSTRUCTED_GPS_HIGH cannot become strict from anchor density alone",
+    "ACTUAL_GPX cannot become strict before >=80% road map matching",
+    "production runtime uses canonical 07:00 Asia/Tokyo operational-night boundary",
+    "legacy corrupt 2026-08-28 holdout remains quarantined while validated compressed originals are accepted",
+    "canonical generated outputs are not auto-published until all expected ACTUAL_GPX originals are present by SHA-256"
+  ],
+  "current_pipeline_baseline": {
+    "last_known_qa_gpx_sessions": 8,
+    "canonical_expected_actual_gpx_sessions": 13,
+    "status": "INCOMPLETE_FOR_CANONICAL_PUBLISH"
+  },
+  "blocking_items": [
+    {
+      "type": "RAW_BINARY_INGESTION",
+      "count": 5,
+      "nights": [
+        "2026-08-12",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-31",
+        "2026-09-02"
+      ],
+      "manifest": "reports/v2_missing_actual_gpx_ingestion_manifest.csv",
+      "target_directory": "data/raw/compressed_gpx/",
+      "reason": "Verified Library originals exist locally, but the current GitHub connector cannot attach local binary files to repository writes."
+    }
+  ],
+  "next_after_binary_ingestion": [
+    "run Habu Pipeline",
+    "confirm canonical inventory 13/13 by raw SHA-256",
+    "map-match all 13 ACTUAL_GPX nights to road segments",
+    "apply >=80% actual-GPX road-match gate night by night",
+    "generate Road x 10 min visits only for eligible mapped segments",
+    "join Habu capture/sighting events without leakage",
+    "label Positive and NO_CAPTURE_OBSERVED",
+    "rebuild training/evaluation datasets and model metrics"
+  ]
+}
