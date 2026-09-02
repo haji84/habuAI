@@ -8,7 +8,9 @@ import pandas as pd
 from habuai.audit_v2 import build_night_audit, write_audit_outputs
 from habuai.evidence_policy import (
     derive_exploration_nights_from_events,
+    load_population_conflicts,
     merge_exploration_night_sources,
+    quarantine_unresolved_nights,
 )
 
 
@@ -38,6 +40,11 @@ def main() -> None:
     parser.add_argument("--events", type=Path)
     parser.add_argument("--gps-history", type=Path)
     parser.add_argument("--exploration-nights", type=Path)
+    parser.add_argument(
+        "--population-conflicts",
+        type=Path,
+        default=Path("config/v2_population_conflicts.csv"),
+    )
     parser.add_argument("--out-dir", type=Path, default=Path("reports/v2_audit"))
     parser.add_argument(
         "--expected-nights",
@@ -58,7 +65,10 @@ def main() -> None:
     # A confirmed self-capture proves that the user was exploring that night.
     # Roadkill/sighting/weather events do not create exploration nights by themselves.
     strong_event_nights = derive_exploration_nights_from_events(events)
-    nights = merge_exploration_night_sources(explicit_nights, strong_event_nights)
+    proposed_nights = merge_exploration_night_sources(explicit_nights, strong_event_nights)
+
+    conflicts = load_population_conflicts(args.population_conflicts)
+    nights, quarantined = quarantine_unresolved_nights(proposed_nights, conflicts)
 
     audit = build_night_audit(
         gpx_points=gpx,
@@ -80,7 +90,11 @@ def main() -> None:
         raise SystemExit(f"duplicate operational nights: {duplicated}")
 
     write_audit_outputs(audit, args.out_dir)
+    if not quarantined.empty:
+        quarantined.to_csv(args.out_dir / "v2_population_quarantine.csv", index=False)
+
     print(f"strong_event_nights={len(strong_event_nights)}")
+    print(f"quarantined_nights={len(quarantined)}")
     if not audit.empty:
         print(audit["classification"].value_counts().sort_index().to_string())
         print(f"road_10min_eval={int(audit['usable_road_10min_eval'].sum())}")
