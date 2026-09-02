@@ -86,24 +86,56 @@ def test_search_end_marker_creates_exploration_night_with_0700_boundary():
     assert audit.iloc[0].night_observation_label == "Unknown"
 
 
-def test_dense_gps_history_is_high_reconstruction_candidate():
+def _dense_history(*, matched: bool) -> pd.DataFrame:
     ts = pd.date_range("2026-06-28 20:00", periods=30, freq="8min", tz="Asia/Tokyo")
-    hist = pd.DataFrame(
-        {
-            "timestamp": ts,
-            "lat": [28.17 + i * 0.0001 for i in range(len(ts))],
-            "lon": [129.35 + i * 0.0001 for i in range(len(ts))],
-        }
-    )
+    data = {
+        "timestamp": ts,
+        "lat": [28.17 + i * 0.0001 for i in range(len(ts))],
+        "lon": [129.35 + i * 0.0001 for i in range(len(ts))],
+    }
+    if matched:
+        data["segment_id"] = [f"seg-{i}" for i in range(len(ts))]
+        data["match_distance_m"] = [8.0] * len(ts)
+    return pd.DataFrame(data)
+
+
+def test_dense_gps_history_is_high_candidate_but_not_strict_before_map_match():
     audit = build_night_audit(
         pd.DataFrame(),
         pd.DataFrame(),
-        gps_history=hist,
+        gps_history=_dense_history(matched=False),
+        exploration_nights=["2026-06-28"],
+    )
+    row = audit.iloc[0]
+    assert row.classification == CLASS_RECONSTRUCTED_HIGH
+    assert row.usable_road
+    assert not row.usable_road_10min_train
+    assert not row.usable_road_10min_eval
+    assert not row.can_generate_no_capture_observed
+
+
+def test_dense_gps_history_becomes_strict_after_good_map_match():
+    audit = build_night_audit(
+        pd.DataFrame(),
+        pd.DataFrame(),
+        gps_history=_dense_history(matched=True),
         exploration_nights=["2026-06-28"],
     )
     row = audit.iloc[0]
     assert row.classification == CLASS_RECONSTRUCTED_HIGH
     assert row.usable_road_10min_train
+    assert row.usable_road_10min_eval
+    assert row.can_generate_no_capture_observed
+
+
+def test_high_candidate_with_poor_map_match_remains_non_strict():
+    hist = _dense_history(matched=True)
+    hist.loc[0:14, "segment_id"] = pd.NA
+    hist.loc[0:14, "match_distance_m"] = pd.NA
+    audit = build_night_audit(pd.DataFrame(), pd.DataFrame(), gps_history=hist)
+    row = audit.iloc[0]
+    assert row.classification == CLASS_RECONSTRUCTED_HIGH
+    assert not row.usable_road_10min_train
 
 
 def test_sparse_timed_anchors_are_partial_not_strict():
