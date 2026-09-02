@@ -20,10 +20,22 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def _resolve_hash_column(expected: pd.DataFrame) -> str:
+    """Return the canonical raw GPX hash column used by the inventory manifest."""
+    for candidate in ("sha256", "raw_sha256"):
+        if candidate in expected.columns:
+            return candidate
+    raise ValueError(
+        "canonical ACTUAL_GPX QC CSV needs a sha256/raw_sha256 column; "
+        f"got columns={list(expected.columns)}"
+    )
+
+
 def main() -> None:
     expected = pd.read_csv(EXPECTED_CSV)
+    hash_column = _resolve_hash_column(expected)
     expected_hashes = {
-        str(row.raw_sha256): str(row.operational_night)
+        str(getattr(row, hash_column)): str(row.operational_night)
         for row in expected.itertuples(index=False)
     }
 
@@ -51,6 +63,7 @@ def main() -> None:
         "missing_expected_actual_gpx_nights": len(missing),
         "canonical_inventory_complete": complete,
         "canonical_model_publish_allowed": complete,
+        "expected_hash_column": hash_column,
         "found": found,
         "missing": missing,
         "rule": (
