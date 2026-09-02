@@ -1,0 +1,20 @@
+{
+  "source": "Habu_AI_v2_GPSアンカー道路経路復元監査.xlsx / 1196区間判定",
+  "source_interval_count": 1196,
+  "unique_route_interval_count": 14,
+  "strict_single_10min_bin_interval_count": 8,
+  "strict_night_count": 6,
+  "strict_operational_nights": [
+    "2026-05-23",
+    "2026-06-06",
+    "2026-06-18",
+    "2026-07-08",
+    "2026-07-20",
+    "2026-07-25"
+  ],
+  "rejected_unique_route_intervals": 6,
+  "rejection_reason": "unique route interval crossed a canonical 10-minute boundary",
+  "semantics": "These are strict temporal-route eligibility intervals only. Join biological events before assigning Positive or NO_CAPTURE_OBSERVED; the interval verifier alone does not assert zero capture.",
+  "whole_night_promotion": false,
+  "final": false
+}
