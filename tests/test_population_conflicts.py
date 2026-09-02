@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pandas as pd
 
-from habuai.evidence_policy import quarantine_unresolved_nights
+from habuai.evidence_policy import load_population_conflicts, quarantine_unresolved_nights
 
 
 def _conflicts() -> pd.DataFrame:
@@ -42,3 +44,13 @@ def test_reviewed_conflict_can_be_promoted_after_independent_evidence():
     kept, quarantine = quarantine_unresolved_nights(["2026-08-21"], _conflicts())
     assert kept == ["2026-08-21"]
     assert quarantine.empty
+
+
+def test_every_configured_default_exclusion_is_actually_quarantined():
+    conflicts = load_population_conflicts(Path("config/v2_population_conflicts.csv"))
+    excluded = conflicts.loc[
+        ~conflicts["include_by_default"], "operational_date_0700"
+    ].astype(str).tolist()
+    kept, quarantine = quarantine_unresolved_nights(excluded, conflicts)
+    assert kept == []
+    assert set(quarantine["operational_date_0700"].astype(str)) == set(excluded)
