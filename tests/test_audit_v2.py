@@ -86,12 +86,13 @@ def test_search_end_marker_creates_exploration_night_with_0700_boundary():
     assert audit.iloc[0].night_observation_label == "Unknown"
 
 
-def _dense_history(*, matched: bool) -> pd.DataFrame:
+def _dense_history(*, matched: bool, temporal_verified: bool = False) -> pd.DataFrame:
     ts = pd.date_range("2026-06-28 20:00", periods=30, freq="8min", tz="Asia/Tokyo")
     data = {
         "timestamp": ts,
         "lat": [28.17 + i * 0.0001 for i in range(len(ts))],
         "lon": [129.35 + i * 0.0001 for i in range(len(ts))],
+        "strict_temporal_route_verified": [temporal_verified] * len(ts),
     }
     if matched:
         data["segment_id"] = [f"seg-{i}" for i in range(len(ts))]
@@ -114,11 +115,24 @@ def test_dense_gps_history_is_high_candidate_but_not_strict_before_map_match():
     assert not row.can_generate_no_capture_observed
 
 
-def test_dense_gps_history_becomes_strict_after_good_map_match():
+def test_good_anchor_map_match_alone_is_still_not_strict():
     audit = build_night_audit(
         pd.DataFrame(),
         pd.DataFrame(),
-        gps_history=_dense_history(matched=True),
+        gps_history=_dense_history(matched=True, temporal_verified=False),
+        exploration_nights=["2026-06-28"],
+    )
+    row = audit.iloc[0]
+    assert row.classification == CLASS_RECONSTRUCTED_HIGH
+    assert not row.usable_road_10min_train
+    assert not row.can_generate_no_capture_observed
+
+
+def test_high_reconstruction_becomes_strict_only_after_temporal_route_verification():
+    audit = build_night_audit(
+        pd.DataFrame(),
+        pd.DataFrame(),
+        gps_history=_dense_history(matched=True, temporal_verified=True),
         exploration_nights=["2026-06-28"],
     )
     row = audit.iloc[0]
@@ -128,8 +142,8 @@ def test_dense_gps_history_becomes_strict_after_good_map_match():
     assert row.can_generate_no_capture_observed
 
 
-def test_high_candidate_with_poor_map_match_remains_non_strict():
-    hist = _dense_history(matched=True)
+def test_high_candidate_with_poor_map_match_remains_non_strict_even_if_temporal_verified():
+    hist = _dense_history(matched=True, temporal_verified=True)
     hist.loc[0:14, "segment_id"] = pd.NA
     hist.loc[0:14, "match_distance_m"] = pd.NA
     audit = build_night_audit(pd.DataFrame(), pd.DataFrame(), gps_history=hist)
