@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from habuai.actual_gpx_gate import enforce_actual_gpx_map_match_gate
 from habuai.audit_v2 import build_night_audit, write_audit_outputs
 from habuai.evidence_policy import (
     derive_dense_field_sequence_nights,
@@ -111,6 +112,11 @@ def main() -> None:
         gps_history=gps_history,
         exploration_nights=nights,
     )
+
+    # ACTUAL_GPX provenance alone is not sufficient for strict Road x 10 min labels.
+    # A raw GPX with no road map-match must remain spatial/temporal evidence but cannot
+    # create NO_CAPTURE_OBSERVED until >=80% of points are attached to road segments.
+    audit = enforce_actual_gpx_map_match_gate(audit, gpx)
 
     if args.expected_nights is not None and len(audit) != args.expected_nights:
         raise SystemExit(
