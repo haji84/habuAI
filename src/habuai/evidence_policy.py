@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from pathlib import Path
 
 import pandas as pd
 
@@ -10,6 +11,16 @@ from habuai.audit_v2 import operational_date_0700
 # night occurred. Ordinary sightings, roadkill and weather observations are not.
 SELF_CAPTURE_EVENT_TYPES = {"捕獲", "capture"}
 EXPLICIT_ZERO_EVENT_TYPES = {"no_capture", "捕獲なし", "探索ゼロ", "zero_capture"}
+
+STATUS_CONFIRMED = "CONFIRMED"
+STATUS_SOURCE_CONFLICT = "SOURCE_CONFLICT"
+STATUS_DUPLICATE_SUSPECT = "DUPLICATE_SUSPECT"
+STATUS_WEAK_EVENT_ONLY = "WEAK_EVENT_ONLY"
+QUARANTINE_STATUSES = {
+    STATUS_SOURCE_CONFLICT,
+    STATUS_DUPLICATE_SUSPECT,
+    STATUS_WEAK_EVENT_ONLY,
+}
 
 
 def derive_exploration_nights_from_events(
@@ -52,6 +63,52 @@ def derive_exploration_nights_from_events(
         for value in e.loc[strong, timestamp_col].dropna()
     }
     return nights
+
+
+def load_population_conflicts(path: Path | str | None) -> pd.DataFrame:
+    """Load a reviewed conflict registry for historical recovered nights."""
+    columns = [
+        "operational_date_0700",
+        "status",
+        "include_by_default",
+        "reason",
+        "source_evidence",
+    ]
+    if path is None:
+        return pd.DataFrame(columns=columns)
+    frame = pd.read_csv(path, dtype=str).fillna("")
+    missing = [column for column in columns if column not in frame.columns]
+    if missing:
+        raise ValueError(f"population conflict registry missing columns: {missing}")
+    frame["operational_date_0700"] = frame["operational_date_0700"].astype(str)
+    frame["status"] = frame["status"].astype(str)
+    frame["include_by_default"] = (
+        frame["include_by_default"].astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
+    )
+    return frame[columns].copy()
+
+
+def quarantine_unresolved_nights(
+    nights: Iterable[str], conflicts: pd.DataFrame
+) -> tuple[list[str], pd.DataFrame]:
+    """Remove unresolved recovered nights unless independently resolved for inclusion.
+
+    This is deliberately conservative. It prevents one corrected workbook from
+    silently overriding conflicting historical provenance. A night can later be
+    promoted by changing the reviewed registry to `include_by_default=true` after
+    its source evidence has been resolved.
+    """
+    night_set = {str(value) for value in nights}
+    if conflicts.empty:
+        return sorted(night_set), conflicts.copy()
+
+    unresolved = conflicts[
+        conflicts["status"].isin(QUARANTINE_STATUSES)
+        & ~conflicts["include_by_default"]
+        & conflicts["operational_date_0700"].isin(night_set)
+    ].copy()
+    night_set.difference_update(unresolved["operational_date_0700"].astype(str))
+    return sorted(night_set), unresolved
 
 
 def merge_exploration_night_sources(*sources: Iterable[str]) -> list[str]:
