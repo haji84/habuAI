@@ -8,13 +8,15 @@ EXPECTED_SHA="29aeebb78545ec897c363024b813c6d04975c4ed13c7f243cd71d60516134904"
 TARGET="$OUTDIR/2026-09-04-探索.gpx"
 
 mkdir -p "$OUTDIR"
-TMP_B64="$(mktemp)"
 TMP_BIN="$(mktemp)"
 TMP_DIR="$(mktemp -d)"
-trap 'rm -f "$TMP_B64" "$TMP_BIN"; rm -rf "$TMP_DIR"' EXIT
+trap 'rm -f "$TMP_BIN"; rm -rf "$TMP_DIR"' EXIT
 
-cat "$STAGING"/part_*.b64 > "$TMP_B64"
-base64 -d "$TMP_B64" > "$TMP_BIN"
+: > "$TMP_BIN"
+for part in "$STAGING"/part_*.b64; do
+  echo "Decoding $(basename "$part")"
+  base64 -d "$part" >> "$TMP_BIN"
+done
 
 extract_gpx() {
   local src="$1"
@@ -48,6 +50,7 @@ extract_gpx() {
 
 if ! extract_gpx "$TMP_BIN"; then
   echo 'Unable to recover 2026-09-04 GPX from staging parts.' >&2
+  file "$TMP_BIN" >&2 || true
   exit 2
 fi
 
