@@ -1,0 +1,2 @@
+operational_date_0700,audit_class,source_file,trackpoints,start_jst,end_jst,duration_h,distance_km,median_gap_s,p95_gap_s,max_gap_s,gaps_gt300s,sha256,status,notes
+2026-09-05,ACTUAL_GPX,2026-09-05-探索.gpx,18007,2026-09-05T22:36:36.047000+09:00,2026-09-06T03:41:12.998000+09:00,5.076931,61.641444,1.000,1.000,70.070,0,396a3c2c29b2c3daa3c4616410c2002faf880fdc3abfc778f8f7cb5c6c6dfddc,OK,"07:00 operational-night rule; complete real GPX; source binary retained outside repo until ingestion path accepts it"
