@@ -7,8 +7,8 @@
   "map_match_max_distance_m": 35.0,
   "heading_penalty_m": 12.0,
   "continuity_penalty_m": 8.0,
-  "baseline_cutoff": "2026-08-28T07:00:00+09:00",
-  "holdout_start": "2026-08-28T07:00:00+09:00",
+  "baseline_cutoff": "2026-09-05T07:00:00+09:00",
+  "holdout_start": "2026-09-05T07:00:00+09:00",
   "weather": {
     "provider": "open-meteo",
     "reference_lat": 28.1456,
