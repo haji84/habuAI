@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'data/raw/**'
+      - 'staging/**'
       - 'config/**'
       - 'src/**'
       - 'scripts/**'
@@ -41,6 +42,10 @@ jobs:
 
       - name: Import zipped GPX/log bundles
         run: bash scripts/import_raw_bundles.sh
+
+      - name: Recover 2026-09-04 canonical GPX
+        if: ${{ hashFiles('staging/retrain-2026-09-04/part_*.b64') != '' }}
+        run: bash scripts/recover_retrain_2026_09_04.sh
 
       - name: Validate raw inputs
         run: |
