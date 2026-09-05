@@ -2,7 +2,7 @@
   "timezone": "Asia/Tokyo",
   "night_rollover_hour": 7,
   "crs_metric": "EPSG:6669",
-  "bbox": [129.265, 28.120, 129.425, 28.235],
+  "bbox": [129.14, 28.11, 129.43, 28.26],
   "segment_length_m": 10.0,
   "map_match_max_distance_m": 35.0,
   "heading_penalty_m": 12.0,
