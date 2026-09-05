@@ -9,6 +9,7 @@
   "continuity_penalty_m": 8.0,
   "baseline_cutoff": "2026-09-05T07:00:00+09:00",
   "holdout_start": "2026-09-05T07:00:00+09:00",
+  "training_data_scope_end": "2026-09-04",
   "weather": {
     "provider": "open-meteo",
     "reference_lat": 28.1456,
