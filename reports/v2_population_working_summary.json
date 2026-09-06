@@ -1,13 +1,13 @@
 {
-  "scope_end": "2026-09-04",
+  "scope_end": "2026-09-05",
   "operational_boundary": "07:00 Asia/Tokyo",
   "historical_audit_nights": 89,
   "historical_nights_retained": 79,
   "historical_nights_quarantined_or_removed": 10,
   "independently_confirmed_omitted_nights_added": 9,
-  "working_canonical_nights": 89,
+  "working_canonical_nights": 90,
   "working_source_breakdown": {
-    "unambiguous_self_capture_nights": 79,
+    "unambiguous_self_capture_nights": 80,
     "explicit_zero_nights": 2,
     "independent_omitted_evidence_nights": 8
   },
@@ -33,7 +33,8 @@
     "2026-08-21",
     "2026-08-31",
     "2026-09-02",
-    "2026-09-04"
+    "2026-09-04",
+    "2026-09-05"
   ],
   "final": false,
   "remaining_work": [
