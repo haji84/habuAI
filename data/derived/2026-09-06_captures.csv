@@ -1,0 +1,3 @@
+operational_date_0700,timestamp_jst,event_type,species,length_cm_raw,size_class,sex,behavior,micro_position,road_surface,area,lat,lon
+2026-09-06,2026-09-06T23:35:00+09:00,capture,ハブ,~90,small,unknown,とぐろ,道路脇,ウエット,瀬戸内町嘉徳,28.19282259182148,129.3971515267262
+2026-09-06,2026-09-07T00:36:00+09:00,capture,ハブ,~90,small,unknown,移動中,山裾,ウエット,節子付近,28.17333698841352,129.3989442727244
