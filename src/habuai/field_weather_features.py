@@ -11,7 +11,9 @@ OPERATIONAL_BOUNDARY_HOUR = 7
 
 _TIMESTAMP_RE = re.compile(r"^(\d{4})/(\d{1,2})/(\d{1,2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$")
 _INLINE_RE = re.compile(r"なう\((\d{4}/\d{1,2}/\d{1,2}\s+\d{1,2}:\d{2}:\d{2})\)([^\n]*)")
-_RAIN_TOKENS = {"小雨", "雨", "大雨", "雨後"}
+_RAIN_ONSET_TOKENS = {"小雨", "雨", "大雨"}
+_RAIN_RECOVERY_TOKENS = {"雨後", "雨やみ", "雨止み", "雨やむ", "雨止む"}
+_RAIN_TOKENS = _RAIN_ONSET_TOKENS | _RAIN_RECOVERY_TOKENS
 
 
 def _to_jst_timestamp(value: str) -> pd.Timestamp:
@@ -25,16 +27,25 @@ def _night_date(ts: pd.Timestamp) -> str:
     return (ts - pd.Timedelta(hours=OPERATIONAL_BOUNDARY_HOUR)).date().isoformat()
 
 
-def parse_field_weather_markers(path: Path) -> pd.DataFrame:
-    """Extract explicit rain-state markers from a field log.
+def _marker_phase(marker: str) -> str:
+    if marker in _RAIN_ONSET_TOKENS:
+        return "rain_onset"
+    if marker in _RAIN_RECOVERY_TOKENS:
+        return "rain_recovery"
+    return "unknown"
 
-    Supports both timestamp blocks such as `2026/09/05 23:47` followed by `雨`
-    and inline observations such as `なう(2026/09/06 01:25:48)雨`.
-    The result is observational context only; it is not assumed to be a complete
-    precipitation record.
+
+def parse_field_weather_markers(path: Path) -> pd.DataFrame:
+    """Extract explicit field rain-state markers without inferring missing weather.
+
+    Rain-onset markers (小雨/雨/大雨) and rain-recovery markers
+    (雨後/雨やみ/雨止み/雨やむ/雨止む) are retained separately. The result is
+    observational context only and is not assumed to be a complete precipitation
+    record.
     """
+    columns = ["timestamp", "marker", "phase", "night_date", "source_file"]
     if not path.exists():
-        return pd.DataFrame(columns=["timestamp", "marker", "night_date", "source_file"])
+        return pd.DataFrame(columns=columns)
 
     lines = [line.strip() for line in path.read_text(encoding="utf-8", errors="ignore").splitlines()]
     rows: list[dict] = []
@@ -54,36 +65,40 @@ def parse_field_weather_markers(path: Path) -> pd.DataFrame:
             rows.append({
                 "timestamp": current_ts,
                 "marker": line,
+                "phase": _marker_phase(line),
                 "night_date": _night_date(current_ts),
                 "source_file": path.name,
             })
 
         for inline in _INLINE_RE.finditer(line):
             suffix = inline.group(2).strip()
-            marker = next((token for token in ["大雨", "小雨", "雨後", "雨"] if suffix.startswith(token)), None)
+            ordered_tokens = ["大雨", "小雨", "雨後", "雨やみ", "雨止み", "雨やむ", "雨止む", "雨"]
+            marker = next((token for token in ordered_tokens if suffix.startswith(token)), None)
             if marker is None:
                 continue
             ts = _to_jst_timestamp(inline.group(1))
             rows.append({
                 "timestamp": ts,
                 "marker": marker,
+                "phase": _marker_phase(marker),
                 "night_date": _night_date(ts),
                 "source_file": path.name,
             })
 
     out = pd.DataFrame(rows)
     if out.empty:
-        return pd.DataFrame(columns=["timestamp", "marker", "night_date", "source_file"])
+        return pd.DataFrame(columns=columns)
     out = out.drop_duplicates(["timestamp", "marker", "source_file"]).sort_values("timestamp").reset_index(drop=True)
-    return out
+    return out[columns]
 
 
 def add_field_rain_candidate_features(visits: pd.DataFrame, markers: pd.DataFrame) -> pd.DataFrame:
-    """Add non-production candidate rain-transition features to observed visits.
+    """Add causal, non-production field rain candidate features.
 
-    These columns are intentionally not added to the model feature list yet. They
-    exist so complete-GPX nights can be compared consistently before deciding
-    whether a rain-transition effect generalizes beyond a single night.
+    Only markers at or before each visit's entered_at are used. Rain onset and
+    rain recovery are tracked by separate timers. Legacy aggregate transition
+    columns are retained for comparison, but production model features remain
+    unchanged.
     """
     if visits is None or visits.empty:
         return visits.copy() if visits is not None else pd.DataFrame()
@@ -101,37 +116,66 @@ def add_field_rain_candidate_features(visits: pd.DataFrame, markers: pd.DataFram
 
     entered_jst = entered.map(to_jst)
     out["operational_date_0700"] = entered_jst.map(lambda x: _night_date(x) if not pd.isna(x) else None)
-    out["field_minutes_since_rain_marker"] = np.nan
+
+    timer_columns = [
+        "field_minutes_since_rain_marker",
+        "field_minutes_since_rain_onset",
+        "field_minutes_since_rain_recovery",
+    ]
+    for col in timer_columns:
+        out[col] = np.nan
+
     out["field_weather_marker_available"] = 0
+    out["field_rain_onset_available"] = 0
+    out["field_rain_recovery_available"] = 0
+
+    def add_windows(prefix: str, mins: pd.Series) -> None:
+        out[f"{prefix}_0_10m"] = ((mins >= 0) & (mins <= 10)).astype(int)
+        out[f"{prefix}_10_20m"] = ((mins > 10) & (mins <= 20)).astype(int)
+        out[f"{prefix}_20_30m"] = ((mins > 20) & (mins <= 30)).astype(int)
+        out[f"{prefix}_30_60m"] = ((mins > 30) & (mins <= 60)).astype(int)
+        out[f"{prefix}_gt_60m"] = (mins > 60).astype(int)
 
     if markers is None or markers.empty:
-        for label in ["0_10m", "10_20m", "20_30m"]:
-            out[f"field_rain_transition_{label}"] = 0
+        for prefix in ["field_rain_transition", "field_rain_onset", "field_rain_recovery"]:
+            add_windows(prefix, pd.Series(np.nan, index=out.index))
         return out
 
     m = markers.copy()
     m["timestamp"] = pd.to_datetime(m["timestamp"], errors="coerce")
+    if "phase" not in m.columns:
+        m["phase"] = m["marker"].map(_marker_phase)
 
     for night, row_idx in out.groupby("operational_date_0700").groups.items():
         night_markers = m[m["night_date"] == night].sort_values("timestamp")
         if night_markers.empty:
             continue
-        marker_times = list(night_markers["timestamp"])
+
+        all_markers = list(zip(night_markers["timestamp"], night_markers["phase"]))
         for idx in row_idx:
             t = entered_jst.loc[idx]
             if pd.isna(t):
                 continue
-            prior = [mt for mt in marker_times if mt <= t]
-            if not prior:
-                continue
-            delta = (t - prior[-1]).total_seconds() / 60.0
-            out.loc[idx, "field_minutes_since_rain_marker"] = delta
-            out.loc[idx, "field_weather_marker_available"] = 1
 
-    mins = out["field_minutes_since_rain_marker"]
-    out["field_rain_transition_0_10m"] = ((mins >= 0) & (mins <= 10)).astype(int)
-    out["field_rain_transition_10_20m"] = ((mins > 10) & (mins <= 20)).astype(int)
-    out["field_rain_transition_20_30m"] = ((mins > 20) & (mins <= 30)).astype(int)
+            prior_all = [(mt, phase) for mt, phase in all_markers if mt <= t]
+            if prior_all:
+                delta = (t - prior_all[-1][0]).total_seconds() / 60.0
+                out.loc[idx, "field_minutes_since_rain_marker"] = delta
+                out.loc[idx, "field_weather_marker_available"] = 1
+
+            prior_onset = [mt for mt, phase in prior_all if phase == "rain_onset"]
+            if prior_onset:
+                out.loc[idx, "field_minutes_since_rain_onset"] = (t - prior_onset[-1]).total_seconds() / 60.0
+                out.loc[idx, "field_rain_onset_available"] = 1
+
+            prior_recovery = [mt for mt, phase in prior_all if phase == "rain_recovery"]
+            if prior_recovery:
+                out.loc[idx, "field_minutes_since_rain_recovery"] = (t - prior_recovery[-1]).total_seconds() / 60.0
+                out.loc[idx, "field_rain_recovery_available"] = 1
+
+    add_windows("field_rain_transition", out["field_minutes_since_rain_marker"])
+    add_windows("field_rain_onset", out["field_minutes_since_rain_onset"])
+    add_windows("field_rain_recovery", out["field_minutes_since_rain_recovery"])
     return out
 
 
