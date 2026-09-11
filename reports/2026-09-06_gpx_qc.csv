@@ -1,0 +1,2 @@
+operational_date,gpx_filename,points,start_jst,end_jst,duration_h,distance_km,median_gap_s,p95_gap_s,max_gap_s,gaps_gt300,sha256,audit_class
+2026-09-06,2026-09-06-探索.gpx,17248,2026-09-06T20:57:52+09:00,2026-09-07T01:47:53+09:00,4.83,53.50,1.000,1.000,63.672,0,93c8338a21517c53e9dd6335b78efa33fa7734666faa41683e2fdbfbd6e9cd1b,1_COMPLETE_ACTUAL_GPX

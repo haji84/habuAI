@@ -11,8 +11,9 @@ if [[ ! -s "$PBF" ]]; then
   mv "$PBF.tmp" "$PBF"
 fi
 
-# bbox = west,south,east,north. Keep tracks/service roads by filtering only on highway=*.
-osmium extract -b 129.265,28.120,129.425,28.235 "$PBF" \
+# bbox = west,south,east,north. Must match config/pipeline.json.
+# Keep tracks/service roads by filtering only on highway=*.
+osmium extract -b 129.14,28.11,129.43,28.26 "$PBF" \
   -o data/osm/setouchi-all.pbf --overwrite
 osmium tags-filter data/osm/setouchi-all.pbf w/highway \
   -o data/osm/setouchi-roads.pbf --overwrite

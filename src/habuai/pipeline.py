@@ -271,7 +271,7 @@ def parse_field_log(path: Path) -> pd.DataFrame:
             species = _species_from_text(text)
             individual_count = _count_from_text(text)
             size = "大" if "ハブ捕獲大" in text else "中" if "ハブ捕獲中" in text else "小" if "ハブ捕獲小" in text else "極小" if "極小" in text else None
-            wetness = next((w for w in ["ソークド(水跳ね)", "ウェット", "ウエット", "湿り", "ドライ"] if w in text), None)
+            wetness = next((w for w in ["ソークド(水跳ね)", "ウェット", "ウエット", "湿り", "ドライ"] if w in text), None
             rows.append({
                 "timestamp": dt,
                 "session_start": current_session_start,
@@ -402,13 +402,13 @@ def fit_model(root: Path, data: pd.DataFrame, cfg: dict) -> dict:
     train = data[data.entered_at < cutoff].copy()
     if train.empty or train.habu_capture.nunique() < 2:
         return {"status":"insufficient-data"}
-    numeric = [c for c in ["sin_hour","cos_hour","mean_speed_mps","elevation_m","rain_1h_mm","rain_3h_mm","rain_6h_mm","rain_12h_mm","rain_24h_mm","rain_48h_mm","temperature_c","humidity_pct","dew_point_c","hours_since_rain","curvature_deg","segment_prior_visits","bio_ネズミ_5m","bio_ネズミ_10m","bio_オットンガエル_10m","bio_カエル_10m","bio_ヤマシギ_10m"] if c in train.columns]
+    numeric = [c for c in ["sin_hour","cos_hour","elevation_m","rain_1h_mm","rain_3h_mm","rain_6h_mm","rain_12h_mm","rain_24h_mm","rain_48h_mm","temperature_c","humidity_pct","dew_point_c","hours_since_rain","curvature_deg","segment_prior_visits","bio_ネズミ_5m","bio_ネズミ_10m","bio_オットンガエル_10m","bio_カエル_10m","bio_ヤマシギ_10m"] if c in train.columns]
     X = train[numeric].replace([np.inf,-np.inf], np.nan).fillna(0)
     y = train.habu_capture.astype(int)
     model = LogisticRegression(max_iter=2000, class_weight="balanced", C=0.5)
     model.fit(X, y)
     p = model.predict_proba(X)[:,1]
-    metrics = {"status":"ok","rows":len(train),"positives":int(y.sum()),"brier_train":float(brier_score_loss(y,p)),"features":numeric}
+    metrics = {"status":"ok","rows":len(train),"positives":int(y.sum()),"brier_train":float(brier_score_loss(y,p)),"features":numeric,"feature_policy":"predictor-only; post-outcome movement speed excluded"}
     joblib.dump({"model":model,"features":numeric}, root/"models"/"habu_occurrence.joblib")
     return metrics
 
